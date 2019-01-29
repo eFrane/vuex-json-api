@@ -8,7 +8,13 @@ function isDeletable (supportedApiMethods) {
   return !supportedApiMethods.hasOwnProperty('delete')
 }
 
+const emptyFn = () => {}
+
 export class ApiModuleBuilder {
+  constructor (store) {
+    this.store = store
+  }
+
   /**
    *
    * @param api ResourcefulApi
@@ -69,7 +75,7 @@ export class ApiModuleBuilder {
     if (isItemOnly) {
       set = new Proxy((state, payload) => {}, {
         apply (target, thisArg, argArray) {
-          Vue.set(argArray, 0, argArray[1])
+          Vue.set(argArray, 0, builder.addRelationshipNavigation(argArray[1]))
         }
       })
     }
@@ -78,7 +84,7 @@ export class ApiModuleBuilder {
       set = new Proxy((state, payload) => {}, {
         apply (target, thisArg, argArray) {
           const payload = argArray[1]
-          Vue.set(argArray[0].list, payload.id, payload.data)
+          Vue.set(argArray[0].list, payload.id, builder.addRelationshipNavigation(payload.data))
         }
       })
     }
@@ -106,16 +112,63 @@ export class ApiModuleBuilder {
     }
   }
 
+  addRelationshipNavigation (item) {
+    let builder = this
+
+    if (item.hasOwnProperty('relationships')) {
+      for (const type in item.relationships) {
+        if (item.relationships.hasOwnProperty(type)) {
+          item.relationships[type].get = new Proxy(emptyFn, {
+            apply (target, thisArg, argArray) {
+              // fun fact: arrays are objects which are constructed from the class Array
+              let isToManyRelationship = thisArg.data.constructor === Array
+              let relationshipType = null
+              let relationshipItemId = null
+
+              if (isToManyRelationship) {
+                relationshipType = thisArg.data[0].type
+                relationshipItemId = thisArg.data[argArray[0]].id
+              } else {
+                relationshipType = thisArg.data.type
+                relationshipItemId = thisArg.data.id
+              }
+
+              let relationshipModule = builder.store.state[relationshipType]
+
+              if (relationshipModule.list.hasOwnProperty(relationshipItemId)) {
+                return new Promise(resolve => {
+                  resolve(relationshipModule.list[relationshipItemId])
+                })
+              } else {
+                // this is actually quite dumb as a relationship can only exist if it exists
+                // (it makes sense, trust me)
+                return builder.store.dispatch(relationshipType + '/get', { id: relationshipItemId })
+              }
+
+              // here be dragons if you're just an item. item-only modules are for house elfs.
+              // did you look for the dragons yet?
+              // why not?
+            }
+          })
+        }
+
+        // TODO: if relationship is a toMany, it should also have an all() method or something like that
+        // TODO: to get the collection of all related items
+      }
+    }
+
+    return item
+  }
+
   createActions (api, moduleName, supportedApiMethods) {
     let actions = {}
-    let emptyFn = () => {}
 
     // TODO: get/set are only implemented for listable entities atm
 
     actions['get'] = new Proxy(emptyFn, {
       apply (target, thisArg, argArray) {
         let commit = argArray[0]['commit']
-        let id = argArray[1]
+        let id     = argArray[1]
 
         return api[moduleName].get({ id }).then(data => {
           commit('set', { id: data[moduleName][id].id, data: data[moduleName][id] })
@@ -126,7 +179,7 @@ export class ApiModuleBuilder {
     actions['set'] = new Proxy(emptyFn, {
       apply (target, thisArg, argArray) {
         let commit = argArray[0]['commit']
-        let id = argArray[1]
+        let id     = argArray[1]
 
         commit('set', { id: data[moduleName][id].id, data: data[moduleName][id] })
       }
@@ -136,8 +189,8 @@ export class ApiModuleBuilder {
       actions['list'] = new Proxy(emptyFn, {
         apply (target, thisArg, argArray) {
           return api[moduleName].list().then(data => {
-            let commit = argArray[0]['commit']
-            let elements = data[moduleName];
+            let commit   = argArray[0]['commit']
+            let elements = data[moduleName]
 
             for (const id in elements) {
               if (elements.hasOwnProperty(id)) {
@@ -150,8 +203,8 @@ export class ApiModuleBuilder {
 
       actions['setList'] = new Proxy(emptyFn, {
         apply (target, thisArg, argArray) {
-          let commit = argArray[0]['commit']
-          let elements = argArray[1];
+          let commit   = argArray[0]['commit']
+          let elements = argArray[1]
 
           for (const id in elements) {
             if (elements.hasOwnProperty(id)) {

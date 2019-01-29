@@ -10,7 +10,7 @@ export class ResourcefulAPI extends Api {
   constructor (router, store) {
     super()
 
-    this.moduleBuilder = new ApiModuleBuilder()
+    this.moduleBuilder = new ApiModuleBuilder(store)
     const routes = router.getRoutes()
 
     for (const route in routes) {
