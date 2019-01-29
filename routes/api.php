@@ -25,4 +25,8 @@ Route::group(['as' => 'api.'], function () {
     Route::get('route/{id}')
         ->name('route.get')
         ->uses('API\RouteController@get');
+
+    Route::get('book')
+        ->name('book.list')
+        ->uses('API\FakeBookstoreController@listBooks');
 });
