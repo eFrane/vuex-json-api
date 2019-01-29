@@ -10,10 +10,9 @@
         <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="flex-center position-ref full-height" id="app">
-            <hello></hello>
+        <div id="app" class="container">
+            <bookstore></bookstore>
         </div>
-
         <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>

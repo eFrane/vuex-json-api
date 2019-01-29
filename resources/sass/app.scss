@@ -1,25 +1,16 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 html, body {
-  background-color: #fff;
-  color: #636b6f;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 200;
   height: 100vh;
   margin: 0;
 }
 
-.full-height {
-  height: 100vh;
+body {
+  background-image: url('../images/jaredd-craig-744902-unsplash.jpg');
+  background-size: 100vw;
 }
 
-.flex-center {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-.position-ref {
-  position: relative;
+.container {
+  background-color: rgba(100, 100, 100, 0.7);
+  width: 70vw;
+  height: 80vh;
+  margin: 10vh auto 0;
 }
