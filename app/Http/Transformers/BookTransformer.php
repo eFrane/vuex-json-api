@@ -27,7 +27,7 @@ class BookTransformer extends BaseTransformer
             'title'    => $book['title'],
             'abstract' => $book['abstract'],
             'isbn'     => $book['isbn'],
-            'rating'   => $book['rating'],
+            'price'    => $book['price'],
         ];
     }
 
@@ -41,9 +41,12 @@ class BookTransformer extends BaseTransformer
 
     public function includeGenres(array $book)
     {
-        $genres = array_filter($this->bookstore->genres, function ($genre) use ($book) {
-            return in_array($genre['id'], $book['genres']);
-        });
+        $genres = array_filter(
+            $this->bookstore->genres,
+            function ($genre) use ($book) {
+                return in_array($genre['id'], $book['genres']);
+            }
+        );
 
         return $this->resourceService->newCollection($genres, GenreTransformer::class);
     }

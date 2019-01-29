@@ -70,7 +70,7 @@ class FakeBookstoreService
             )
             ->toArray();
 
-        $this->books = collect(range(0, 20))
+        $this->books = collect(range(0, 41))
             ->map(
                 function ($id) use ($faker) {
                     return [
@@ -78,7 +78,7 @@ class FakeBookstoreService
                         'title'    => $faker->realText(15),
                         'abstract' => $faker->realText(400),
                         'isbn'     => $faker->isbn10,
-                        'rating'   => $faker->randomDigitNotNull,
+                        'price'    => $faker->randomFloat(null, 0, 20),
                         'author'   => $faker->randomElement(array_keys($this->authors)),
                         'genres'   => $faker->randomElements(array_keys($this->genres), $faker->randomDigitNotNull),
                     ];
