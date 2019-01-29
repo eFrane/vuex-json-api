@@ -15,4 +15,35 @@ body {
   width: 70vw;
   height: 80vh;
   margin: 10vh auto 0;
+  overflow-y: scroll;
+}
+
+.book-teaser {
+  background-size: cover;
+  min-height: 300px;
+  width: 300px;
+  position: relative;
+  margin: .6em;
+}
+
+ul {
+  list-style: none;
+}
+
+.book-teaser ul {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 5vw;
+  line-height: 1.5;
+  display: block;
+  margin: 0;
+  color: white;
+}
+
+.book-teaser ul li:last-child {
+  text-align: right;
+  padding-right: 5px;
 }

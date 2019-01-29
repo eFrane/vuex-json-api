@@ -136,11 +136,12 @@ export class ApiModuleBuilder {
               let relationshipModule = builder.store.state[relationshipType]
 
               if (relationshipModule.list.hasOwnProperty(relationshipItemId)) {
-                return new Promise(resolve => {
-                  resolve(relationshipModule.list[relationshipItemId])
-                })
+                // return new Promise(resolve => {
+                //   resolve(relationshipModule.list[relationshipItemId])
+                // })
+                return relationshipModule.list[relationshipItemId]
               } else {
-                // this is actually quite dumb as a relationship can only exist if it exists
+                // fixme: this is actually quite dumb as a relationship can only exist if it exists
                 // (it makes sense, trust me)
                 return builder.store.dispatch(relationshipType + '/get', { id: relationshipItemId })
               }

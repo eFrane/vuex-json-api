@@ -1,9 +1,12 @@
 <template>
-  <div class="row" v-if="book">
-    <div class="col">
-      <div class="box">
-        {{ book.attributes.title }}
-        <em>{{ book.relationships.author }}</em>
+  <div class="row">
+    <div class="col-xs-4" v-for="book in books" :key="book.id">
+      <div class="box book-teaser" :style="bookTeaserStyle(book.id)">
+        <ul>
+          <li><strong>{{ book.attributes.title }}</strong></li>
+          <li><em>{{ book.relationships.author.get().attributes.name }}</em></li>
+          <li><em>{{ book.attributes.price }} €</em></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -15,17 +18,17 @@
   export default {
     name: 'Bookstore',
     computed: {
-      book () {
-        if (!this.books || this.books.length < 1) return null
-        return this.books[0]
-      },
-
       ...mapState('book', {
         books: state => state.list
       }),
       ...mapState('author', {
         authors: state => state.list
       }),
+    },
+    methods: {
+      bookTeaserStyle(id) {
+        return "background-image: url('https://lorempixel.com/300/300/cats?foo=" + id + "')"
+      }
     }
   }
 </script>

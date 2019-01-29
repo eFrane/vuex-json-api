@@ -27,7 +27,7 @@ class BookTransformer extends BaseTransformer
             'title'    => $book['title'],
             'abstract' => $book['abstract'],
             'isbn'     => $book['isbn'],
-            'price'    => $book['price'],
+            'price'    => number_format($book['price'], 2),
         ];
     }
 
