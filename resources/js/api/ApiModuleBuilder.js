@@ -153,7 +153,7 @@ export class ApiModuleBuilder {
           let commit = argArray[0]['commit']
           let elements = argArray[1];
 
-          for (const id in elements) {
+          for (const element in elements) {
             if (elements.hasOwnProperty(id)) {
               commit('set', { id: elements[id].id, data: elements[id] })
             }

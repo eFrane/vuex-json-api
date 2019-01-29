@@ -29,4 +29,24 @@ Route::group(['as' => 'api.'], function () {
     Route::get('book')
         ->name('book.list')
         ->uses('API\FakeBookstoreController@listBooks');
+
+    Route::get('book/{id}')
+        ->name('book.get')
+        ->uses('API\FakeBookstoreController@getBook');
+
+    Route::get('author')
+        ->name('author.list')
+        ->uses('API\FakeBookstoreController@listAuthors');
+
+    Route::get('author/{id}')
+        ->name('author.get')
+        ->uses('API\FakeBookstoreController@getAuthor');
+
+    Route::get('genre')
+        ->name('genre.list')
+        ->uses('API\FakeBookstoreController@listGenres');
+
+    Route::get('genre/{id}')
+        ->name('genre.get')
+        ->uses('API\FakeBookstoreController@getGenre');
 });
