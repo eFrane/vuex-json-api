@@ -76,6 +76,8 @@ class FakeBookstoreService
                     return [
                         'id'       => $id,
                         'title'    => $faker->realText(15),
+                        'subtitle' => $faker->realText(10),
+                        'teaser'   => $faker->realText(22),
                         'abstract' => $faker->realText(400),
                         'isbn'     => $faker->isbn10,
                         'price'    => $faker->randomFloat(null, 0, 20),

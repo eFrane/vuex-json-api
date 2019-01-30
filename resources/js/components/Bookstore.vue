@@ -5,7 +5,7 @@
         <ul>
           <li><strong>{{ book.attributes.title }}</strong></li>
           <li><em>{{ book.relationships.author.get().attributes.name }}</em></li>
-          <li><em>{{ book.attributes.price }} €</em></li>
+          <li><em>{{ book.attributes.price }} &euro;</em></li>
         </ul>
       </div>
     </div>
@@ -27,7 +27,7 @@
     },
     methods: {
       bookTeaserStyle(id) {
-        return "background-image: url('https://lorempixel.com/300/300/cats?foo=" + id + "')"
+        return `background-image: url('/cover/${id}')`
       }
     }
   }

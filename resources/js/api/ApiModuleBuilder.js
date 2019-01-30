@@ -53,7 +53,7 @@ export class ApiModuleBuilder {
   }
 
   createMutations (isItemOnly, supportedApiMethods) {
-    // we're dealing with proxys, this *will* get lost
+    // we're dealing with proxys, `this` *will* get lost
     let builder = this
 
     /**

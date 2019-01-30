@@ -13,6 +13,9 @@
         <div id="app" class="container">
             <bookstore></bookstore>
         </div>
+        <footer>
+            <small>Background image &copy; </small>
+        </footer>
         <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
