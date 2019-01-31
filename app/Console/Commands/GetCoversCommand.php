@@ -53,20 +53,25 @@ class GetCoversCommand extends Command
             $url = 'https://orly-appstore.herokuapp.com/generate?';
 
             $urlWithParams = $url . \http_build_query($urlParams);
-
-            $this->info('Getting '.$urlWithParams);
-
-            $image = file_get_contents($urlWithParams);
             $storagePath = storage_path('app/cover'.$book['id'].'.png');
-            file_put_contents($storagePath, $image);
 
-            $this->info('Got '.$storagePath);
+            if (!file_exists($storagePath)) {
+                $this->info('Getting '.$urlWithParams);
 
-            $cooldown = random_int(120, 240);
+                $image = file_get_contents($urlWithParams);
 
-            $this->info('Cooling down for '.number_format($cooldown/60, 2).' minutes');
+                file_put_contents($storagePath, $image);
 
-            sleep($cooldown);
+                $this->info('Got '.$storagePath);
+
+                $cooldown = random_int(120, 240);
+
+                $this->info('Cooling down for '.number_format($cooldown/60, 2).' minutes');
+
+                sleep($cooldown);
+            }
+
+            $this->info('Skipping '.$storagePath);
         }
     }
 }
