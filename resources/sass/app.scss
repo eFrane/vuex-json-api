@@ -21,11 +21,12 @@ body {
 
 .book-teaser {
   background-size: cover;
-  min-height: 250px;
+  min-height: 300px;
   width: 210px;
   position: relative;
-  margin: 0;
+  margin: .6em 0;
 }
+
 ul {
   list-style: none;
 }
@@ -38,9 +39,13 @@ ul {
   right: 0;
   min-height: 5vw;
   line-height: 1.5;
-  display: block;
+  display: none;
   margin: 0;
   color: white;
+}
+
+.book-teaser:hover ul {
+  display: block;
 }
 
 .book-teaser ul li:last-child {
