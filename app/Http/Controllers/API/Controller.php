@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\JsonApiSerializer;
 use App\Services\ApiResourceService;
 use App\Types\ApiRequestInfo;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use League\Fractal\Manager;
 use League\Fractal\Resource\ResourceAbstract;
-use League\Fractal\Serializer\JsonApiSerializer;
 
 abstract class Controller extends BaseController
 {
@@ -65,17 +65,15 @@ abstract class Controller extends BaseController
     {
         $fractal = new Manager();
 
-        $fractal->setSerializer(new JsonApiSerializer());
+        $serializer = new JsonApiSerializer();
 
         if ($this->request->has('include')) {
             $includes = explode(',', $this->request->get('include'));
             $fractal->parseIncludes($includes);
+            $serializer->setIncluded($includes);
         }
 
-        if ($this->request->has('exclude')) {
-            $excludes = explode(',', $this->request->get('exclude'));
-            $fractal->parseExcludes($excludes);
-        }
+        $fractal->setSerializer($serializer);
 
         return $fractal;
     }
