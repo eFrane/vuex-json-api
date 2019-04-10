@@ -125,33 +125,20 @@ export class ApiModuleBuilder {
             apply (target, thisArg, argArray) {
               // fun fact: arrays are objects which are constructed from the class Array
               let isToManyRelationship = thisArg.data.constructor === Array
-              let relationshipType = null
-              let relationshipItemId = null
+              let relationshipType     = null
+              let relationshipItemId   = null
 
               if (isToManyRelationship) {
-                relationshipType = thisArg.data[0].type
+                relationshipType   = thisArg.data[0].type
                 relationshipItemId = thisArg.data[argArray[0]].id
               } else {
-                relationshipType = thisArg.data.type
+                relationshipType   = thisArg.data.type
                 relationshipItemId = thisArg.data.id
               }
 
               let relationshipModule = builder.store.state[relationshipType]
 
-              if (relationshipModule.list.hasOwnProperty(relationshipItemId)) {
-                // return new Promise(resolve => {
-                //   resolve(relationshipModule.list[relationshipItemId])
-                // })
-                return relationshipModule.list[relationshipItemId]
-              } else {
-                // fixme: this is actually quite dumb as a relationship can only exist if it exists
-                // (it makes sense, trust me)
-                return builder.store.dispatch(relationshipType + '/get', { id: relationshipItemId })
-              }
-
-              // here be dragons if you're just an item. item-only modules are for house elfs.
-              // did you look for the dragons yet?
-              // why not?
+              return relationshipModule.list[relationshipItemId]
             }
           })
         }
@@ -172,27 +159,31 @@ export class ApiModuleBuilder {
     actions['get'] = new Proxy(emptyFn, {
       apply (target, thisArg, argArray) {
         let commit = argArray[0]['commit']
-        let id     = argArray[1]
 
-        return api[moduleName].get({ id }).then(data => {
+        return api[moduleName].get(argArray[1]).then(({ data }) => {
           commit('set', { id: data[moduleName][id].id, data: data[moduleName][id] })
         })
       }
     })
 
+    /**
+     *
+     * @type {Store, Number, Object}
+     */
     actions['set'] = new Proxy(emptyFn, {
       apply (target, thisArg, argArray) {
         let commit = argArray[0]['commit']
         let id     = argArray[1]
+        let data   = argArray[2]
 
-        commit('set', { id: data[moduleName][id].id, data: data[moduleName][id] })
+        commit('set', { id, data })
       }
     })
 
     if (!isItemOnlyApi(supportedApiMethods)) {
       actions['list'] = new Proxy(emptyFn, {
         apply (target, thisArg, argArray) {
-          return api[moduleName].list().then(data => {
+          return api[moduleName].list(argArray[1]).then(({ data, meta }) => {
             let commit   = argArray[0]['commit']
             let elements = data[moduleName]
 
@@ -201,9 +192,26 @@ export class ApiModuleBuilder {
                 commit('set', { id: elements[id].id, data: elements[id] })
               }
             }
-          })
-        }
-      })
+
+            if (meta.hasOwnProperty('includes')) {
+              for (const includedModuleName in meta.includes) {
+                if (meta.includes.hasOwnProperty(includedModuleName)
+                  && meta.hasOwnProperty(includedModuleName)
+                  && data.hasOwnProperty(includedModuleName)) {
+                  for (const id in data[includedModuleName]) {
+                    if (data[includedModuleName].hasOwnProperty(id)) {
+                      commit(`{includedModulename}/set`, {
+                        id: data[includedModuleName][id].id,
+                        data: data[includedModuleName][id].data
+                      })
+                    } // srsly
+                  } // what the hell
+                } // stahp
+              } // go home javascript
+            } // you're drunk!
+          }) // I mean it!
+        } // staaaahp
+      }) // for fucks sake!
 
       actions['setList'] = new Proxy(emptyFn, {
         apply (target, thisArg, argArray) {

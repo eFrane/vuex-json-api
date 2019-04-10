@@ -32,7 +32,10 @@ export class Api {
     return axios.create(config)
       .request({ method, url, params, data })
       .then((data) => {
-        return normalize(data.data)
+        return {
+          data: normalize(data.data),
+          meta: data.meta
+        }
       })
   }
 
