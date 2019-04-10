@@ -13,6 +13,7 @@ export class ResourcefulAPI extends Api {
     this.moduleBuilder = new ApiModuleBuilder(store)
     const routes = router.getRoutes()
 
+    console.time('api: setup')
     for (const route in routes) {
       if (routes.hasOwnProperty(route)) {
         let methods = routes[route]
@@ -22,16 +23,19 @@ export class ResourcefulAPI extends Api {
     }
 
     delete this.moduleBuilder
+    console.timeEnd('api: setup')
   }
 
   registerResourceMethods (route, methods) {
     this[route] = {}
 
+    console.time('api: add method proxies for route ' + route)
     for (let method in methods) {
       if (methods.hasOwnProperty(method)) {
         this[route][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
       }
     }
+    console.timeEnd('api: add method proxies for route ' + route)
   }
 
   /**

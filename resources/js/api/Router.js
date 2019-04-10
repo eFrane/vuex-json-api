@@ -14,7 +14,8 @@ export class Router {
   updateRoutes () {
     let api = new Api()
     return api.get('/api/route?filter[group]=api')
-      .then((data) => {
+      .then(({ data }) => {
+        console.time('router_setup')
         for (let idx in data.route) {
           if (data.route.hasOwnProperty(idx)) {
             let route = data.route[idx]
@@ -31,6 +32,7 @@ export class Router {
             this.routes[routeIdentifier][action] = new Route(route)
           }
         }
+        console.timeEnd('router_setup')
 
         // returning self to make working with this in chained promises easier
         return this

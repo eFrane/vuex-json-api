@@ -22,6 +22,7 @@ export class ApiModuleBuilder {
    * @param supportedApiMethods object
    */
   build (api, moduleName, supportedApiMethods) {
+    console.time('api: build module ' + moduleName)
     let module = {
       namespaced: true,
       state: {},
@@ -34,6 +35,8 @@ export class ApiModuleBuilder {
     module.state     = this.initState(isItemOnly)
     module.mutations = this.createMutations(isItemOnly, supportedApiMethods)
     module.actions   = this.createActions(api, moduleName, supportedApiMethods)
+
+    console.timeEnd('api: build module ' + moduleName)
 
     return module
   }
