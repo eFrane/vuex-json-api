@@ -10,6 +10,19 @@ function isDeletable (supportedApiMethods) {
 
 const emptyFn = () => {}
 
+/**
+ * JsonApi-based module builder for Vuex
+ *
+ * This module builder will create a vuex module based on the assumption of
+ * working with valid json api resources. Additionally, it can do a little
+ * more magic if the API adds the following meta data:
+ *
+ * - included: a list of included types (This is used to hookup relationships
+ *             without incurring too much of a computation penalty for tree
+ *             traversal
+ * - the proposed json api 1.1 pagination style meta attributes
+ *   (-> https://jsonapi.org/format/1.1/#fetching-pagination)
+ */
 export class ApiModuleBuilder {
   constructor (store) {
     this.store = store
@@ -48,9 +61,17 @@ export class ApiModuleBuilder {
   initState (isItemOnly) {
     return (() => {
       if (isItemOnly) {
-        return {}
+        return {
+          item: {},
+          changed: {}
+        }
       } else {
-        return { list: {} }
+        return {
+          items: {},
+          changed: {},
+          currentPage: 0,
+          totalPages: 0
+        }
       }
     })()
   }
@@ -87,7 +108,7 @@ export class ApiModuleBuilder {
       set = new Proxy((state, payload) => {}, {
         apply (target, thisArg, argArray) {
           const payload = argArray[1]
-          Vue.set(argArray[0].list, payload.id, builder.addRelationshipNavigation(payload.data))
+          Vue.set(argArray[0].items, payload.id, builder.addRelationshipNavigation(payload.data))
         }
       })
     }
@@ -102,7 +123,7 @@ export class ApiModuleBuilder {
       if (!isItemOnly) {
         unset = new Proxy((state, payload) => {}, {
           apply (target, thisArg, argArray) {
-            Vue.delete(argArray[0].list, argArray[1])
+            Vue.delete(argArray[0].items, argArray[1])
           }
         })
       }
@@ -138,7 +159,7 @@ export class ApiModuleBuilder {
 
               let relationshipModule = builder.store.state[relationshipType]
 
-              return relationshipModule.list[relationshipItemId]
+              return relationshipModule.items[relationshipItemId]
             }
           })
         }

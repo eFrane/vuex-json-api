@@ -70,6 +70,7 @@ abstract class Controller extends BaseController
         if ($this->request->has('include')) {
             $includes = explode(',', $this->request->get('include'));
             $fractal->parseIncludes($includes);
+
             $serializer->setIncluded($includes);
         }
 
@@ -97,6 +98,7 @@ abstract class Controller extends BaseController
         );
 
         return response($jsonEncode, 200)
-            ->header('Content-type', 'application/vnd.api+json');
+            ->header('Content-type', 'application/vnd.api+json')
+            ->header('Access-Control-Allow-Origin', '*');
     }
 }
