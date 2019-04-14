@@ -13,7 +13,7 @@ export class Router {
    */
   updateRoutes () {
     let api = new Api()
-    return api.get('route?filter[group]=api')
+    return api.get('/api/route?filter[group]=api')
       .then(({ data }) => {
         console.time('router_setup')
         for (let idx in data.route) {

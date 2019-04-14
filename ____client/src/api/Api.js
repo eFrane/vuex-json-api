@@ -6,6 +6,10 @@ import {Route} from './Route'
 
 class Api {
   constructor () {
+    if (typeof Api.baseUrl === 'undefined') {
+      Api.baseUrl = ''
+    }
+
     this.defaultOptions = {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -33,7 +37,11 @@ class Api {
 
     url = Api.baseUrl + url
 
-    const crossDomain = true
+    // make cross domain requests if necessary
+    let crossDomain = false
+    if (Api.baseUrl.length > 0) {
+      crossDomain = true
+    }
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
@@ -55,6 +63,10 @@ class Api {
 
   put (url, params = null, data = null, options = {}) {
     return this.doRequest('put', url, params, data, options)
+  }
+
+  patch (url, params = null, data = null, options = {}) {
+    return this.doRequest('patch', url, params, data, options)
   }
 
   delete (url, params = null, data = null, options = {}) {

@@ -1,5 +1,5 @@
 import { Api } from './Api'
-// import { ApiModuleBuilder } from './ApiModuleBuilder'
+import { Builder } from './module/Builder'
 
 export class ResourcefulAPI extends Api {
   /**
@@ -10,7 +10,6 @@ export class ResourcefulAPI extends Api {
   constructor (router, store) {
     super()
 
-    // this.moduleBuilder = new ApiModuleBuilder(store)
     const routes = router.getRoutes()
 
     console.time('api: setup')
@@ -18,14 +17,21 @@ export class ResourcefulAPI extends Api {
       if (routes.hasOwnProperty(route)) {
         let methods = routes[route]
         this.registerResourceMethods(route, methods)
-        this.registerApiModule(store, route, methods)
+
+        let moduleBuilder = new Builder(store, this, route, methods)
+        const module = moduleBuilder.build()
+        store.registerModule(route, module)
       }
     }
 
-    delete this.moduleBuilder
     console.timeEnd('api: setup')
   }
 
+  /**
+   *
+   * @param {*} route
+   * @param {*} methods
+   */
   registerResourceMethods (route, methods) {
     this[route] = {}
 
@@ -40,14 +46,10 @@ export class ResourcefulAPI extends Api {
 
   /**
    *
-   * @param store Vuex.Store
-   * @param routeName string
-   * @param methods object
+   * @param {*} api
+   * @param {*} method
+   * @param {*} route
    */
-  registerApiModule (store, routeName, methods) {
-    // store.registerModule(routeName, this.moduleBuilder.build(this, routeName, methods))
-  }
-
   static createApiProxy (api, method, route) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
@@ -62,14 +64,17 @@ export class ResourcefulAPI extends Api {
           case 'create':
             return api.post.apply(api, argArray)
 
-          case 'update':
+          case 'replace':
             return api.put.apply(api, argArray)
+
+          case 'update':
+            return api.patch.apply(api, argArray)
 
           case 'delete':
             return api.delete.apply(api, argArray)
 
           default:
-            throw new Error('unsupported restful method: ' + method)
+            throw new Error('unsupported api method: ' + method)
         }
       }
     })

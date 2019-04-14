@@ -5,6 +5,19 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+/**
+ * Converts a module listing object (e.g. `{ myModule: myModule }`)
+ * to the expected syntax for module registration.
+ *
+ * By default, this Vuex usage interpretation expects non-api-bound
+ * modules to have a `name`-property which defines their namespaced
+ * name. This is necessary to facilitate auto-registration of the modules.
+ *
+ * N.b.: There is no checking done to avoid overwrites of these modules
+ * by later-to-be-initialized api-bound modules.
+ *
+ * @param {object|array} modules
+ */
 function prepareModuleHashMap (modules) {
   let moduleHashMap = {}
 
@@ -24,7 +37,7 @@ function prepareModuleHashMap (modules) {
  * @param modules non-dynamic modules
  * @returns {Promise<Store>}
  */
-export function createVuexStore (modules) {
+export async function createVuexStore (modules) {
   let router = new Router()
 
   return router
@@ -35,9 +48,18 @@ export function createVuexStore (modules) {
 
         modules: prepareModuleHashMap(modules),
 
+        mutations: {
+          trackChange (state, changingMutation) {
+
+          }
+        },
+
         plugins: [
           store => {
             store.api = new ResourcefulAPI(router, store)
+            store.subscribe((mutation, state) => {
+              console.dir(mutation, state)
+            })
           }
         ]
       })
