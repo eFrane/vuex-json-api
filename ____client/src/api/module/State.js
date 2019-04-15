@@ -33,8 +33,8 @@ function initialState (isCollection) {
       return {
         items: {},
         initial: {},
-        currentPage: 0,
-        totalPages: 0
+        currentPage: null,
+        totalPages: null
       }
     } else {
       return {
