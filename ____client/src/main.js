@@ -6,18 +6,32 @@ import { createVueInstance } from './init/createVueInstance'
 import { createVuexStore } from './init/createVuexStore'
 
 import { Api } from './api/Api'
-import { SimpleRouter } from './api/route/SimpleRouter'
+import { StaticRouter } from './api/route/StaticRouter'
 
 import App from './App'
 
-Api.setBaseUrl('https://apifoo.test/')
+Api.setBaseUrl('http://jsonapiplayground.reyesoft.com')
 
 window.axios = axios
 window.Api = Api
 
 Vue.config.productionTip = false
 
-createVuexStore({}, new SimpleRouter('/api/route?filter[group]=api'))
+const router = new StaticRouter([
+  {
+    module: 'authors',
+    action: 'get',
+    url: '/v2/authors/{id}',
+    parameters: ['id']
+  },
+  {
+    module: 'authors',
+    action: 'list',
+    url: '/v2/authors'
+  }
+])
+
+createVuexStore({}, router)
   .then((store) => {
     return createVueInstance(store, { App })
   })

@@ -26,4 +26,18 @@ export class Router {
   async updateRoutes () {
     return this
   }
+
+  /**
+   *
+   * @param {String} module
+   * @param {String} action
+   * @param {Route} route
+   */
+  addRoute (module, action, route) {
+    if (!this.routes.hasOwnProperty(module)) {
+      this.routes[module] = {}
+    }
+
+    this.routes[module][action] = route
+  }
 }

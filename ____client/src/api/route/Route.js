@@ -7,6 +7,16 @@ export class Route {
     this.parameters = apiRouteObject.attributes.parameters
   }
 
+  static fromPOJO ({ module, _, url, parameters }) {
+    return new Route({
+      type: module,
+      attributes: {
+        url,
+        parameters
+      }
+    })
+  }
+
   /**
    * Prepare an url, replacing provided parameters
    *

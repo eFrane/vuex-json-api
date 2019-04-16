@@ -16,7 +16,8 @@ import { Route } from './Route'
  *             "id": "api.route.list",
  *             "attributes": {
  *                 "parameters": [],
- *                 "url": "api/route"
+ *                 "url": "api/route",
+ *                 "method": "list"
  *             }
  *        },
  *        {
@@ -26,7 +27,8 @@ import { Route } from './Route'
  *                "parameters": [
  *                    "id"
  *                ],
- *                "url": "api/route/{id}"
+ *                "url": "api/route/{id}",
+ *                "method": "get"
  *            }
  *        }
  *     ]
@@ -54,18 +56,12 @@ export class SimpleRouter extends Router {
         console.time('router_setup')
         for (let idx in data.route) {
           if (data.route.hasOwnProperty(idx)) {
-            let route = data.route[idx]
+            const route = data.route[idx]
 
-            let nameComponents = route.id.split('.')
+            const module = route.type.toLower()
+            const action = route.attributes.action.toLower()
 
-            let routeIdentifier = nameComponents[1]
-            let action = nameComponents[2]
-
-            if (!this.routes.hasOwnProperty(routeIdentifier)) {
-              this.routes[routeIdentifier] = {}
-            }
-
-            this.routes[routeIdentifier][action] = new Route(route)
+            this.addRoute(module, action, new Route(route))
           }
         }
         console.timeEnd('router_setup')
