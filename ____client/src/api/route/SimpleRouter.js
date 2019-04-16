@@ -3,7 +3,38 @@ import { Router } from './Router'
 import { Route } from './Route'
 
 /**
- * A simple router implementation querying a
+ * A simple router implementation querying a json:api endpoint which delivers all
+ * necessary route information
+ *
+ * The endpoint must return a list of Route objects:
+ *
+ * ```json
+ * {
+ *     "data": [
+ *         {
+ *             "type": "Route",
+ *             "id": "api.route.list",
+ *             "attributes": {
+ *                 "parameters": [],
+ *                 "url": "api/route"
+ *             }
+ *        },
+ *        {
+ *            "type": "Route",
+ *            "id": "api.route.get",
+ *            "attributes": {
+ *                "parameters": [
+ *                    "id"
+ *                ],
+ *                "url": "api/route/{id}"
+ *            }
+ *        }
+ *     ]
+ * }
+ * ```
+ *
+ * To initialize this router, simply `new` it with the desired fetch path,
+ * e.g. `new SimpleRouter('/api/route')`.
  */
 export class SimpleRouter extends Router {
   constructor (fetchPath) {
