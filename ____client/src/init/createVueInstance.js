@@ -1,5 +1,4 @@
-import Vue from 'vue'
-
+import Vue from 'vue/dist/vue.esm'
 // import { SettingsModule } from '../store/SettingsModule'
 
 if (process.env.NODE_ENV === 'development') {
@@ -13,10 +12,10 @@ if (process.env.NODE_ENV === 'development') {
  * @param {function} mountedCallback
  * @returns {Promise<Vue>}
  */
-export function createVueInstance (store, components, mountedCallback = () => {}) {
+export async function createVueInstance (store, components, mountedCallback = () => {}) {
   return new Vue({
-    components: components,
-    store: store,
+    components,
+    store,
     mounted () {
       mountedCallback.call(this)
     },

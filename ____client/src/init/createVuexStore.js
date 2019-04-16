@@ -1,5 +1,5 @@
 import { ResourcefulAPI } from '../api/ResourcefulApi'
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)

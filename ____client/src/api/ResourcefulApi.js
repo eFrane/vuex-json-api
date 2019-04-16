@@ -4,8 +4,8 @@ import { Builder } from './module/Builder'
 export class ResourcefulAPI extends Api {
   /**
    *
-   * @param router Router
-   * @param store Vuex.Store
+   * @param {route.Router} router
+   * @param {Vuex.Store} store
    */
   constructor (router, store) {
     super()
