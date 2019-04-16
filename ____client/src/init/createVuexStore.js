@@ -1,4 +1,3 @@
-import { Router } from '../api/Router'
 import { ResourcefulAPI } from '../api/ResourcefulApi'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -34,32 +33,31 @@ function prepareModuleHashMap (modules) {
 /**
  * Create Vuex Store with API Plugin
  *
- * @param modules non-dynamic modules
+ * @param {object} staticModules non-dynamic modules
+ * @param {route.Router} router
  * @returns {Promise<Store>}
  */
-export async function createVuexStore (modules) {
-  let router = new Router()
-
+export async function createVuexStore (staticModules, router) {
   return router
     .updateRoutes()
     .then(router => {
       const store = new Vuex.Store({
         strict: true,
 
-        modules: prepareModuleHashMap(modules),
+        modules: prepareModuleHashMap(staticModules),
 
-        mutations: {
-          trackChange (state, changingMutation) {
+        // mutations: {
+        //   trackChange (state, changingMutation) {
 
-          }
-        },
+        //   }
+        // },
 
         plugins: [
           store => {
             store.api = new ResourcefulAPI(router, store)
-            store.subscribe((mutation, state) => {
-              console.dir(mutation, state)
-            })
+            // store.subscribe((mutation, state) => {
+            //   console.dir(mutation, state)
+            // })
           }
         ]
       })

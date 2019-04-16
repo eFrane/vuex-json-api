@@ -2,7 +2,7 @@ import axios from 'axios'
 import stringify from 'qs-stringify'
 import normalize from 'json-api-normalizer'
 
-import {Route} from './Route'
+import {Route} from './route/Route'
 
 class Api {
   constructor () {

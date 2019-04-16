@@ -1,9 +1,14 @@
+import { Api } from '../Api'
+import { Router } from './Router'
 import { Route } from './Route'
-import { Api } from './Api'
 
-export class Router {
-  constructor () {
-    this.routes = {}
+/**
+ * A simple router implementation querying a
+ */
+export class SimpleRouter extends Router {
+  constructor (fetchPath) {
+    super()
+    this.fetchPath = fetchPath
   }
 
   /**
@@ -11,9 +16,9 @@ export class Router {
    *
    * @returns {*}
    */
-  updateRoutes () {
+  async updateRoutes () {
     let api = new Api()
-    return api.get('/api/route?filter[group]=api')
+    return api.get(this.fetchPath)
       .then(({ data }) => {
         console.time('router_setup')
         for (let idx in data.route) {
@@ -37,9 +42,5 @@ export class Router {
         // returning self to make working with this in chained promises easier
         return this
       })
-  }
-
-  getRoutes () {
-    return this.routes
   }
 }
