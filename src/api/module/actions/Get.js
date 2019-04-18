@@ -9,6 +9,8 @@ export function get (api, moduleName) {
     apply (target, thisArg, argArray) {
       const [ vuexFns, query ] = argArray
 
+      vuexFns.commit('startLoading')
+
       return api[moduleName].get(query).then(({ data }) => {
         let objectId = null
         for (let idx in data[moduleName]) {
@@ -19,6 +21,8 @@ export function get (api, moduleName) {
         }
 
         vuexFns.commit('set', { id: data[moduleName][objectId].id, data: data[moduleName][objectId] })
+      }).finally(() => {
+        vuexFns.commit('endLoading')
       })
     }
   })

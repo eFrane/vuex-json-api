@@ -6,6 +6,7 @@ import { reset as resetAction } from './actions/Reset'
 import { reset as resetMutation } from './mutations/Reset'
 import { set as setMutation } from './mutations/Set'
 import { remove as removeMutation } from './mutations/Delete'
+import { startLoading as startLoadingMutation, endLoading as endLoadingMutation } from './mutations/Loading'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -63,7 +64,9 @@ export class Builder {
   buildMutations () {
     let mutations = {
       reset: resetMutation(this.isCollection),
-      set: setMutation(this.store, this.isCollection)
+      set: setMutation(this.store, this.isCollection),
+      startLoading: startLoadingMutation,
+      endLoading: endLoadingMutation
     }
 
     if (allowsDeletion(this.apiMethods)) {

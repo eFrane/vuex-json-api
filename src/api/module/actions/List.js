@@ -7,6 +7,8 @@ export function list (api, moduleName) {
         query = {}
       }
 
+      vuexFns.commit('startLoading')
+
       return api[moduleName].list(query).then(({ data, meta }) => {
         let elements = data[moduleName]
 
@@ -17,7 +19,9 @@ export function list (api, moduleName) {
         }
 
         // TODO: includes, pagination
-      })
+      }).finally(
+        vuexFns.commit('endLoading')
+      )
     }
   })
 }

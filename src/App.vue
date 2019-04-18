@@ -5,7 +5,7 @@
 
     <h2>Books</h2>
 
-    <table>
+    <table v-if="!authorsLoading">
       <thead>
         <tr>
           <th>ID</th>
@@ -21,6 +21,7 @@
         </tr>
       </tbody>
     </table>
+    <div v-else>Authors are currently loading</div>
 
     <h2>Author Books</h2>
 
@@ -42,7 +43,8 @@ export default {
   },
   computed: {
     ...mapState('authors', {
-      authors: state => state.items
+      authors: state => state.items,
+      authorsLoading: state => state.loading
     }),
     ...mapState('books', {
       books: state => state.items

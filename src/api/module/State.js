@@ -31,6 +31,7 @@ function initialState (isCollection) {
   return (() => {
     if (isCollection) {
       return {
+        loading: false,
         items: {},
         initial: {},
         currentPage: null,
@@ -38,6 +39,7 @@ function initialState (isCollection) {
       }
     } else {
       return {
+        loading: false,
         item: {},
         initial: {}
       }
