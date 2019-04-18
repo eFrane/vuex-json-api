@@ -12,7 +12,7 @@ import App from './App'
 
 import JsonApiPlaygroundRoutes from './api/misc/JsonApiPlaygroundRoutes'
 
-Api.setBaseUrl('http://jsonapiplayground.reyesoft.com')
+Api.setBaseUrl('https://jsonapiplayground.reyesoft.com')
 
 window.axios = axios
 window.Api = Api
