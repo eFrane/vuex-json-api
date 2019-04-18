@@ -7,11 +7,13 @@ export class ResourceObject {
   constructor (store, resultObject) {
     this.store = store
 
-    if (DataTransferItem.hasOwnProperty('relationships')) {
-      resultObject.relationships = this.addRelationshipResolvers(resultObject.relationships)
+    let obj = resultObject.data
+
+    if (obj.hasOwnProperty('relationships')) {
+      obj.relationships = this.addRelationshipResolvers(obj.relationships)
     }
 
-    return resultObject
+    return obj
   }
 
   /**
@@ -35,22 +37,18 @@ export class ResourceObject {
   resolveRelationshipForObjectType (relatedObjectType) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
-        let isToManyRelationship = thisArg.data.constructor === Array
+        console.dir(arguments)
+        /*
+          thisArg is the relationship obj with `data` and `get()` function;
+          should return the objects from the related modules
 
-        let relationshipType = null
-        let relationshipItemId = null
+          what if they are not loaded?
 
-        if (isToManyRelationship) {
-          relationshipType = thisArg.data[0].type
-          relationshipItemId = thisArg.data[argArray[0]].id
-        } else {
-          relationshipType = thisArg.data.type
-          relationshipItemId = thisArg.data.id
-        }
+          options:
 
-        let relationshipModule = this.store.state[relationshipType]
-
-        return relationshipModule.items[relationshipItemId]
+          a) throw an error indicating the missing objects
+          b) turn this into an async function which only returns once the items are loaded
+        */
       }
     })
 

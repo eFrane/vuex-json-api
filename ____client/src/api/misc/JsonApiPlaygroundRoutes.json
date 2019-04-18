@@ -1,0 +1,24 @@
+[
+  {
+    "module": "authors",
+    "action": "get",
+    "url": "/v2/authors/{id}",
+    "parameters": ["id"]
+  },
+  {
+    "module": "authors",
+    "action": "list",
+    "url": "/v2/authors"
+  },
+  {
+    "module": "books",
+    "action": "get",
+    "url": "/v2/books/{id}",
+    "parameters": ["id"]
+  },
+  {
+    "module": "books",
+    "action": "list",
+    "url": "/v2/books"
+  }
+]

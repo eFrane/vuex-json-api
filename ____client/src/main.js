@@ -10,6 +10,8 @@ import { StaticRouter } from './api/route/StaticRouter'
 
 import App from './App'
 
+import JsonApiPlaygroundRoutes from './api/misc/JsonApiPlaygroundRoutes'
+
 Api.setBaseUrl('http://jsonapiplayground.reyesoft.com')
 
 window.axios = axios
@@ -17,19 +19,7 @@ window.Api = Api
 
 Vue.config.productionTip = false
 
-const router = new StaticRouter([
-  {
-    module: 'authors',
-    action: 'get',
-    url: '/v2/authors/{id}',
-    parameters: ['id']
-  },
-  {
-    module: 'authors',
-    action: 'list',
-    url: '/v2/authors'
-  }
-])
+const router = new StaticRouter(JsonApiPlaygroundRoutes)
 
 createVuexStore({}, router)
   .then((store) => {

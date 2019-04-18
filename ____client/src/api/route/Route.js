@@ -3,8 +3,8 @@ export class Route {
    * @param apiRouteObject
    */
   constructor (apiRouteObject) {
-    this.url = apiRouteObject.attributes.url
-    this.parameters = apiRouteObject.attributes.parameters
+    this.url = apiRouteObject.attributes.url || ''
+    this.parameters = apiRouteObject.attributes.parameters || {}
   }
 
   static fromPOJO ({ module, _, url, parameters }) {
@@ -42,7 +42,7 @@ export class Route {
    * @returns {boolean}
    */
   hasParameter (parameter) {
-    return this.parameters.filter((checkParam) => {
+    return this.parameters.hasOwnProperty(parameter) && this.parameters.filter((checkParam) => {
       return parameter === checkParam
     }).length > 0
   }

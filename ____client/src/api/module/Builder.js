@@ -2,6 +2,7 @@ import { initialState, isCollection, allowsDeletion, allowsModification } from '
 import { get as getAction } from './actions/Get'
 import { set as setAction } from './actions/Set'
 import { list as listAction } from './actions/List'
+import { reset as resetAction } from './actions/Reset'
 import { reset as resetMutation } from './mutations/Reset'
 import { set as setMutation } from './mutations/Set'
 import { remove as removeMutation } from './mutations/Delete'
@@ -74,7 +75,8 @@ export class Builder {
 
   buildActions () {
     let actions = {
-      get: getAction(this.api, this.moduleName)
+      get: getAction(this.api, this.moduleName),
+      reset: resetAction
     }
 
     if (this.isCollection) {
