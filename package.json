@@ -1,8 +1,11 @@
 {
-  "name": "apifoo____client",
+  "name": "vuex-json-api",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "eFrane <efrane@meanderingsoul.com>",
+  "description": "A Vue.js library for interfacing with Json:Api endpoints",
+  "license": "MIT",
+  "authors": [
+    "eFrane <efrane@meanderingsoul.com>"
+  ],
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
