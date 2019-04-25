@@ -1,3 +1,5 @@
+import { setResourceObjectsForModule } from './setResourceObjectsForModule'
+
 /**
  * Get a resource from a
  *
@@ -7,20 +9,20 @@
 export function get (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      const [ vuexFns, query ] = argArray
+      let [ vuexFns, query ] = argArray
+
+      if (typeof query === 'undefined') {
+        query = {}
+      }
 
       vuexFns.commit('startLoading')
 
       return api[moduleName].get(query).then(({ data }) => {
-        let objectId = null
-        for (let idx in data[moduleName]) {
-          if (data[moduleName].hasOwnProperty(idx)) {
-            objectId = idx
-            break
+        for (let destinationModule in data) {
+          if (data.hasOwnProperty(destinationModule)) {
+            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule])
           }
         }
-
-        vuexFns.commit('set', { id: data[moduleName][objectId].id, data: data[moduleName][objectId] })
       }).finally(() => {
         vuexFns.commit('endLoading')
       })
