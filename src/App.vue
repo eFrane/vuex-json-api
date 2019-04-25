@@ -3,7 +3,7 @@
     <h1>Vuex Json Api</h1>
     <em>Interacting with <a href="http://jsonapiplayground.reyesoft.com/">http://jsonapiplayground.reyesoft.com/</a></em>
 
-    <h2>Books</h2>
+    <h2>Authors</h2>
 
     <table v-if="!authorsLoading">
       <thead>
