@@ -1,5 +1,5 @@
 import axios from 'axios'
-import stringify from 'qs-stringify'
+import { stringify } from 'qs'
 import normalize from 'json-api-normalizer'
 
 import {Route} from './route/Route'
@@ -17,7 +17,7 @@ class Api {
         'Accept': 'application/vnd.api+json'
       },
       paramsSerializer (params) {
-        return stringify(params)
+        return stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
       }
     }
 
