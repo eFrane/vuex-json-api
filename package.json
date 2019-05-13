@@ -1,19 +1,19 @@
 {
   "name": "vuex-json-api",
-  "version": "1.0.0",
+  "version": "0.0.1-prealpha",
   "description": "A Vue.js library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
     "eFrane <efrane@meanderingsoul.com>"
   ],
-  "private": true,
+  "main": "vuex-json-api.umd.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "node build/build.js"
+    "build": "rimraf ./dist && webpack --config webpack.config.js",
+    "prepare": "yarn run lint",
+    "prepack": "yarn run test && yarn run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -61,7 +61,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
-    "rimraf": "^2.6.0",
+    "rimraf": "^2.6.3",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
@@ -70,13 +70,13 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.6.0",
+    "webpack": "^4.0.0",
+    "webpack-cli": "^3.1.2",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 6.0.0",
+    "node": ">= 8.0.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
