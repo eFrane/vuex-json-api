@@ -2,6 +2,18 @@
 
 > Automagic Json:Api integration for Vuex.
 
+## Publishing
+
+To publish a new (development) version run
+
+npm version patch
+
+To increase the patch version and
+
+npm publish
+
+To post to npm.
+
 ## Developing
 
 This project uses `yarn` for package management.
