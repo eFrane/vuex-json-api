@@ -36,14 +36,33 @@ export class Builder {
     this.moduleName = moduleName
     this.apiMethods = apiMethods
 
+    if (!this.hasOwnProperty('prefix')) {
+      this.prefix = ''
+    }
+
     this.isCollection = isCollection(apiMethods)
+  }
+
+  /**
+   * Configure a module name prefix for all generated modules
+   * @param {String} prefix
+   */
+  static setModulePrefix (prefix) {
+    Builder.prototype.prefix = prefix
+  }
+
+  /**
+   * Return module name with prefix
+   */
+  getModuleName () {
+    return this.prefix + this.moduleName
   }
 
   /**
    * Build the module for this builder instance
    */
   build () {
-    const storeModuleBuildTimer = 'api: build module ' + this.moduleName
+    const storeModuleBuildTimer = 'api: build module ' + this.getModuleName()
     console.time(storeModuleBuildTimer)
 
     let module = {
@@ -78,12 +97,12 @@ export class Builder {
 
   buildActions () {
     let actions = {
-      get: getAction(this.api, this.moduleName),
+      get: getAction(this.api, this.getModuleName()),
       reset: resetAction
     }
 
     if (this.isCollection) {
-      actions['list'] = listAction(this.api, this.moduleName)
+      actions['list'] = listAction(this.api, this.getModuleName())
     }
 
     if (allowsModification(this.apiMethods)) {
