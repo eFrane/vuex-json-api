@@ -43,6 +43,6 @@ Tests are written with Jest + vue-test-utils.
 
 This project interfaces with the Json:Api playground by [Reyesoft](https://www.reyesoft.com) at [https://jsonapiplayground.reyesoft.com](https://jsonapiplayground.reyesoft.com).
 
-## License
+## License ##
 
 MIT
