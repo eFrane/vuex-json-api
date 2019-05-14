@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 // import { SettingsModule } from '../store/SettingsModule'
 
 if (process.env.NODE_ENV === 'development') {
