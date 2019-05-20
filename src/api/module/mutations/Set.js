@@ -25,6 +25,11 @@ export function set (store, isCollection) {
       const [ state, payload ] = argArray
 
       if (isCollection) {
+        if (payload.hasOwnProperty('group') && null !== payload.group) {
+          Vue.set(state.groups[payload.group].items, payload.id, new ResourceObject(store, payload))
+          return
+        }
+
         Vue.set(state.items, payload.id, new ResourceObject(store, payload))
       } else {
         Vue.set(state, 'item', new ResourceObject(store, payload))

@@ -2,11 +2,14 @@ import { initialState, isCollection, allowsDeletion, allowsModification } from '
 import { get as getAction } from './actions/Get'
 import { set as setAction } from './actions/Set'
 import { list as listAction } from './actions/List'
+import { addGroup as addGroupAction } from './actions/addGroup'
 import { reset as resetAction } from './actions/Reset'
 import { reset as resetMutation } from './mutations/Reset'
 import { set as setMutation } from './mutations/Set'
+import { addGroup as addGroupMutation } from './mutations/addGroup'
 import { remove as removeMutation } from './mutations/Delete'
 import { startLoading as startLoadingMutation, endLoading as endLoadingMutation } from './mutations/Loading'
+import { setPagination } from './mutations/setPagination'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -85,11 +88,16 @@ export class Builder {
       reset: resetMutation(this.isCollection),
       set: setMutation(this.store, this.isCollection),
       startLoading: startLoadingMutation,
-      endLoading: endLoadingMutation
+      endLoading: endLoadingMutation,
+      addGroup: addGroupMutation(this.store, this.isCollection)
     }
 
     if (allowsDeletion(this.apiMethods)) {
       mutations['remove'] = removeMutation(this.isCollection)
+    }
+
+    if (this.isCollection) {
+      mutations['setPagination'] = setPagination
     }
 
     return mutations
@@ -98,7 +106,8 @@ export class Builder {
   buildActions () {
     let actions = {
       get: getAction(this.api, this.getModuleName()),
-      reset: resetAction
+      reset: resetAction,
+      addGroup: addGroupAction(),
     }
 
     if (this.isCollection) {

@@ -12,21 +12,27 @@ export function list (api, moduleName) {
       let [vuexFns, query] = argArray
 
       if (typeof query === 'undefined') {
-        query = {}
+        query = { query: {}, group: null }
       }
 
-      vuexFns.commit('startLoading')
+      let group = (query.hasOwnProperty('group')) ? query.group : null
 
-      return api[moduleName].list(query).then(({ data, meta }) => {
+      vuexFns.commit('startLoading', group)
+
+      return api[moduleName].list(query.query).then(({ data, meta }) => {
+
         for (let destinationModule in data) {
           if (data.hasOwnProperty(destinationModule)) {
-            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule])
+            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
           }
         }
 
-        // TODO: pagination
+        if (meta.hasOwnProperty('pagination')) {
+          vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })
+        }
+
       }).finally(
-        vuexFns.commit('endLoading')
+        vuexFns.commit('endLoading', group)
       )
     }
   })
