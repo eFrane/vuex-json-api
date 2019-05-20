@@ -20,7 +20,6 @@ export function list (api, moduleName) {
       vuexFns.commit('startLoading', group)
 
       return api[moduleName].list(query.query).then(({ data, meta }) => {
-
         for (let destinationModule in data) {
           if (data.hasOwnProperty(destinationModule)) {
             setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
@@ -30,7 +29,6 @@ export function list (api, moduleName) {
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })
         }
-
       }).finally(
         vuexFns.commit('endLoading', group)
       )

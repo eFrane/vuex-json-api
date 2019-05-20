@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
-export function setPagination(state, { group, pagination }) {
-  if (null === group) {
+export function setPagination (state, { group, pagination }) {
+  if (group === null) {
     state.currentPage = pagination.current
     state.totalPages = pagination.total
     return

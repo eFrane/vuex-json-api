@@ -107,7 +107,7 @@ export class Builder {
     let actions = {
       get: getAction(this.api, this.getModuleName()),
       reset: resetAction,
-      addGroup: addGroupAction(),
+      addGroup: addGroupAction()
     }
 
     if (this.isCollection) {

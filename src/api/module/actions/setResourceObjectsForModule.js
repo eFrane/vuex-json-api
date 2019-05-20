@@ -1,6 +1,5 @@
 export function setResourceObjectsForModule (vuexFns, currentModule, destinationModule, objects, group) {
   for (const id in objects) {
-
     if (objects.hasOwnProperty(id)) {
       const isRootMutation = currentModule !== destinationModule
       let mutation = 'set'

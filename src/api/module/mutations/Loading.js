@@ -1,5 +1,5 @@
 export function startLoading (state, group) {
-  if (null === group) {
+  if (group === null) {
     state.loading = true
     return
   }
@@ -8,7 +8,7 @@ export function startLoading (state, group) {
 }
 
 export function endLoading (state, group) {
-  if (null === group) {
+  if (group === null) {
     state.loading = false
     return
   }
