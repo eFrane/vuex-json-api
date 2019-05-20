@@ -19,7 +19,7 @@ import { ResourceObject } from '../ResourceObject'
  * @param {Vuex.Store} store
  * @param {Boolean} isCollection
  */
-export function set (store, isCollection) {
+export function setMutation (store, isCollection) {
   return new Proxy((state, payload) => {}, {
     apply (target, thisArg, argArray) {
       const [ state, payload ] = argArray

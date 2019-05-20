@@ -14,7 +14,7 @@ import Vue from 'vue'
  *
  * @param {Boolean} isCollection
  */
-export function remove (isCollection) {
+export function removeMutation (isCollection) {
   return new Proxy((state, payload) => {}, {
     apply (target, thisArg, argArray) {
       const state = argArray[0]

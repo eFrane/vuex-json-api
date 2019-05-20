@@ -6,7 +6,7 @@ import { setResourceObjectsForModule } from './setResourceObjectsForModule'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function list (api, moduleName) {
+export function listAction (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       let [vuexFns, query] = argArray

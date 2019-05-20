@@ -1,4 +1,4 @@
-export function set () {
+export function setAction () {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       const [ vuexFns, id, data ] = argArray

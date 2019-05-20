@@ -5,7 +5,7 @@ import { initialState } from '../State'
  *
  * @param {Boolean} isCollection
  */
-export function reset (isCollection) {
+export function resetMutation (isCollection) {
   /* eslint-disable no-new */
   return new Proxy((state) => {}, {
     apply (target, thisArg, argArray) {

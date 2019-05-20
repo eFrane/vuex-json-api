@@ -1,7 +1,7 @@
 import { initialState } from '../State'
 import Vue from 'vue'
 
-export function addGroup (store, isCollection) {
+export function addGroupMutation (store, isCollection) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       const [state, group] = argArray

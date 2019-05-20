@@ -1,15 +1,15 @@
 import { initialState, isCollection, allowsDeletion, allowsModification } from './State'
-import { get as getAction } from './actions/Get'
-import { set as setAction } from './actions/Set'
-import { list as listAction } from './actions/List'
-import { addGroup as addGroupAction } from './actions/addGroup'
-import { reset as resetAction } from './actions/Reset'
-import { reset as resetMutation } from './mutations/Reset'
-import { set as setMutation } from './mutations/Set'
-import { addGroup as addGroupMutation } from './mutations/addGroup'
-import { remove as removeMutation } from './mutations/Delete'
-import { startLoading as startLoadingMutation, endLoading as endLoadingMutation } from './mutations/Loading'
-import { setPagination } from './mutations/setPagination'
+import { getAction } from './actions/getAction'
+import { setAction } from './actions/setAction'
+import { listAction } from './actions/listAction'
+import { addGroupAction } from './actions/addGroupAction'
+import { resetAction } from './actions/resetAction'
+import { resetMutation } from './mutations/resetMutation'
+import { setMutation } from './mutations/setMutation'
+import { addGroupMutation } from './mutations/addGroupMutation'
+import { removeMutation } from './mutations/removeMutation'
+import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
+import { setPaginationMutation } from './mutations/setPaginationMutation'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -97,7 +97,7 @@ export class Builder {
     }
 
     if (this.isCollection) {
-      mutations['setPagination'] = setPagination
+      mutations['setPaginationMutation'] = setPaginationMutation()
     }
 
     return mutations

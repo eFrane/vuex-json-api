@@ -6,7 +6,7 @@ import { setResourceObjectsForModule } from './setResourceObjectsForModule'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function get (api, moduleName) {
+export function getAction (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       let [ vuexFns, query ] = argArray

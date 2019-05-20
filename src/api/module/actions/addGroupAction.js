@@ -1,4 +1,4 @@
-export function addGroup () {
+export function addGroupAction () {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       const [ vuexFns, group ] = argArray
