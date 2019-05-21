@@ -42,7 +42,7 @@ export class Route {
    * @returns {boolean}
    */
   hasParameter (parameter) {
-    return this.parameters.hasOwnProperty(parameter) && this.parameters.filter((checkParam) => {
+    return this.parameters.filter((checkParam) => {
       return parameter === checkParam
     }).length > 0
   }
