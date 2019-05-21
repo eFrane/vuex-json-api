@@ -48,7 +48,7 @@ class Api {
       .then((data) => {
         return {
           data: normalize(data.data),
-          meta: data.meta
+          meta: data.data.meta
         }
       })
   }
@@ -75,6 +75,10 @@ class Api {
 
   static setBaseUrl (baseUrl) {
     Api.baseUrl = baseUrl
+  }
+
+  static getBaseUrl (baseUrl) {
+    return Api.baseUrl
   }
 }
 
