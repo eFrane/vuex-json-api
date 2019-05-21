@@ -1,13 +1,32 @@
 module.exports = {
-  title: '@efrane/vuex-json-api',
-  description: 'A Json:Api integration for Vuex',
+  title: 'Json:Api for Vuex',
+  description: 'Automagic Json:Api integration for Vuex',
   themeConfig: {
     nav: [
       {
+        text: 'Documentation',
+        link: '/'
+      },
+      {
+        text: 'Development',
+        link: '/development.html'
+      },
+      {
         text: 'GitHub',
         link: 'https://github.com/eFrane/vuex-json-api'
-      }
+      },
     ],
-    sidebar: 'auto'
+    displayAllHeaders: true,
+    activeHeaderLinks: true,
+    sidebar: [
+      {
+        title: 'Configuration',
+        collapsible: false
+      },
+      {
+        title: 'Usage',
+        collapsible: false
+      }
+    ]
   }
 }
