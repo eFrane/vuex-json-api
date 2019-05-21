@@ -19,14 +19,9 @@ module.exports = {
     displayAllHeaders: true,
     activeHeaderLinks: true,
     sidebar: [
-      {
-        title: 'Configuration',
-        collapsible: false
-      },
-      {
-        title: 'Usage',
-        collapsible: false
-      }
+      ['/', 'Home'],
+      '/configuration/',
+      '/usage/'
     ]
   }
 }
