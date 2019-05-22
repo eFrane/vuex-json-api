@@ -1,19 +1,20 @@
 {
   "name": "@efrane/vuex-json-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Vue.js library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
     "eFrane <efrane@meanderingsoul.com>"
   ],
+  "homepage": "https://vuex-json-api.efrane.com",
   "main": "vuex-json-api.umd.js",
   "scripts": {
     "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "test": "npm run unit",
+    "test": "unit",
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "rimraf ./dist && webpack --config webpack.config.js",
-    "prepare": "yarn run lint",
-    "prepack": "yarn run build",
+    "prepare": "lint",
+    "prepack": "build",
     "vuepress:dev": "vuepress dev docs",
     "vuepress:build": "vuepress build docs"
   },
