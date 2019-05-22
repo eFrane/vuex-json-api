@@ -1,5 +1,5 @@
 import { Api } from './Api'
-import { Builder } from './module/Builder'
+import { Builder } from '../module/Builder'
 
 export class ResourcefulAPI extends Api {
   /**

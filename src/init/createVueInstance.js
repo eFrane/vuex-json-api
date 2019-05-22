@@ -1,5 +1,4 @@
 import Vue from 'vue'
-// import { SettingsModule } from '../store/SettingsModule'
 
 if (process.env.NODE_ENV === 'development') {
   Vue.config.performance = true
