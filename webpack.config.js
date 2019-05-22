@@ -33,7 +33,7 @@ module.exports = [
   // browser build
   merge(common, {
     mode: 'production',
-    entry: resolve('/src/lib.js'),
+    entry: resolve('/src/main.js'),
     output: {
       filename: 'browser/vuex-json-api.min.js',
     },
@@ -42,7 +42,7 @@ module.exports = [
   // node module build
   merge(common, {
     mode: 'production',
-    entry: resolve('/src/lib.js'),
+    entry: resolve('/src/main.js'),
     output: {
       filename: 'vuex-json-api.umd.js',
       libraryTarget: 'umd',
@@ -54,8 +54,7 @@ module.exports = [
       new CopyWebpackPlugin([
         {
           from: './src/**/*',
-          to: '',
-          ignore: ['App.vue', 'main.js']
+          to: ''
         }
       ]),
     ]
