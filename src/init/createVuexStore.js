@@ -1,6 +1,7 @@
-import { ResourcefulAPI } from '../api/ResourcefulApi'
 import Vue from 'vue'
 import Vuex from 'vuex'
+
+import { initJsonApiPlugin } from './initJsonApiPlugin'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,7 @@ Vue.use(Vuex)
  *
  * @param {object|array} modules
  */
-function prepareModuleHashMap (modules) {
+export function prepareModuleHashMap (modules) {
   let moduleHashMap = {}
 
   for (let idx in modules) {
@@ -43,22 +44,9 @@ export async function createVuexStore (staticModules, router) {
     .then(router => {
       const store = new Vuex.Store({
         strict: true,
-
         modules: prepareModuleHashMap(staticModules),
-
-        // mutations: {
-        //   trackChange (state, changingMutation) {
-
-        //   }
-        // },
-
         plugins: [
-          store => {
-            store.api = new ResourcefulAPI(router, store)
-            // store.subscribe((mutation, state) => {
-            //   console.dir(mutation, state)
-            // })
-          }
+          initJsonApiPlugin(router)
         ]
       })
 
