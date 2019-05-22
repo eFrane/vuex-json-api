@@ -13,7 +13,7 @@
     "test": "yarn unit",
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "rimraf ./dist && webpack --config webpack.config.js",
-    "prepare": "yarn lint",
+    "prepare": "yarn lint && yarn test",
     "prepack": "yarn build",
     "vuepress:dev": "vuepress dev docs",
     "vuepress:build": "vuepress build docs"
