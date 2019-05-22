@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns the default state for a non-collection module 1`] = `
+Object {
+  "initial": Object {},
+  "item": Object {},
+  "loading": false,
+}
+`;

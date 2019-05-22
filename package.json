@@ -10,11 +10,11 @@
   "main": "vuex-json-api.umd.js",
   "scripts": {
     "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "test": "unit",
+    "test": "yarn unit",
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "rimraf ./dist && webpack --config webpack.config.js",
-    "prepare": "lint",
-    "prepack": "build",
+    "prepare": "yarn lint",
+    "prepack": "yarn build",
     "vuepress:dev": "vuepress dev docs",
     "vuepress:build": "vuepress build docs"
   },
