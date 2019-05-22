@@ -10,12 +10,11 @@ module.exports = {
       {
         text: 'Development',
         link: '/development.html'
-      },
-      {
-        text: 'GitHub',
-        link: 'https://github.com/eFrane/vuex-json-api'
-      },
+      }
     ],
+    repo: 'eFrane/vuex-json-api',
+    editLinks: true,
+    editLinkText: 'Help us improve this page!',
     displayAllHeaders: true,
     activeHeaderLinks: true,
     sidebar: [
@@ -23,5 +22,6 @@ module.exports = {
       '/configuration/',
       '/usage/'
     ]
-  }
+  },
+  evergreen: true
 }
