@@ -6,9 +6,8 @@ export function addGroupMutation (store, isCollection) {
     apply (target, thisArg, argArray) {
       const [state, group] = argArray
 
-      /* TODO: replacing the state with a group state seems to be a little more complicated */
       if (!state.hasOwnProperty('groups')) {
-        state.groups = {}
+        Vue.set(state, 'groups', {})
       }
 
       Vue.set(state.groups, group, initialState(isCollection))
