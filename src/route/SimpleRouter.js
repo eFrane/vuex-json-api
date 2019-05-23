@@ -1,4 +1,4 @@
-import { Api } from '../Api'
+import { Api } from '../api/Api'
 import { Router } from './Router'
 import { Route } from './Route'
 
