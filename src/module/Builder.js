@@ -10,6 +10,8 @@ import { addGroupMutation } from './mutations/addGroupMutation'
 import { removeMutation } from './mutations/removeMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
+import { updateMutation } from './mutations/updateMutation'
+import { getProperty } from './getters/getProperty'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -75,6 +77,7 @@ export class Builder {
 
     module['actions'] = this.buildActions()
     module['mutations'] = this.buildMutations()
+    module['getters'] = this.buildGetters()
 
     console.timeEnd(storeModuleBuildTimer)
     return module
@@ -89,7 +92,8 @@ export class Builder {
       set: setMutation(this.store, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,
-      addGroup: addGroupMutation(this.store, this.isCollection)
+      addGroup: addGroupMutation(this.store, this.isCollection),
+      update: updateMutation
     }
 
     if (allowsDeletion(this.apiMethods)) {
@@ -97,7 +101,7 @@ export class Builder {
     }
 
     if (this.isCollection) {
-      mutations['setPaginationMutation'] = setPaginationMutation()
+      mutations['setPagination'] = setPaginationMutation
     }
 
     return mutations
@@ -119,5 +123,13 @@ export class Builder {
     }
 
     return actions
+  }
+
+  buildGetters () {
+    let getters = {
+      getProperty: getProperty
+    }
+
+    return getters
   }
 }

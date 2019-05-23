@@ -1,3 +1,3 @@
-export function resetAction ({ commit }) {
-  commit('reset')
+export function resetAction (vuexFns, group) {
+  vuexFns.commit('reset', group)
 }

@@ -9,7 +9,14 @@ export function resetMutation (isCollection) {
   /* eslint-disable no-new */
   return new Proxy((state) => {}, {
     apply (target, thisArg, argArray) {
-      argArray[0] = initialState(isCollection)
+      let [state, group] = argArray
+
+      if (group !== null) {
+        state.groups[group] = initialState(isCollection)
+        return
+      }
+
+      state = initialState(isCollection)
     }
   })
 }

@@ -20,6 +20,8 @@ export function listAction (api, moduleName) {
       vuexFns.commit('startLoading', group)
 
       return api[moduleName].list(query.query).then(({ data, meta }) => {
+        vuexFns.commit('reset', group)
+
         for (let destinationModule in data) {
           if (data.hasOwnProperty(destinationModule)) {
             setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
