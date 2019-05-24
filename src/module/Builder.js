@@ -33,7 +33,7 @@ export class Builder {
    * @param {Vuex} store
    * @param {ResourcefulApi} api
    * @param {String} moduleName
-   * @param {Array[String]} apiMethods
+   * @param {Array} apiMethods
    */
   constructor (store, api, moduleName, apiMethods) {
     this.store = store
