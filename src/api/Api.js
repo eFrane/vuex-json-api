@@ -77,7 +77,7 @@ class Api {
     Api.baseUrl = baseUrl
   }
 
-  static getBaseUrl (baseUrl) {
+  static getBaseUrl () {
     return Api.baseUrl
   }
 }

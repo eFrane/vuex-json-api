@@ -20,7 +20,8 @@ module.exports = {
     sidebar: [
       ['/', 'Home'],
       '/configuration/',
-      '/usage/'
+      '/usage/',
+      '/code/'
     ]
   },
   evergreen: true

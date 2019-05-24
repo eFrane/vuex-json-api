@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 /**
  * @param {Vuex.Store} store
- * @param {Vue,object} components
+ * @param {Vue|object} components
  * @param {function} mountedCallback
  * @returns {Promise<Vue>}
  */

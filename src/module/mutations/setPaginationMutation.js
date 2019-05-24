@@ -4,6 +4,7 @@ export function setPaginationMutation (state, { group, pagination }) {
   if (group === null) {
     state.currentPage = pagination.current
     state.totalPages = pagination.total
+
     return
   }
 
