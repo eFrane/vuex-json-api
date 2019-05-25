@@ -21,6 +21,10 @@ Generated modules always manage their own loading state, so you don't have to wo
 that. They also know as much as possible about communicating with your backend, leaving free
 to worry about less boring things like creating awesome user experiences.
 
+### State
+
+<<< @/src/module/State.js
+
 ### Module Builder Decision Graphs
 
 ### Initial state
