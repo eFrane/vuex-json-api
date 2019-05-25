@@ -2,6 +2,11 @@ import { ResourcefulAPI } from '../api/ResourcefulApi'
 import { Router } from '../route/Router'
 import { Api } from '../api/Api'
 
+/**
+ *
+ * @param {object} config
+ * @param {String} property
+ */
 function checkConfigProperty (config, property) {
   if (typeof config === 'object' && config.hasOwnProperty(property)) {
     return true

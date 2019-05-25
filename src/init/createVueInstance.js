@@ -1,17 +1,17 @@
 import Vue from 'vue'
 
-if (process.env.NODE_ENV === 'development') {
-  Vue.config.performance = true
-  Vue.config.devtools = true
-}
-
 /**
  * @param {Vuex.Store} store
  * @param {Vue|object} components
  * @param {function} mountedCallback
  * @returns {Promise<Vue>}
  */
-export async function createVueInstance (store, components, mountedCallback = () => {}) {
+export async function createVueInstance (store, components, mountedCallback = () => { }) {
+  if (process.env.NODE_ENV === 'development') {
+    Vue.config.performance = true
+    Vue.config.devtools = true
+  }
+
   return new Vue({
     components,
     store,

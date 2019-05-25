@@ -3,24 +3,8 @@
 ## Functions
 
 <dl>
-<dt><a href="#createVueInstance">`createVueInstance(store, components, mountedCallback)`</a> ⇒ <code>Promise.&lt;Vue&gt;</code></dt>
-<dd></dd>
-<dt><a href="#prepareModuleHashMap">`prepareModuleHashMap(modules)`</a></dt>
-<dd><p>Converts a module listing object (e.g. <code>{ myModule: myModule }</code>)
-to the expected syntax for module registration.</p>
-<p>By default, this Vuex usage interpretation expects non-api-bound
-modules to have a <code>name</code>-property which defines their namespaced
-name. This is necessary to facilitate auto-registration of the modules.</p>
-<p>N.b.: There is no checking done to avoid overwrites of these modules
-by later-to-be-initialized api-bound modules.</p>
-</dd>
 <dt><a href="#createVuexStore">`createVuexStore(staticModules, router)`</a> ⇒ <code>Promise.&lt;Store&gt;</code></dt>
 <dd><p>Create Vuex Store with API Plugin</p>
-</dd>
-<dt><a href="#initJsonApiPlugin">`initJsonApiPlugin(config)`</a></dt>
-<dd><p>Initialize the API Plugin</p>
-<p>May receive a configuration object but at least
-needs a configured router.</p>
 </dd>
 <dt><a href="#getAction">`getAction(api, moduleName)`</a></dt>
 <dd><p>Get a resource from a</p>
@@ -76,43 +60,25 @@ used/updated upon navigation</p>
 <dt><a href="#isCollection">`isCollection(apiMethods)`</a></dt>
 <dd><p>Check whether the api supports collections</p>
 </dd>
+<dt><a href="#createVueInstance">`createVueInstance(store, components, mountedCallback)`</a> ⇒ <code>Promise.&lt;Vue&gt;</code></dt>
+<dd></dd>
+<dt><a href="#prepareModuleHashMap">`prepareModuleHashMap(modules)`</a></dt>
+<dd><p>Converts a module listing object (e.g. <code>{ myModule: myModule }</code>)
+to the expected syntax for module registration.</p>
+<p>By default, this Vuex usage interpretation expects non-api-bound
+modules to have a <code>name</code>-property which defines their namespaced
+name. This is necessary to facilitate auto-registration of the modules.</p>
+<p>N.b.: There is no checking done to avoid overwrites of these modules
+by later-to-be-initialized api-bound modules.</p>
+</dd>
+<dt><a href="#checkConfigProperty">`checkConfigProperty(config, property)`</a></dt>
+<dd></dd>
+<dt><a href="#initJsonApiPlugin">`initJsonApiPlugin(config)`</a></dt>
+<dd><p>Initialize the API Plugin</p>
+<p>May receive a configuration object but at least
+needs a configured router.</p>
+</dd>
 </dl>
-
-<a name="createVueInstance"></a>
-
-## `createVueInstance(store, components, mountedCallback)` ⇒ <code>Promise.&lt;Vue&gt;</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| store | <code>Vuex.Store</code> | 
-| components | <code>Vue</code> \| <code>object</code> | 
-| mountedCallback | <code>function</code> | 
-
-
-* * *
-
-<a name="prepareModuleHashMap"></a>
-
-## `prepareModuleHashMap(modules)`
-Converts a module listing object (e.g. `{ myModule: myModule }`)
-to the expected syntax for module registration.
-
-By default, this Vuex usage interpretation expects non-api-bound
-modules to have a `name`-property which defines their namespaced
-name. This is necessary to facilitate auto-registration of the modules.
-
-N.b.: There is no checking done to avoid overwrites of these modules
-by later-to-be-initialized api-bound modules.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| modules | <code>object</code> \| <code>array</code> | 
-
-
-* * *
 
 <a name="createVuexStore"></a>
 
@@ -125,23 +91,6 @@ Create Vuex Store with API Plugin
 | --- | --- | --- |
 | staticModules | <code>object</code> | non-dynamic modules |
 | router | <code>route.Router</code> |  |
-
-
-* * *
-
-<a name="initJsonApiPlugin"></a>
-
-## `initJsonApiPlugin(config)`
-Initialize the API Plugin
-
-May receive a configuration object but at least
-needs a configured router.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| config | [<code>Router</code>](#Router) \| <code>object</code> | or router |
 
 
 * * *
@@ -288,6 +237,76 @@ Check whether the api supports collections
 | Param | Type | Description |
 | --- | --- | --- |
 | apiMethods | <code>object</code> | supported api methods (list, get, update, delete) |
+
+
+* * *
+
+<a name="createVueInstance"></a>
+
+## `createVueInstance(store, components, mountedCallback)` ⇒ <code>Promise.&lt;Vue&gt;</code>
+**Kind**: global function  
+**Category**: Initialization  
+
+| Param | Type |
+| --- | --- |
+| store | <code>Vuex.Store</code> | 
+| components | <code>Vue</code> \| <code>object</code> | 
+| mountedCallback | <code>function</code> | 
+
+
+* * *
+
+<a name="prepareModuleHashMap"></a>
+
+## `prepareModuleHashMap(modules)`
+Converts a module listing object (e.g. `{ myModule: myModule }`)
+to the expected syntax for module registration.
+
+By default, this Vuex usage interpretation expects non-api-bound
+modules to have a `name`-property which defines their namespaced
+name. This is necessary to facilitate auto-registration of the modules.
+
+N.b.: There is no checking done to avoid overwrites of these modules
+by later-to-be-initialized api-bound modules.
+
+**Kind**: global function  
+**Category**: Initialization  
+
+| Param | Type |
+| --- | --- |
+| modules | <code>object</code> \| <code>array</code> | 
+
+
+* * *
+
+<a name="checkConfigProperty"></a>
+
+## `checkConfigProperty(config, property)`
+**Kind**: global function  
+**Category**: Initialization  
+
+| Param | Type |
+| --- | --- |
+| config | <code>object</code> | 
+| property | <code>String</code> | 
+
+
+* * *
+
+<a name="initJsonApiPlugin"></a>
+
+## `initJsonApiPlugin(config)`
+Initialize the API Plugin
+
+May receive a configuration object but at least
+needs a configured router.
+
+**Kind**: global function  
+**Category**: Initialization  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| config | [<code>Router</code>](#Router) \| <code>object</code> | or router |
 
 
 * * *
