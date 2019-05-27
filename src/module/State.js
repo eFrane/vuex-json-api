@@ -8,26 +8,6 @@ import { collection } from './state/collection'
  * make absolutely sure we get pristine objects. This is a safety
  * measure to guard against unintended cross-module reference bindings.
  *
- * ## The fields
- *
- * **item/items**:
- *
- * This is the container for the normalized resource objects of the
- * module. If the module is not a collection, there will always only
- * be one item, thus it's singularized.
- *
- * **initial**:
- *
- * Once any data-changing mutation is applied to the state,
- * the store will automatically copy the affected resource object
- * into `initial`. This is always either empty or a map of `id => ResourceObject`
- *
- * **currentPage/totalPages**
- *
- * If the API responses contain pagination information in `meta`
- * this will be stored in these properties and subsequently
- * used/updated upon navigation
- *
  * @param {Boolean} isCollection
  */
 function initialState (isCollection) {
