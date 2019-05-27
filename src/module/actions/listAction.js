@@ -1,4 +1,5 @@
 import { setResourceObjectsForModule } from './setResourceObjectsForModule'
+import { isMissingModule, registerMissingModule } from '../helpers/missingModule';
 
 /**
  * Get a resource list
@@ -23,6 +24,10 @@ export function listAction (api, moduleName) {
         vuexFns.commit('reset', group)
 
         for (let destinationModule in data) {
+          if (isMissingModule(thisArg, destinationModule)) {
+            registerMissingModule(thisArg, api, destinationModule)
+          }
+
           if (data.hasOwnProperty(destinationModule)) {
             setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
           }
