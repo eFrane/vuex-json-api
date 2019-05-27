@@ -1,5 +1,4 @@
-import { setResourceObjectsForModule } from './setResourceObjectsForModule'
-import { isMissingModule, registerMissingModule } from '../helpers/missingModule';
+import { processResponseData } from '../helpers/processResponseData'
 
 /**
  * Get a resource list
@@ -23,15 +22,7 @@ export function listAction (api, moduleName) {
       return api[moduleName].list(query.query).then(({ data, meta }) => {
         vuexFns.commit('reset', group)
 
-        for (let destinationModule in data) {
-          if (isMissingModule(thisArg, destinationModule)) {
-            registerMissingModule(thisArg, api, destinationModule)
-          }
-
-          if (data.hasOwnProperty(destinationModule)) {
-            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
-          }
-        }
+        processResponseData(thisArg, api, moduleName, data)
 
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })

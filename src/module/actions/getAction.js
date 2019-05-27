@@ -1,7 +1,7 @@
-import { setResourceObjectsForModule } from './setResourceObjectsForModule'
+import { processResponseData } from '../helpers/processResponseData'
 
 /**
- * Get a resource from a
+ * Get a resource
  *
  * @param {ResourcefulApi} api
  * @param {String} moduleName
@@ -18,11 +18,7 @@ export function getAction (api, moduleName) {
       vuexFns.commit('startLoading')
 
       return api[moduleName].get(query).then(({ data }) => {
-        for (let destinationModule in data) {
-          if (data.hasOwnProperty(destinationModule)) {
-            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule])
-          }
-        }
+        processResponseData(thisArg, api, moduleName, data)
       }).finally(() => {
         vuexFns.commit('endLoading')
       })
