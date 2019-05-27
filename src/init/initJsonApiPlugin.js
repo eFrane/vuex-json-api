@@ -36,6 +36,10 @@ export function initJsonApiPlugin (config) {
     Api.setBaseUrl(config.baseUrl)
   }
 
+  if (checkConfigProperty(config, 'modules')) {
+    // TODO: initialize only those modules
+  }
+
   return store => {
     store.api = new ResourcefulAPI(router, store)
     // store.subscribe((mutation, state) => {
