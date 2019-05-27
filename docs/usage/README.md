@@ -18,7 +18,7 @@ ResourcefulAPI-->Builder
 
 Modules are auto-configured to have just the right set of mutations, actions and getters.
 Generated modules always manage their own loading state, so you don't have to worry about
-that. They also know as much as possible about communicating with your backend, leaving free
+that. They also know as much as possible about communicating with your backend, leaving you free
 to worry about less boring things like creating awesome user experiences.
 
 ### State

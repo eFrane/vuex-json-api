@@ -1,3 +1,6 @@
+import { item } from './state/item'
+import { collection } from './state/collection'
+
 /**
  * Return a new Object representing the initial state of a module
  *
@@ -30,19 +33,9 @@
 function initialState (isCollection) {
   return (() => {
     if (isCollection) {
-      return {
-        loading: false,
-        items: {},
-        initial: {},
-        currentPage: null,
-        totalPages: null
-      }
+      return collection
     } else {
-      return {
-        loading: false,
-        item: {},
-        initial: {}
-      }
+      return item
     }
   })()
 }
