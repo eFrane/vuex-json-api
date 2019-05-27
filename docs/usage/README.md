@@ -23,7 +23,18 @@ to worry about less boring things like creating awesome user experiences.
 
 ### State
 
-<<< @/src/module/State.js
+The basic state structure is different depending on whether we're dealing
+with a collection or a single item. Additionally, `vuex-json-api` offers
+the capability to handle multiple sets of a collection, in which case all of the
+below is a little more complicated.
+
+**Base state for items**
+
+<<< @/src/module/state/item.js
+
+**Base state for collections**
+
+<<< @/src/module/state/collection.js
 
 ### Module Builder Decision Graphs
 
