@@ -1,5 +1,4 @@
-import { Builder } from "../Builder";
-import { ResourcefulAPI } from "../../api/ResourcefulApi";
+import { Builder } from '../Builder'
 
 /**
  * Check if a module is registered in the store
