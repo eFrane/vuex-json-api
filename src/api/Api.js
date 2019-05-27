@@ -40,8 +40,8 @@ class Api {
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
-//      TODO: implement userland callbacks before handling the response
-//      .then(preprocessingCallbacks)
+    //      TODO: implement userland callbacks before handling the response
+    //      .then(preprocessingCallbacks)
       .then((data) => {
         return {
           data: normalize(data.data),
