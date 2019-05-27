@@ -10,7 +10,7 @@ import { validateResourceObject } from '../helpers/validateResourceObject'
 export function createAction (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let [ vuexFns, resourceObject] = argArray
+      let [vuexFns, resourceObject] = argArray
 
       validateResourceObject(resourceObject)
 
