@@ -33,9 +33,9 @@ import { collection } from './state/collection'
 function initialState (isCollection) {
   return (() => {
     if (isCollection) {
-      return collection
+      return Object.assign({}, collection)
     } else {
-      return item
+      return Object.assign({}, item)
     }
   })()
 }
