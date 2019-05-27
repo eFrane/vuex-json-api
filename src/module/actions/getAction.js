@@ -18,7 +18,7 @@ export function getAction (api, moduleName) {
       vuexFns.commit('startLoading')
 
       return api[moduleName].get(query).then(({ data }) => {
-        processResponseData(thisArg, api, moduleName, data)
+        processResponseData(thisArg, vuexFns, api, moduleName, data)
       }).finally(() => {
         vuexFns.commit('endLoading')
       })

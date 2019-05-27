@@ -22,7 +22,7 @@ export function listAction (api, moduleName) {
       return api[moduleName].list(query.query).then(({ data, meta }) => {
         vuexFns.commit('reset', group)
 
-        processResponseData(thisArg, api, moduleName, data)
+        processResponseData(thisArg, vuexFns, api, moduleName, data, group)
 
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })
