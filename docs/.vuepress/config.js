@@ -21,6 +21,7 @@ module.exports = {
       ['/', 'Home'],
       '/configuration/',
       '/usage/',
+      '/usage/modules.html',
       '/code/'
     ]
   },
