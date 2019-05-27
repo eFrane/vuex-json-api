@@ -1,4 +1,4 @@
-import { initialState, isCollection, allowsDeletion, allowsModification } from './State'
+import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
 import { getAction } from './actions/getAction'
 import { setAction } from './actions/setAction'
 import { listAction } from './actions/listAction'
@@ -12,6 +12,8 @@ import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { updateMutation } from './mutations/updateMutation'
 import { getProperty } from './getters/getProperty'
+import { updateAction } from './actions/updateAction'
+import { createAction } from './actions/createAction'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -114,6 +116,11 @@ export class Builder {
 
     if (allowsModification(this.apiMethods)) {
       actions['set'] = setAction()
+      actions['update'] = updateAction(this.api, this.isCollection, this.moduleName)
+    }
+
+    if (allowsCreation(this.apiMethods)) {
+      actions['create'] = createAction(this.api, this.moduleName)
     }
 
     return actions
