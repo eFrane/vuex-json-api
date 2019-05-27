@@ -30,14 +30,28 @@ export class Builder {
    * @param {ResourcefulApi} api
    * @param {String} moduleName
    * @param {Array} apiMethods
+   * @param {Object} options
    */
-  constructor (store, api, moduleName, apiMethods) {
+  constructor (store, api, moduleName, apiMethods, options) {
     this.store = store
     this.api = api
-    moduleName = moduleName
-    this.apiMethods = apiMethods || []
+    this.moduleName = moduleName
+    this.apiMethods = apiMethods || {}
 
     this.isCollection = isCollection(apiMethods)
+
+    // is this a standalone module with no outside connections?
+    this.isStandalone = options.hasPermission('standalone') && options.standalone
+
+    if (this.isStandalone) {
+      // standalone modules are always collections
+      // because they will only be created if a list request
+      // ends up having unknown includes
+      // and as the law of known unknowns and unknown unknowns goes
+      // we know that we may get this unknown other resource
+      // but we don't know how many items of that resource
+      this.isCollection = true
+    }
   }
 
   /**
@@ -52,9 +66,12 @@ export class Builder {
       state: initialState(this.isCollection)
     }
 
-    module['actions'] = this.buildActions()
     module['mutations'] = this.buildMutations()
-    module['getters'] = this.buildGetters()
+
+    if (!this.isStandalone) {
+      module['actions'] = this.buildActions()
+      module['getters'] = this.buildGetters()
+    }
 
     console.timeEnd(storeModuleBuildTimer)
     return module

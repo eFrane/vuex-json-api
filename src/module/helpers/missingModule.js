@@ -12,13 +12,15 @@ export function isMissingModule (store, moduleName) {
 }
 
 /**
- * Register an empty module (state and default actions and mutations)
- * to the store. Empty modules default to being collection modules.
+ * Register a standalone module to the store.
  *
  * @param {Vuex} store
  * @param {ResourcefulAPI} api
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-  store.registerModule(moduleName, new Builder(store, api, moduleName, [{ list: null }]))
+  store.registerModule(
+    moduleName,
+    new Builder(store, api, moduleName, {}, { standalone: true })
+  )
 }
