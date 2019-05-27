@@ -1,5 +1,5 @@
-return const item = {
-        loading: false,
-        item: {},
-        initial: {}
-      }
+export const item = {
+  loading: false,
+  item: {},
+  initial: {}
+}
