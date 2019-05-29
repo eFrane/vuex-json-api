@@ -22,6 +22,7 @@ module.exports = {
       '/configuration/',
       '/usage/',
       '/usage/modules.html',
+      '/usage/requests.html',
       '/code/'
     ]
   },

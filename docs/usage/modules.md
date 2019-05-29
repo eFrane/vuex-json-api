@@ -52,6 +52,64 @@ used/updated upon navigation
 
 ## Mutations
 
+### Default Mutations
+
+| Name         | Description                                            |
+|--------------|--------------------------------------------------------|
+| reset        | Reset the state of the module to it's initial state    |
+| set          | Set the data for **one** object                        |
+| update       | Change a property of an object                         |
+| startLoading | Enable the loading state of the module*                |
+| endLoading   | Disable the loading state of the module*               |
+
+_On the loading state_: Loading state may only indicate loading of a subset
+of the module.
+
+### Additional Mutations
+
+In addition to the above, some module types may have more mutations:
+
+- Modules that represent a collection resource get a `addGroup` mutation
+  to create a query subset and a `setPagination` mutation which handles
+  pagination meta information according to JSON:API v1.1
+
+- Modules which have a `DELETE` route registered to them get a `remove`
+  mutation
+
+### Calling mutations without dispatching an action
+
+The short answer is "don't do it". Here be dragons and stuff.
+The longer answer is that you can of course call mutations (by mapping
+them with `mapMutations`) in your Vue components but you probably
+shouldn't. The mutations created by this library handle several
+intricate edge cases based on agreed-upon input parameters which
+the actions provided by this library take care in passing.
+If you're willing to pay very close attention to the parameters
+any particular mutation expects, go ahead. If not, be aware of
+the possibly destructive consequences.
+
 ## Actions
+
+| Name     | Description
+|----------|------------
+| get      | Get a single item
+| reset    | Reset the module state
+| list     | Get a list of items
+| addGroup | Add a sub group
+| set      | Set an item's data
+| update   | Update an item on the server
+
+<mermaid>
+graph TD
+Builder-- add actions to Module -->Route
+Route-->CollDec
+CollDec{isCollection}-->list
+CollDec-->addGroup
+Route-->CreateDec
+CreateDec{allowsCreation}-->create
+Route-->ModDec
+ModDec{allowsModification}-->update
+ModDec-->set
+</mermaid>
 
 ## Getters
