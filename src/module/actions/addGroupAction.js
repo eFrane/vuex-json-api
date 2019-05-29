@@ -1,9 +1,9 @@
-export function addGroupAction () {
-  return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      const [ vuexFns, group ] = argArray
-
-      vuexFns.commit('addGroup', group)
-    }
-  })
+/**
+ * Add a collection group
+ *
+ * @param {Object} vuexFns
+ * @param {String} groupName
+ */
+export function addGroupAction (vuexFns, groupName) {
+  vuexFns.commit('addGroup', groupName)
 }

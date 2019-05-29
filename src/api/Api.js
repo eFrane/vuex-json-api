@@ -20,11 +20,6 @@ class Api {
         return stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
       }
     }
-
-    let metaCsrfToken = document.querySelector('meta[name=csrf-token]')
-    if (metaCsrfToken) {
-      this.defaultOptions.headers['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').content
-    }
   }
 
   async doRequest (method, url, params, data, options) {
@@ -39,12 +34,14 @@ class Api {
 
     // make cross domain requests if necessary
     let crossDomain = false
-    if (Api.baseUrl.length > 0) {
+    if (Api.baseUrl.length > 0 && Api.baseUrl.indexOf('://') > 0) {
       crossDomain = true
     }
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
+    //      TODO: implement userland callbacks before handling the response
+    //      .then(preprocessingCallbacks)
       .then((data) => {
         return {
           data: normalize(data.data),

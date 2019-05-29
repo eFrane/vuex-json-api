@@ -1,4 +1,4 @@
-import { setResourceObjectsForModule } from './setResourceObjectsForModule'
+import { processResponseData } from '../helpers/processResponseData'
 
 /**
  * Get a resource list
@@ -22,11 +22,7 @@ export function listAction (api, moduleName) {
       return api[moduleName].list(query.query).then(({ data, meta }) => {
         vuexFns.commit('reset', group)
 
-        for (let destinationModule in data) {
-          if (data.hasOwnProperty(destinationModule)) {
-            setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
-          }
-        }
+        processResponseData(thisArg, vuexFns, api, moduleName, data, group)
 
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })

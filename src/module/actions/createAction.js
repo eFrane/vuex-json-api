@@ -1,23 +1,22 @@
 import { processResponseData } from '../helpers/processResponseData'
+import { validateResourceObject } from '../helpers/validateResourceObject'
 
 /**
- * Get a resource
+ * Create a new resource
  *
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function getAction (api, moduleName) {
+export function createAction (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let [ vuexFns, query ] = argArray
+      let [vuexFns, resourceObject] = argArray
 
-      if (typeof query === 'undefined') {
-        query = {}
-      }
+      validateResourceObject(resourceObject)
 
       vuexFns.commit('startLoading')
 
-      return api[moduleName].get(query).then(({ data }) => {
+      return api[moduleName].create(resourceObject).then(({ data }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
       }).finally(() => {
         vuexFns.commit('endLoading')

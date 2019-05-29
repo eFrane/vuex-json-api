@@ -1,16 +1,16 @@
 import { initialState } from '../State'
 import Vue from 'vue'
 
-export function addGroupMutation (store, isCollection) {
-  return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      const [state, group] = argArray
+/**
+ * Turn the state object into a group state object
+ *
+ * @param {Object} state
+ * @param {String} groupName
+ */
+export function addGroupMutation (state, groupName) {
+  if (!state.hasOwnProperty('groups')) {
+    Vue.set(state, 'groups', {})
+  }
 
-      if (!state.hasOwnProperty('groups')) {
-        Vue.set(state, 'groups', {})
-      }
-
-      Vue.set(state.groups, group, initialState(isCollection))
-    }
-  })
+  Vue.set(state.groups, groupName, initialState(true))
 }
