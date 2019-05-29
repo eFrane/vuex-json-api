@@ -49,7 +49,7 @@ export class ResourceObject {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
         let moduleName = relatedObject.type.toLower()
-        let relatedModule = store[moduleName]
+        let relatedModule = this.store[moduleName]
 
         if (isToManyRelationship) {
           let [requestedId] = argArray
