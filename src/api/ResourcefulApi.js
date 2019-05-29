@@ -23,7 +23,7 @@ export class ResourcefulAPI extends Api {
 
         // conditionally build and register a corresponding vuex module
         if (modulesToRegister.length === 0 || modulesToRegister.indexOf(routeName) >= 0) {
-          this.registerModule(store, methods);
+          this.registerModule(store, methods, routeName)
         }
       }
     }
@@ -36,10 +36,10 @@ export class ResourcefulAPI extends Api {
    * @param {Vuex} store
    * @param {Route} methods
    */
-  registerModule (store, methods) {
-    let moduleBuilder = new Builder(store, this, route, methods);
-    const module = moduleBuilder.build();
-    store.registerModule(route, module);
+  registerModule (store, methods, routeName) {
+    let moduleBuilder = new Builder(store, this, routeName, methods)
+    const module = moduleBuilder.build()
+    store.registerModule(routeName, module)
   }
 
   /**

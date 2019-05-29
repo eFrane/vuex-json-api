@@ -7,7 +7,7 @@ import { Builder } from '../Builder'
  * @param {String} moduleName
  */
 export function isMissingModule (store, moduleName) {
-  return Object.keys(store._modules.root._children).includes(moduleName)
+  return Object.keys(store._modules.root._children).indexOf(moduleName) < 0
 }
 
 /**
@@ -18,8 +18,10 @@ export function isMissingModule (store, moduleName) {
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
+  let builder = new Builder(store, api, moduleName, {}, { standalone: true })
+
   store.registerModule(
     moduleName,
-    new Builder(store, api, moduleName, {}, { standalone: true })
+    builder.build()
   )
 }

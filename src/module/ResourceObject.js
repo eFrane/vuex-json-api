@@ -5,12 +5,14 @@ export class ResourceObject {
    * @param {object} resultObject
    */
   constructor (store, resultObject) {
-    this.store = store
-
     let obj = resultObject.data
 
     if (obj.hasOwnProperty('relationships')) {
-      obj.relationships = this.addRelationshipResolvers(obj.relationships)
+      obj.relationships = this.addRelationshipResolvers(store, obj.relationships)
+    }
+
+    obj.hasRelationship = name => {
+      return obj.hasOwnProperty('relationships') && obj.relationships.hasOwnProperty(name) && obj.relationships[name].data.length !== 0
     }
 
     return obj
@@ -45,25 +47,23 @@ export class ResourceObject {
    *
    * @param {Object} relatedObject
    */
-  resolveToOneRelationship (relatedObject, isToManyRelationship) {
+  resolveToOneRelationship (store, relatedObject, isToManyRelationship) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
-        let moduleName = relatedObject.type.toLower()
-        let relatedModule = this.store[moduleName]
+        let moduleName = relatedObject.data.type
+        let relatedModule = store.state[moduleName]
 
         if (isToManyRelationship) {
           let [requestedId] = argArray
 
           try {
-            return relatedModule.items.filter(item => {
-              return item.id === requestedId
-            })[0]
+            return relatedModule.items[requestedId]
           } catch (e) {
             throw new Error(`Related object ${relatedObject.id} not found in ${moduleName}`)
           }
         }
 
-        return relatedModule.item
+        return relatedModule.items[relatedObject.data.id]
       }
     })
   }
@@ -72,10 +72,21 @@ export class ResourceObject {
    *
    * @param {Array} relatedObjects
    */
-  resolveToManyRelationship (relatedObjects) {
+  resolveToManyRelationship (store, relatedObjects) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
-        console.log(arguments)
+
+        let moduleName = relatedObjects.data[0].type
+        let relatedModule = store.state[moduleName]
+
+        let relatedObjectIds = relatedObjects.data.map(obj => obj.id)
+
+        let relatedItems = []
+        relatedObjectIds.forEach(id => {
+          relatedItems.push(relatedModule.items[id])
+        })
+
+        return relatedItems
       }
     })
   }
