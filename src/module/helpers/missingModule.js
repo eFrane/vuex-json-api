@@ -7,7 +7,7 @@ import { Builder } from '../Builder'
  * @param {String} moduleName
  */
 export function isMissingModule (store, moduleName) {
-  return store._modules.root._children.hasOwnProperty(moduleName)
+  return Object.keys(store._modules.root._children).includes(moduleName)
 }
 
 /**
