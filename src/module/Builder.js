@@ -115,7 +115,7 @@ export class Builder {
     }
 
     if (allowsModification(this.apiMethods)) {
-      actions['set'] = setAction()
+      actions['set'] = setAction
       actions['update'] = updateAction(this.api, this.isCollection, this.moduleName)
     }
 
