@@ -32,9 +32,9 @@ export class Builder {
    * @param {ResourcefulApi} api
    * @param {String} moduleName
    * @param {Array} apiMethods
-   * @param {Object} options
+   * @param {Object} options additional objects for the module builder
    */
-  constructor (store, api, moduleName, apiMethods, options) {
+  constructor (store, api, moduleName, apiMethods, options = {}) {
     this.store = store
     this.api = api
     this.moduleName = moduleName
@@ -43,7 +43,7 @@ export class Builder {
     this.isCollection = isCollection(apiMethods)
 
     // is this a standalone module with no outside connections?
-    this.isStandalone = options.hasPermission('standalone') && options.standalone
+    this.isStandalone = options.hasOwnProperty('standalone') && options.standalone
 
     if (this.isStandalone) {
       // standalone modules are always collections
@@ -51,7 +51,7 @@ export class Builder {
       // ends up having unknown includes
       // and as the law of known unknowns and unknown unknowns goes
       // we know that we may get this unknown other resource
-      // but we don't know how many items of that resource
+      // but we don't know how many items of that resource there will be
       this.isCollection = true
     }
   }
