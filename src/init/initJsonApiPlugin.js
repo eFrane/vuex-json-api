@@ -6,10 +6,15 @@ import { Api } from '../api/Api'
  *
  * @param {object} config
  * @param {String} property
+ * @param {Boolean} isRequiredProp
  */
-function checkConfigProperty (config, property) {
-  if (typeof config === 'object' && config.hasOwnProperty(property)) {
+function checkConfigProperty (config, property, isRequiredProp = true) {
+  if (typeof config === 'object' && config.hasOwnProperty(property) && isRequiredProp) {
     return true
+  }
+
+  if (false === isRequiredProp) {
+    return false
   }
 
   throw new Error('Missing configuration property: ' + property)
@@ -36,12 +41,13 @@ export function initJsonApiPlugin (config) {
     Api.setBaseUrl(config.baseUrl)
   }
 
-  if (checkConfigProperty(config, 'modules')) {
-    // TODO: initialize only those modules
+  let modulesToRegister = []
+  if (checkConfigProperty(config, 'modules', false)) {
+    modulesToRegister
   }
 
   return store => {
-    store.api = new ResourcefulAPI(router, store)
+    store.api = new ResourcefulAPI(router, store, modulesToRegister)
     // store.subscribe((mutation, state) => {
     //   console.dir(mutation, state)
     // })

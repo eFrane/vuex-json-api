@@ -6,25 +6,35 @@ export class ResourcefulAPI extends Api {
    *
    * @param {route.Router} router
    * @param {Vuex.Store} store
+   * @param {Array} modulesToRegister
    */
-  constructor (router, store) {
+  constructor (router, store, modulesToRegister = []) {
     super()
 
     const routes = router.getRoutes()
 
     console.time('api: setup')
-    for (const route in routes) {
-      if (routes.hasOwnProperty(route)) {
-        let methods = routes[route]
-        this.registerResourceMethods(route, methods)
 
-        let moduleBuilder = new Builder(store, this, route, methods)
-        const module = moduleBuilder.build()
-        store.registerModule(route, module)
+    for (const routeName in routes) {
+      if (routes.hasOwnProperty(routeName)) {
+        let methods = routes[routeName]
+
+        this.registerResourceMethods(routeName, methods)
+
+        // conditionally build and register a corresponding vuex module
+        if (modulesToRegister.length === 0 || modulesToRegister.indexOf(routeName) >= 0) {
+          this.registerModule(store, methods);
+        }
       }
     }
 
     console.timeEnd('api: setup')
+  }
+
+  registerModule (store, methods) {
+    let moduleBuilder = new Builder(store, this, route, methods);
+    const module = moduleBuilder.build();
+    store.registerModule(route, module);
   }
 
   /**
