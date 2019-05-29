@@ -31,6 +31,11 @@ export class ResourcefulAPI extends Api {
     console.timeEnd('api: setup')
   }
 
+  /**
+   *
+   * @param {Vuex} store
+   * @param {Route} methods
+   */
   registerModule (store, methods) {
     let moduleBuilder = new Builder(store, this, route, methods);
     const module = moduleBuilder.build();
@@ -39,26 +44,26 @@ export class ResourcefulAPI extends Api {
 
   /**
    *
-   * @param {*} route
-   * @param {*} methods
+   * @param {String} routeName
+   * @param {Route} methods
    */
-  registerResourceMethods (route, methods) {
-    this[route] = {}
+  registerResourceMethods (routeName, methods) {
+    this[routeName] = {}
 
-    console.time('api: add method proxies for route ' + route)
+    console.time('api: add method proxies for route ' + routeName)
     for (let method in methods) {
       if (methods.hasOwnProperty(method)) {
-        this[route][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
+        this[routeName][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
       }
     }
-    console.timeEnd('api: add method proxies for route ' + route)
+    console.timeEnd('api: add method proxies for route ' + routeName)
   }
 
   /**
    *
-   * @param {*} api
-   * @param {*} method
-   * @param {*} route
+   * @param {Api} api
+   * @param {String} method
+   * @param {Route} route
    */
   static createApiProxy (api, method, route) {
     return new Proxy(() => {}, {
