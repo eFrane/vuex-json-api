@@ -36,9 +36,9 @@ import { Route } from './Route'
  * ```
  *
  * To initialize this router, simply `new` it with the desired fetch path,
- * e.g. `new SimpleRouter('/api/route')`.
+ * e.g. `new JsonApiRouter('/api/route')`.
  */
-export class SimpleRouter extends Router {
+export class JsonApiRouter extends Router {
   constructor (fetchPath) {
     super()
     this.fetchPath = fetchPath

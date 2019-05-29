@@ -6,21 +6,25 @@ export class ResourcefulAPI extends Api {
    *
    * @param {route.Router} router
    * @param {Vuex.Store} store
+   * @param {Array} modulesToRegister
    */
-  constructor (router, store) {
+  constructor (router, store, modulesToRegister = []) {
     super()
 
     const routes = router.getRoutes()
 
     console.time('api: setup')
-    for (const route in routes) {
-      if (routes.hasOwnProperty(route)) {
-        let methods = routes[route]
-        this.registerResourceMethods(route, methods)
 
-        let moduleBuilder = new Builder(store, this, route, methods)
-        const module = moduleBuilder.build()
-        store.registerModule(route, module)
+    for (const routeName in routes) {
+      if (routes.hasOwnProperty(routeName)) {
+        let methods = routes[routeName]
+
+        this.registerResourceMethods(routeName, methods)
+
+        // conditionally build and register a corresponding vuex module
+        if (modulesToRegister.length === 0 || modulesToRegister.indexOf(routeName) >= 0) {
+          this.registerModule(store, methods);
+        }
       }
     }
 
@@ -29,26 +33,37 @@ export class ResourcefulAPI extends Api {
 
   /**
    *
-   * @param {*} route
-   * @param {*} methods
+   * @param {Vuex} store
+   * @param {Route} methods
    */
-  registerResourceMethods (route, methods) {
-    this[route] = {}
-
-    console.time('api: add method proxies for route ' + route)
-    for (let method in methods) {
-      if (methods.hasOwnProperty(method)) {
-        this[route][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
-      }
-    }
-    console.timeEnd('api: add method proxies for route ' + route)
+  registerModule (store, methods) {
+    let moduleBuilder = new Builder(store, this, route, methods);
+    const module = moduleBuilder.build();
+    store.registerModule(route, module);
   }
 
   /**
    *
-   * @param {*} api
-   * @param {*} method
-   * @param {*} route
+   * @param {String} routeName
+   * @param {Route} methods
+   */
+  registerResourceMethods (routeName, methods) {
+    this[routeName] = {}
+
+    console.time('api: add method proxies for route ' + routeName)
+    for (let method in methods) {
+      if (methods.hasOwnProperty(method)) {
+        this[routeName][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
+      }
+    }
+    console.timeEnd('api: add method proxies for route ' + routeName)
+  }
+
+  /**
+   *
+   * @param {Api} api
+   * @param {String} method
+   * @param {Route} route
    */
   static createApiProxy (api, method, route) {
     return new Proxy(() => {}, {
