@@ -12,8 +12,7 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "yarn unit",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "rimraf ./dist && webpack --config webpack.config.js",
-    "prepack": "yarn lint && yarn test && yarn build",
+    "build": "yarn lint && yarn test && rimraf ./dist && webpack --config webpack.config.js",
     "vuepress:apidoc": "YARN_SILENT=1 yarn jsdoc2md -f 'src/**/*' --private -l js --name-format --separators --template docs/.vuepress/jsdoctemplate.handlebars > docs/code/README.md",
     "vuepress:dev": "yarn vuepress:apidoc && vuepress dev docs",
     "vuepress:build": "yarn vuepress:apidoc && vuepress build docs"
