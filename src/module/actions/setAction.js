@@ -1,9 +1,3 @@
-export function setAction () {
-  return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      const [ vuexFns, id, data ] = argArray
-
-      vuexFns.commit('set', { id, data })
-    }
-  })
+export function setAction (vuexFns, id, data) {
+  vuexFns.commit('set', { id, data })
 }
