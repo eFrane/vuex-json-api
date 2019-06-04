@@ -7,17 +7,26 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {Vuex} vuexInstance
  * @param {Object} vuexFns
  * @param {ResourcefulApi} api
- * @param {String} moduleName
+ * @param {String} currentModule
  * @param {Object} data
+ * @param {String} group
  */
-export function processResponseData (vuexInstance, vuexFns, api, moduleName, data, group = null) {
+export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, group = null) {
   for (let destinationModule in data) {
+    if (!data.hasOwnProperty(destinationModule)) {
+      continue
+    }
+
     if (isMissingModule(vuexInstance, destinationModule)) {
       registerMissingModule(vuexInstance, api, destinationModule)
     }
 
-    if (data.hasOwnProperty(destinationModule)) {
-      setResourceObjectsForModule(vuexFns, moduleName, destinationModule, data[destinationModule], group)
-    }
+    setResourceObjectsForModule(
+      vuexFns,
+      currentModule,
+      destinationModule,
+      data[destinationModule],
+      group
+    )
   }
 }
