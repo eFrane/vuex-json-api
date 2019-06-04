@@ -1,7 +1,7 @@
 {
   "name": "@efrane/vuex-json-api",
   "version": "0.0.12",
-  "description": "A Vue.js library for interfacing with Json:Api endpoints",
+  "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
     "eFrane <efrane@meanderingsoul.com>"
@@ -11,6 +11,7 @@
   "scripts": {
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "yarn unit",
+    "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test/unit",
     "build": "yarn lint && yarn test && rimraf ./dist && webpack --config webpack.config.js",
     "vuepress:apidoc": "YARN_SILENT=1 yarn jsdoc2md -f 'src/**/*' --private -l js --name-format --separators --template docs/.vuepress/jsdoctemplate.handlebars > docs/code/README.md",
