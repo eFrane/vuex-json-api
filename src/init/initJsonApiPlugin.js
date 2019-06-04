@@ -26,7 +26,7 @@ function checkConfigProperty (config, property, isRequiredProp = true) {
  * May receive a configuration object but at least
  * needs a configured router.
  *
- * @param {Router|object} config or router
+ * @param {Router|Object} config or router
  */
 export function initJsonApiPlugin (config) {
   const api = new ResourcefulAPI()
