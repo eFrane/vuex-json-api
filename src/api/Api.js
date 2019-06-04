@@ -6,9 +6,9 @@ import {Route} from '../route/Route'
 
 class Api {
   constructor () {
-    if (typeof Api.baseUrl === 'undefined') {
-      Api.baseUrl = ''
-    }
+    this.baseUrl = ''
+
+    this.preprocessingCallbacks = []
 
     this.defaultOptions = {
       headers: {
@@ -22,6 +22,38 @@ class Api {
     }
   }
 
+  /**
+   *
+   * @param {Array} callbacks
+   */
+  setPreprocessingCallbacks (callbacks) {
+    if (callbacks.constructor !== Array
+      || callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true)) {
+      throw new Error('You must pass an array of callbacks to this method')
+    }
+
+    this.preprocessingCallbacks = callbacks
+  }
+
+  /**
+   *
+   * @param {Function} callback
+   */
+  addPreprocessingCallback (callback) {
+    if (callback.constructor !== Function) {
+      throw new Error('You must pass a valid callback to this method')
+    }
+
+    this.preprocessingCallbacks.push(callback)
+  }
+
+  /**
+   * Reset the response preprocessing to the default behaviour
+   */
+  resetPreprocessing () {
+    this.preprocessingCallbacks = []
+  }
+
   async doRequest (method, url, params, data, options) {
     // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Objekte_mit_gleichen_Eigenschaften_zusammenf%C3%BChren
     let config = Object.assign(options, this.defaultOptions, options)
@@ -30,7 +62,7 @@ class Api {
       url = url.prepare(params)
     }
 
-    url = Api.baseUrl + url
+    url = this.baseUrl + url
 
     // make cross domain requests if necessary
     let crossDomain = false
@@ -40,8 +72,7 @@ class Api {
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
-    //      TODO: implement userland callbacks before handling the response
-    //      .then(preprocessingCallbacks)
+      .then(Promise.all(this.preprocessingCallbacks))
       .then((data) => {
         return {
           data: normalize(data.data),
@@ -70,12 +101,8 @@ class Api {
     return this.doRequest('delete', url, params, data, options)
   }
 
-  static setBaseUrl (baseUrl) {
-    Api.baseUrl = baseUrl
-  }
-
-  static getBaseUrl () {
-    return Api.baseUrl
+  setBaseUrl (baseUrl) {
+    this.baseUrl = baseUrl
   }
 }
 

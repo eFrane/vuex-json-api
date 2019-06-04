@@ -5,30 +5,44 @@ export class ResourcefulAPI extends Api {
   /**
    *
    * @param {route.Router} router
-   * @param {Vuex.Store} store
-   * @param {Array} modulesToRegister
    */
-  constructor (router, store, modulesToRegister = []) {
-    super()
-
+  setupResourcefulRequests (router) {
+    console.time('api: setup resourceful routing')
     const routes = router.getRoutes()
-
-    console.time('api: setup')
+    this.registerableModules = {}
 
     for (const routeName in routes) {
       if (routes.hasOwnProperty(routeName)) {
         let methods = routes[routeName]
 
         this.registerResourceMethods(routeName, methods)
-
-        // conditionally build and register a corresponding vuex module
-        if (modulesToRegister.length === 0 || modulesToRegister.indexOf(routeName) >= 0) {
-          this.registerModule(store, methods, routeName)
-        }
+        this.registerableModules[routeName] = methods
       }
     }
 
-    console.timeEnd('api: setup')
+    console.timeEnd('api: setup resourceful routing')
+  }
+
+  /**
+   *
+   * @param {Vuex.Store} store
+   * @param {Array} modulesToRegister
+   */
+  setupModules (store, modulesToRegister) {
+    console.time('api: setup modules')
+
+    let registerableModuleNames = Object.keys(this.registerableModules)
+
+    let currentModuleName
+    while (currentModuleName = registerableModuleNames.pop()) {
+      if (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName)) {
+        this.registerModule(store, this.registerableModules[currentModuleName], currentModuleName)
+      }
+    }
+
+    delete this.registerableModules
+
+    console.timeEnd('api: setup modules')
   }
 
   /**
@@ -36,10 +50,10 @@ export class ResourcefulAPI extends Api {
    * @param {Vuex} store
    * @param {Route} methods
    */
-  registerModule (store, methods, routeName) {
-    let moduleBuilder = new Builder(store, this, routeName, methods)
+  registerModule (store, methods, moduleName) {
+    let moduleBuilder = new Builder(store, this, moduleName, methods)
     const module = moduleBuilder.build()
-    store.registerModule(routeName, module)
+    store.registerModule(moduleName, module)
   }
 
   /**
@@ -51,11 +65,13 @@ export class ResourcefulAPI extends Api {
     this[routeName] = {}
 
     console.time('api: add method proxies for route ' + routeName)
+
     for (let method in methods) {
       if (methods.hasOwnProperty(method)) {
         this[routeName][method] = ResourcefulAPI.createApiProxy(this, method, methods[method])
       }
     }
+
     console.timeEnd('api: add method proxies for route ' + routeName)
   }
 

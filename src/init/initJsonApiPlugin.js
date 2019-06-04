@@ -29,25 +29,33 @@ function checkConfigProperty (config, property, isRequiredProp = true) {
  * @param {Router|object} config or router
  */
 export function initJsonApiPlugin (config) {
+  const api = new ResourcefulAPI()
+
   let router
 
   if (config instanceof Router) {
-    router = config
+    api.setupResourcefulRequests(router)
   } else if (checkConfigProperty(config, 'router')) {
-    router = config.router
+    api.setupResourcefulRequests(config.router)
   }
 
   if (checkConfigProperty(config, 'baseUrl')) {
-    Api.setBaseUrl(config.baseUrl)
+    api.setBaseUrl(config.baseUrl)
+  }
+
+  if (checkConfigProperty(config, 'preprocessingCallbacks', false)) {
+    api.setPreprocessingCallbacks(config.setPreprocessingCallbacks)
   }
 
   let modulesToRegister = []
   if (checkConfigProperty(config, 'modules', false)) {
-    modulesToRegister
+    modulesToRegister = config.modules
   }
 
+  Api.setupModules(store, modulesToRegister)
+
   return store => {
-    store.api = new ResourcefulAPI(router, store, modulesToRegister)
+    store.api = api
     // store.subscribe((mutation, state) => {
     //   console.dir(mutation, state)
     // })
