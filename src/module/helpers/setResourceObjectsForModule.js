@@ -12,9 +12,5 @@ export function setResourceObjectsForModule (vuexFns, currentModule, destination
 
       vuexFns.commit(mutation, payload, { root: isRootMutation })
     }
-
-    if (objects.hasOwnProperty('relationships')) {
-      // TODO: process relationships
-    }
   }
 }

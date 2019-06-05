@@ -13,9 +13,9 @@ import { collection } from './state/collection'
 function initialState (isCollection) {
   return (() => {
     if (isCollection) {
-      return Object.assign({}, collection)
+      return JSON.parse(JSON.stringify(collection))
     } else {
-      return Object.assign({}, item)
+      return JSON.parse(JSON.stringify(item))
     }
   })()
 }

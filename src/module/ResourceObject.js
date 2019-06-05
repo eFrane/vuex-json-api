@@ -20,20 +20,23 @@ export class ResourceObject {
 
   /**
    *
+   * @param {Vuex.Store} store
    * @param {object} resultObjectRelationships
    */
-  addRelationshipResolvers (resultObjectRelationships) {
+  addRelationshipResolvers (store, resultObjectRelationships) {
     for (const relatedObjectType in resultObjectRelationships) {
       if (resultObjectRelationships.hasOwnProperty(relatedObjectType)) {
-        let isToManyRelationship = resultObjectRelationships[relatedObjectType].constructor === Array
+        let isToManyRelationship = resultObjectRelationships[relatedObjectType].data.constructor === Array
 
         resultObjectRelationships[relatedObjectType].get = this.resolveToOneRelationship(
+          store,
           resultObjectRelationships[relatedObjectType],
           isToManyRelationship
         )
 
         if (isToManyRelationship) {
           resultObjectRelationships[relatedObjectType].list = this.resolveToManyRelationship(
+            store,
             resultObjectRelationships[relatedObjectType]
           )
         }
@@ -45,6 +48,7 @@ export class ResourceObject {
 
   /**
    *
+   * @param {Vuex.Store} store
    * @param {Object} relatedObject
    */
   resolveToOneRelationship (store, relatedObject, isToManyRelationship) {
@@ -69,7 +73,7 @@ export class ResourceObject {
   }
 
   /**
-   *
+   * @param {Vuex.Store} store
    * @param {Array} relatedObjects
    */
   resolveToManyRelationship (store, relatedObjects) {
@@ -81,9 +85,9 @@ export class ResourceObject {
 
         let relatedObjectIds = relatedObjects.data.map(obj => obj.id)
 
-        let relatedItems = []
+        let relatedItems = {}
         relatedObjectIds.forEach(id => {
-          relatedItems.push(relatedModule.items[id])
+          relatedItems[id] = relatedModule.items[id]
         })
 
         return relatedItems
