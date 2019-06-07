@@ -66,7 +66,7 @@ class Api {
 
     // make cross domain requests if necessary
     let crossDomain = false
-    if (Api.baseUrl.length > 0 && Api.baseUrl.indexOf('://') > 0) {
+    if (this.baseUrl.length > 0 && this.baseUrl.indexOf('://') > 0) {
       crossDomain = true
     }
 

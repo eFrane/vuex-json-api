@@ -53,7 +53,7 @@ export function initJsonApiPlugin (config) {
   }
 
   return store => {
-    Api.setupModules(store, modulesToRegister)
+    api.setupModules(store, modulesToRegister)
 
     store.api = api
     // store.subscribe((mutation, state) => {

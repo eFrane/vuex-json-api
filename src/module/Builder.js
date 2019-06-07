@@ -66,7 +66,7 @@ export class Builder {
 
     let module = {
       namespaced: true,
-      state () { return initialState(this.isCollection) }
+      state () { return initialState(isCollection) }
     }
 
     module['mutations'] = this.buildMutations()
