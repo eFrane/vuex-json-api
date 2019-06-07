@@ -1,5 +1,5 @@
 export function startLoadingMutation (state, group) {
-  if (group === null) {
+  if (typeof group === 'undefined') {
     state.loading = true
     return
   }
@@ -8,7 +8,7 @@ export function startLoadingMutation (state, group) {
 }
 
 export function endLoadingMutation (state, group) {
-  if (group === null) {
+  if (typeof group === 'undefined') {
     state.loading = false
     return
   }

@@ -6,10 +6,10 @@ import { processResponseData } from '../helpers/processResponseData'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function updateAction (api, isCollection, moduleName) {
+export function saveAction (api, isCollection, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let [ vuexFns, id ] = argArray
+      let [ vuexFns, {id, payload, parameters} ] = argArray
 
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
@@ -21,7 +21,7 @@ export function updateAction (api, isCollection, moduleName) {
 
       vuexFns.commit('startLoading')
 
-      return api[moduleName].update(id, currentItemState).then(({ data }) => {
+      return api[moduleName].update(parameters, currentItemState).then(({ data }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
       }).finally(() => {
         vuexFns.commit('endLoading')

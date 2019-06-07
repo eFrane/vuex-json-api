@@ -1,19 +1,20 @@
 import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
-import { getAction } from './actions/getAction'
-import { setAction } from './actions/setAction'
-import { listAction } from './actions/listAction'
 import { addGroupAction } from './actions/addGroupAction'
-import { resetAction } from './actions/resetAction'
-import { resetMutation } from './mutations/resetMutation'
-import { setMutation } from './mutations/setMutation'
 import { addGroupMutation } from './mutations/addGroupMutation'
-import { removeMutation } from './mutations/removeMutation'
-import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
-import { setPaginationMutation } from './mutations/setPaginationMutation'
-import { updateMutation } from './mutations/updateMutation'
-import { getProperty } from './getters/getProperty'
-import { updateAction } from './actions/updateAction'
 import { createAction } from './actions/createAction'
+import { getAction } from './actions/getAction'
+import { getProperty } from './getters/getProperty'
+import { listAction } from './actions/listAction'
+import { listTypeAndId } from './getters/listTypeAndId'
+import { resetAction } from './actions/resetAction'
+import { removeMutation } from './mutations/removeMutation'
+import { resetMutation } from './mutations/resetMutation'
+import { saveAction } from './actions/saveAction'
+import { setAction } from './actions/setAction'
+import { setMutation } from './mutations/setMutation'
+import { setPaginationMutation } from './mutations/setPaginationMutation'
+import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
+import { updateMutation } from './mutations/updateMutation'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -116,7 +117,7 @@ export class Builder {
 
     if (allowsModification(this.apiMethods)) {
       actions['set'] = setAction
-      actions['update'] = updateAction(this.api, this.isCollection, this.moduleName)
+      actions['save'] = saveAction(this.api, this.isCollection, this.moduleName)
     }
 
     if (allowsCreation(this.apiMethods)) {
@@ -128,7 +129,8 @@ export class Builder {
 
   buildGetters () {
     let getters = {
-      getProperty: getProperty
+      getProperty: getProperty,
+      listTypeAndId: listTypeAndId
     }
 
     return getters
