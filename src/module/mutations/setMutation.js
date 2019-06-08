@@ -27,7 +27,6 @@ export function setMutation (store, isCollection) {
       if (isCollection) {
         if (payload.hasOwnProperty('group') && payload.group !== null) {
           Vue.set(state.groups[payload.group].items, payload.id, new ResourceObject(store, payload))
-          Vue.set(state.groups[payload.group].initial, payload.id, new ResourceObject(store, payload))
           return
         }
 
@@ -37,7 +36,6 @@ export function setMutation (store, isCollection) {
 
       if (isCollection === false) {
         Vue.set(state, 'item', new ResourceObject(store, payload))
-        Vue.set(state, 'initial', new ResourceObject(store, payload))
       }
     }
   })
