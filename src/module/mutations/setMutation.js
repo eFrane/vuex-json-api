@@ -32,6 +32,7 @@ export function setMutation (store, isCollection) {
         }
 
         Vue.set(state.items, payload.id, new ResourceObject(store, payload))
+        Vue.set(state.initial, payload.id, new ResourceObject(store, payload))
       }
 
       if (isCollection === false) {
