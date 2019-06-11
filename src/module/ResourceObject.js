@@ -5,7 +5,8 @@ export class ResourceObject {
    * @param {object} resultObject
    */
   constructor (store, resultObject) {
-    let obj = JSON.parse(JSON.stringify(resultObject.data))
+    this._originalData = JSON.stringify(resultObject.data)
+    let obj = JSON.parse(this._originalData)
 
     if (obj.hasOwnProperty('relationships')) {
       obj.relationships = this.addRelationshipResolvers(store, obj.relationships)

@@ -9,6 +9,7 @@ import { listTypeAndId } from './getters/listTypeAndId'
 import { resetItemsAction } from './actions/resetItemsAction'
 import { removeMutation } from './mutations/removeMutation'
 import { resetItemsMutation } from './mutations/resetItemsMutation'
+import { restoreFromInitialAction } from './actions/restoreFromInitialAction'
 import { saveAction } from './actions/saveAction'
 import { setAction } from './actions/setAction'
 import { setMutation } from './mutations/setMutation'
@@ -107,7 +108,8 @@ export class Builder {
   buildActions () {
     let actions = {
       get: getAction(this.api, this.moduleName),
-      resetItems: resetItemsAction
+      resetItems: resetItemsAction,
+      restoreFromInitial: restoreFromInitialAction(this.moduleName, this.isCollection)
     }
 
     if (this.isCollection) {
