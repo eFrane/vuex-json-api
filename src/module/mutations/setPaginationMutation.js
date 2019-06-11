@@ -2,8 +2,8 @@ import Vue from 'vue'
 
 export function setPaginationMutation (state, { group, pagination }) {
   if (group === null) {
-    state.currentPage = pagination.current
-    state.totalPages = pagination.total
+    state.currentPage = pagination.current_page
+    state.totalPages = pagination.total_pages
 
     return
   }
