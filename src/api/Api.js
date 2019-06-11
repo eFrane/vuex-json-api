@@ -73,10 +73,10 @@ class Api {
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
       .then(Promise.all(this.preprocessingCallbacks))
-      .then((data) => {
+      .then((response) => {
         return {
-          data: normalize(data.data),
-          meta: data.data.meta
+          data: normalize(response.data),
+          meta: response.data.meta
         }
       })
   }
