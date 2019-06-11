@@ -1,6 +1,5 @@
 import { ResourcefulAPI } from '../api/ResourcefulApi'
 import { Router } from '../route/Router'
-import { Api } from '../api/Api'
 
 /**
  *
