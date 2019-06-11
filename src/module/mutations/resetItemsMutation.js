@@ -15,15 +15,18 @@ export function resetItemsMutation (isCollection) {
 
       if (isCollection) {
         Vue.set(state, 'items', initial.items)
+        Vue.set(state, 'initial', initial.initial)
       }
 
       if (group !== null) {
         Vue.set(state.groups[group], 'items', initial.items)
+        Vue.set(state.groups[group], 'initial', initial.initial)
         return
       }
 
       if (!isCollection) {
         Vue.set(state.item, initial.item)
+        Vue.set(state.item, initial.initial)
       }
     }
   })
