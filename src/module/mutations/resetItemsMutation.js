@@ -11,7 +11,7 @@ export function resetItemsMutation (isCollection) {
     apply (target, thisArg, argArray) {
       let [state, group] = argArray
 
-      let initial = initialState(collection)
+      let initial = initialState(isCollection)
 
       if (isCollection) {
         Vue.set(state, 'items', initial.items)
