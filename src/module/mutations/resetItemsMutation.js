@@ -5,18 +5,26 @@ import { initialState } from '../State'
  *
  * @param {Boolean} isCollection
  */
-export function resetMutation (isCollection) {
+export function resetItemsMutation (isCollection) {
   /* eslint-disable no-new */
   return new Proxy((state) => {}, {
     apply (target, thisArg, argArray) {
       let [state, group] = argArray
 
+      let initial = initialState(collection)
+
+      if (isCollection) {
+        Vue.set(state, 'items', initial.items)
+      }
+
       if (group !== null) {
-        state.groups[group] = initialState(isCollection)
+        Vue.set(state.groups[group], 'items', initial.items)
         return
       }
 
-      state = initialState(isCollection)
+      if (!isCollection) {
+        Vue.set(state.item, initial.item)
+      }
     }
   })
 }

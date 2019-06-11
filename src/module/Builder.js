@@ -6,9 +6,9 @@ import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
 import { listAction } from './actions/listAction'
 import { listTypeAndId } from './getters/listTypeAndId'
-import { resetAction } from './actions/resetAction'
+import { resetItemsAction } from './actions/resetItemsAction'
 import { removeMutation } from './mutations/removeMutation'
-import { resetMutation } from './mutations/resetMutation'
+import { resetItemsMutation } from './mutations/resetItemsMutation'
 import { saveAction } from './actions/saveAction'
 import { setAction } from './actions/setAction'
 import { setMutation } from './mutations/setMutation'
@@ -85,7 +85,7 @@ export class Builder {
    */
   buildMutations () {
     let mutations = {
-      reset: resetMutation(this.isCollection),
+      resetItems: resetItemsMutation(this.isCollection),
       set: setMutation(this.store, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,
@@ -107,7 +107,7 @@ export class Builder {
   buildActions () {
     let actions = {
       get: getAction(this.api, this.moduleName),
-      reset: resetAction
+      resetItems: resetItemsAction
     }
 
     if (this.isCollection) {

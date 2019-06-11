@@ -20,7 +20,7 @@ export function listAction (api, moduleName) {
       vuexFns.commit('startLoading', group)
 
       return api[moduleName].list(query.query).then(({ data, meta }) => {
-        vuexFns.commit('reset', group)
+        vuexFns.commit('resetItems', group)
 
         processResponseData(thisArg, vuexFns, api, moduleName, data, group)
 
