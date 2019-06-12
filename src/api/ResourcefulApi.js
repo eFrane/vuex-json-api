@@ -35,11 +35,11 @@ export class ResourcefulAPI extends Api {
 
     let currentModuleName
     do {
+      currentModuleName = registerableModuleNames.pop()
+
       if (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName)) {
         this.registerModule(store, this.registerableModules[currentModuleName], currentModuleName)
       }
-
-      currentModuleName = registerableModuleNames.pop()
     } while (currentModuleName)
 
     delete this.registerableModules
@@ -55,7 +55,9 @@ export class ResourcefulAPI extends Api {
   registerModule (store, methods, moduleName) {
     let moduleBuilder = new Builder(store, this, moduleName, methods)
     const module = moduleBuilder.build()
-    store.registerModule(moduleName, module)
+    if (moduleName) {
+      store.registerModule(moduleName, module)
+    }
   }
 
   /**
