@@ -43,5 +43,5 @@ export function updateMutation (state, payload) {
     return
   }
 
-  throw new Error('something went wrong')
+  throw new Error('Update failed')
 }
