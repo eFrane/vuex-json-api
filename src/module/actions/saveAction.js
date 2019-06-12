@@ -1,5 +1,5 @@
-import { diff } from 'deep-object-diff'
-import { processResponseData } from '../helpers/processResponseData'
+import {diff} from 'deep-object-diff'
+import {processResponseData} from '../helpers/processResponseData'
 
 /**
  * Update an existing resource
@@ -7,28 +7,38 @@ import { processResponseData } from '../helpers/processResponseData'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function saveAction (api, isCollection, moduleName) {
-  return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      let [ vuexFns, id ] = argArray
+export function saveAction(api, isCollection, moduleName) {
+  return new Proxy(() => {
+  }, {
+    apply(target, thisArg, argArray) {
+      let [vuexFns, id] = argArray
 
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
       }
 
-      let currentItemState = (isCollection)
+      let currentItemState = JSON.parse(JSON.stringify((isCollection)
         ? thisArg.state[moduleName].items[id]
-        : thisArg.state[moduleName].item
+        : thisArg.state[moduleName].item))
 
-      let initialItemState = (isCollection)
-        ? thisArg.initial[moduleName].items[id]
-        : thisArg.initial[moduleName].item
+      let initialItemState = JSON.parse(JSON.stringify((isCollection)
+        ? thisArg.state[moduleName].initial[id]
+        : thisArg.state[moduleName].initial))
 
       let changedItemState = diff(initialItemState, currentItemState)
 
       vuexFns.commit('startLoading', null)
 
-      return api[moduleName].update({ id }, { data: changedItemState }).then(({ data }) => {
+      return api[moduleName].update(
+        {id},
+        {
+          data: Object.assign(
+            changedItemState, {
+              id: id,
+              type: currentItemState.type
+            })
+        }
+      ).then(({data}) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
       }).finally(() => {
         vuexFns.commit('endLoading', null)
