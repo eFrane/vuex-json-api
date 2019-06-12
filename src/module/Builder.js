@@ -1,6 +1,4 @@
 import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
-import { addGroupAction } from './actions/addGroupAction'
-import { addGroupMutation } from './mutations/addGroupMutation'
 import { createAction } from './actions/createAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
@@ -99,7 +97,6 @@ export class Builder {
 
     if (this.isCollection) {
       mutations['setPagination'] = setPaginationMutation
-      mutations['addGroup'] = addGroupMutation
     }
 
     return mutations
@@ -114,7 +111,6 @@ export class Builder {
 
     if (this.isCollection) {
       actions['list'] = listAction(this.api, this.moduleName)
-      actions['addGroup'] = addGroupAction
     }
 
     if (allowsModification(this.apiMethods)) {

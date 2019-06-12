@@ -1,4 +1,11 @@
-export function setResourceObjectsForModule (vuexFns, currentModule, destinationModule, objects, group) {
+/**
+ *
+ * @param {*} vuexFns
+ * @param {*} currentModule
+ * @param {*} destinationModule
+ * @param {*} objects
+ */
+export function setResourceObjectsForModule (vuexFns, currentModule, destinationModule, objects) {
   for (const id in objects) {
     if (objects.hasOwnProperty(id)) {
       const isRootMutation = currentModule !== destinationModule
@@ -8,7 +15,7 @@ export function setResourceObjectsForModule (vuexFns, currentModule, destination
         mutation = destinationModule + '/' + mutation
       }
 
-      const payload = { id: objects[id].id, data: objects[id], group: group }
+      const payload = { id: objects[id].id, data: objects[id] }
 
       vuexFns.commit(mutation, payload, { root: isRootMutation })
     }

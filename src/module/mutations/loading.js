@@ -1,17 +1,7 @@
-export function startLoadingMutation (state, group) {
-  if (group === null) {
-    state.loading = true
-    return
-  }
-
-  state.groups[group].loading = true
+export function startLoadingMutation (state) {
+  state.loading = true
 }
 
-export function endLoadingMutation (state, group) {
-  if (group === null) {
-    state.loading = false
-    return
-  }
-
-  state.groups[group].loading = false
+export function endLoadingMutation (state) {
+  state.loading = false
 }

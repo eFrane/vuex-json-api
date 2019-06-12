@@ -12,23 +12,21 @@ export function listAction (api, moduleName) {
       let [vuexFns, query] = argArray
 
       if (typeof query === 'undefined') {
-        query = { query: {}, group: null }
+        query = {}
       }
 
-      let group = (query.hasOwnProperty('group')) ? query.group : null
+      vuexFns.commit('startLoading')
 
-      vuexFns.commit('startLoading', group)
+      return api[moduleName].list(query).then(({ data, meta }) => {
+        vuexFns.commit('resetItems')
 
-      return api[moduleName].list(query.query).then(({ data, meta }) => {
-        vuexFns.commit('resetItems', group)
-
-        processResponseData(thisArg, vuexFns, api, moduleName, data, group)
+        processResponseData(thisArg, vuexFns, api, moduleName, data)
 
         if (meta.hasOwnProperty('pagination')) {
-          vuexFns.commit('setPagination', { group: group, pagination: meta.pagination })
+          vuexFns.commit('setPagination', meta.pagination)
         }
       }).finally(
-        vuexFns.commit('endLoading', group)
+        vuexFns.commit('endLoading')
       )
     }
   })

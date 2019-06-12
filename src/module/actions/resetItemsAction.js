@@ -1,3 +1,3 @@
-export function resetItemsAction (vuexFns, group) {
-  vuexFns.commit('resetItems', group)
+export function resetItemsAction (vuexFns) {
+  vuexFns.commit('resetItems')
 }
