@@ -1,23 +1,7 @@
 import { ResourcefulAPI } from '../api/ResourcefulApi'
 import { Router } from '../route/Router'
-
-/**
- *
- * @param {object} config
- * @param {String} property
- * @param {Boolean} isRequiredProp
- */
-function checkConfigProperty (config, property, isRequiredProp = true) {
-  if (typeof config === 'object' && config.hasOwnProperty(property) && isRequiredProp) {
-    return true
-  }
-
-  if (isRequiredProp === false) {
-    return false
-  }
-
-  throw new Error('Missing configuration property: ' + property)
-}
+import { checkConfigProperty } from './helpers/checkConfigProperty'
+import { createPresetModule } from '../module/preset/createPresetModule'
 
 /**
  * Initialize the API Plugin
@@ -55,6 +39,9 @@ export function initJsonApiPlugin (config) {
     api.setupModules(store, modulesToRegister)
 
     store.api = api
+
+    store.createPresetModule = createPresetModule(store, api)
+
     store.subscribe((mutation, state) => {
       // console.dir(mutation, state)
     })
