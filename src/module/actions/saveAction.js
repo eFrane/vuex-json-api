@@ -1,3 +1,4 @@
+import { diff } from 'deep-object-diff'
 import { processResponseData } from '../helpers/processResponseData'
 
 /**
@@ -9,7 +10,7 @@ import { processResponseData } from '../helpers/processResponseData'
 export function saveAction (api, isCollection, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let [ vuexFns, {id, payload, parameters} ] = argArray
+      let [ vuexFns, id ] = argArray
 
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
@@ -19,12 +20,18 @@ export function saveAction (api, isCollection, moduleName) {
         ? thisArg.state[moduleName].items[id]
         : thisArg.state[moduleName].item
 
-      vuexFns.commit('startLoading')
+      let initialItemState = (isCollection)
+        ? thisArg.initial[moduleName].items[id]
+        : thisArg.initial[moduleName].item
 
-      return api[moduleName].update(parameters, currentItemState).then(({ data }) => {
+      let changedItemState = diff(initialItemState, currentItemState)
+
+      vuexFns.commit('startLoading', null)
+
+      return api[moduleName].update({ id }, { data: changedItemState }).then(({ data }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
       }).finally(() => {
-        vuexFns.commit('endLoading')
+        vuexFns.commit('endLoading', null)
       })
     }
   })
