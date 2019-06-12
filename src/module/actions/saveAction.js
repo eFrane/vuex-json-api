@@ -17,15 +17,15 @@ export function saveAction (api, isCollection, moduleName) {
         throw new Error('You must pass an object id to this action')
       }
 
-      let currentItemState = JSON.parse(JSON.stringify((isCollection)
+      const currentItemState = JSON.parse(JSON.stringify((isCollection)
         ? thisArg.state[moduleName].items[id]
         : thisArg.state[moduleName].item))
 
-      let initialItemState = JSON.parse(JSON.stringify((isCollection)
+      const initialItemState = JSON.parse(JSON.stringify((isCollection)
         ? thisArg.state[moduleName].initial[id]
         : thisArg.state[moduleName].initial))
 
-      let changedItemState = diff(initialItemState, currentItemState)
+      const changedItemState = diff(initialItemState, currentItemState)
 
       vuexFns.commit('startLoading', null)
 
