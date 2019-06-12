@@ -12,7 +12,7 @@ function checkConfigProperty (config, property, isRequiredProp = true) {
     return true
   }
 
-  if (false === isRequiredProp) {
+  if (isRequiredProp === false) {
     return false
   }
 
@@ -56,7 +56,7 @@ export function initJsonApiPlugin (config) {
 
     store.api = api
     store.subscribe((mutation, state) => {
-       // console.dir(mutation, state)
+      // console.dir(mutation, state)
     })
   }
 }

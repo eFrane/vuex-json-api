@@ -34,11 +34,13 @@ export class ResourcefulAPI extends Api {
     let registerableModuleNames = Object.keys(this.registerableModules)
 
     let currentModuleName
-    while (currentModuleName = registerableModuleNames.pop()) {
+    do {
       if (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName)) {
         this.registerModule(store, this.registerableModules[currentModuleName], currentModuleName)
       }
-    }
+
+      currentModuleName = registerableModuleNames.pop()
+    } while (currentModuleName)
 
     delete this.registerableModules
 

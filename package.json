@@ -96,6 +96,8 @@
     "not ie <= 8"
   ],
   "husky": {
-    "pre-commit": "yarn lint && yarn test"
+    "hooks": {
+      "pre-commit": "yarn lint && yarn test"
+    }
   }
 }

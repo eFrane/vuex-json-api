@@ -1,6 +1,6 @@
-export function restoreFromInitialAction(moduleName, isCollection) {
+export function restoreFromInitialAction (moduleName, isCollection) {
   return new Proxy(() => { }, {
-    apply(target, thisArg, argArray) {
+    apply (target, thisArg, argArray) {
       let [vuexFns, id] = argArray
       let item
 

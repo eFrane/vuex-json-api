@@ -79,7 +79,6 @@ export class ResourceObject {
   resolveToManyRelationship (store, relatedObjects) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
-
         let moduleName = relatedObjects.data[0].type
         let relatedModule = store.state[moduleName]
 

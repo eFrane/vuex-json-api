@@ -7,10 +7,10 @@ import {processResponseData} from '../helpers/processResponseData'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function saveAction(api, isCollection, moduleName) {
+export function saveAction (api, isCollection, moduleName) {
   return new Proxy(() => {
   }, {
-    apply(target, thisArg, argArray) {
+    apply (target, thisArg, argArray) {
       let [vuexFns, id] = argArray
 
       if (typeof id === 'undefined') {

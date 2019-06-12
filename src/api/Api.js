@@ -27,8 +27,8 @@ class Api {
    * @param {Array} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    if (callbacks.constructor !== Array
-      || callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true)) {
+    if (callbacks.constructor !== Array ||
+      callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true)) {
       throw new Error('You must pass an array of callbacks to this method')
     }
 

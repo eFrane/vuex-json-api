@@ -8,7 +8,7 @@ import { Router } from './Router'
  * @see https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
  */
 export class FosJsRoutingRouter extends Router {
-  constructor(fosRouter, options = {}) {
+  constructor (fosRouter, options = {}) {
     super()
 
     this.fosRouter = fosRouter
@@ -31,10 +31,10 @@ export class FosJsRoutingRouter extends Router {
 
   async updateRoutes () {
     // TODO: extract routes from fosRouter based on naming scheme or something
-    this.fosRouter.map(route, name => {
+    this.fosRouter.map(this.fosRouter.getRoutes(), name => {
       if (this.matchRouteName(name)) {
         let route = Route.fromPojo()
-        this.addRoute()
+        this.addRoute(route)
       }
     })
   }
