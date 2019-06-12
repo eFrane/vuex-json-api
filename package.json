@@ -21,7 +21,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "deep-object-diff": "^1.1.0",
-    "husky": "^2.4.0",
     "json-api-normalizer": "~0.4.14",
     "qs": "~6.7.0",
     "vue": "2.*",
@@ -58,6 +57,7 @@
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
+    "husky": "^2.4.0",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
     "jsdoc-to-markdown": "^5.0.0",
