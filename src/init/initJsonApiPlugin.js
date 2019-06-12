@@ -55,8 +55,8 @@ export function initJsonApiPlugin (config) {
     api.setupModules(store, modulesToRegister)
 
     store.api = api
-    // store.subscribe((mutation, state) => {
-    //   console.dir(mutation, state)
-    // })
+    store.subscribe((mutation, state) => {
+       // console.dir(mutation, state)
+    })
   }
 }

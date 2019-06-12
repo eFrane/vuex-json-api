@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "deep-object-diff": "^1.1.0",
+    "husky": "^2.4.0",
     "json-api-normalizer": "~0.4.14",
     "qs": "~6.7.0",
     "vue": "2.*",
@@ -93,5 +94,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "husky": {
+    "pre-commit": "yarn lint && yarn test"
+  }
 }
