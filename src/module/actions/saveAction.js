@@ -27,6 +27,12 @@ export function saveAction (api, isCollection, moduleName) {
 
       const changedItemState = diff(initialItemState, currentItemState)
 
+      if (changedItemState.hasOwnProperty('relationships')) {
+        for (let relationship in changedItemState.relationships) {
+          changedItemState.relationships[relationship] = currentItemState.relationships[relationship]
+        }
+      }
+
       vuexFns.commit('startLoading', null)
 
       return api[moduleName].update(
