@@ -1,5 +1,6 @@
 import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
 import { createAction } from './actions/createAction'
+import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
 import { listAction } from './actions/listAction'
@@ -10,7 +11,7 @@ import { resetItemsMutation } from './mutations/resetItemsMutation'
 import { restoreFromInitialAction } from './actions/restoreFromInitialAction'
 import { saveAction } from './actions/saveAction'
 import { setAction } from './actions/setAction'
-import {setItemMutation} from './mutations/setItemMutation'
+import { setItemMutation } from './mutations/setItemMutation'
 import { setMutation } from './mutations/setMutation'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
@@ -122,6 +123,10 @@ export class Builder {
 
     if (allowsCreation(this.apiMethods)) {
       actions['create'] = createAction(this.api, this.moduleName)
+    }
+
+    if (allowsDeletion(this.apiMethods)) {
+      actions['delete'] = deleteAction(this.api, this.moduleName)
     }
 
     return actions

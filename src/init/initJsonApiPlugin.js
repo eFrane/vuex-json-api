@@ -1,6 +1,6 @@
 import { ResourcefulAPI } from '../api/ResourcefulApi'
 import { Router } from '../route/Router'
-import { checkConfigProperty } from './helpers/checkConfigProperty'
+import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { createPresetModule } from '../module/preset/createPresetModule'
 
 /**
