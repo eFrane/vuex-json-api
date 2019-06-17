@@ -9,9 +9,8 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {ResourcefulApi} api
  * @param {String} currentModule
  * @param {Object} data
- * @param {String} group
  */
-export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, group = null) {
+export function processResponseData (vuexInstance, vuexFns, api, currentModule, data) {
   for (let destinationModule in data) {
     if (!data.hasOwnProperty(destinationModule)) {
       continue
@@ -25,8 +24,7 @@ export function processResponseData (vuexInstance, vuexFns, api, currentModule, 
       vuexFns,
       currentModule,
       destinationModule,
-      data[destinationModule],
-      group
+      data[destinationModule]
     )
   }
 }

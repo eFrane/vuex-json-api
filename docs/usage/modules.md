@@ -69,9 +69,9 @@ of the module.
 
 In addition to the above, some module types may have more mutations:
 
-- Modules that represent a collection resource get a `addGroup` mutation
-  to create a query subset and a `setPagination` mutation which handles
-  pagination meta information according to JSON:API v1.1
+- Modules that represent a collection resource get a
+  `setPagination` mutation which handles pagination meta
+  information according to JSON:API v1.1
 
 - Modules which have a `DELETE` route registered to them get a `remove`
   mutation
@@ -95,7 +95,6 @@ the possibly destructive consequences.
 | get      | Get a single item
 | reset    | Reset the module state
 | list     | Get a list of items
-| addGroup | Add a sub group
 | set      | Set an item's data
 | update   | Update an item on the server
 
@@ -104,7 +103,6 @@ graph TD
 Builder-- add actions to Module -->Route
 Route-->CollDec
 CollDec{isCollection}-->list
-CollDec-->addGroup
 Route-->CreateDec
 CreateDec{allowsCreation}-->create
 Route-->ModDec

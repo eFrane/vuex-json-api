@@ -12,7 +12,7 @@ export function restoreFromInitialAction (moduleName, isCollection) {
         item = thisArg.state[moduleName].initial
       }
 
-      vuexFns.commit('set', { group: null, id: id, data: item })
+      vuexFns.commit('set', { id: id, data: item })
     }
   })
 }
