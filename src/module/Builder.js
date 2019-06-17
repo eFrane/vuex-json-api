@@ -10,6 +10,7 @@ import { resetItemsMutation } from './mutations/resetItemsMutation'
 import { restoreFromInitialAction } from './actions/restoreFromInitialAction'
 import { saveAction } from './actions/saveAction'
 import { setAction } from './actions/setAction'
+import {setItemMutation} from './mutations/setItemMutation'
 import { setMutation } from './mutations/setMutation'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
@@ -86,6 +87,7 @@ export class Builder {
     let mutations = {
       resetItems: resetItemsMutation(this.isCollection),
       set: setMutation(this.store, this.isCollection),
+      setItem: setItemMutation(this.store, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,
       update: updateMutation
