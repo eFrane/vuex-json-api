@@ -2,14 +2,15 @@ import Vue from 'vue'
 import { initialState } from '../State'
 
 /**
- * Reset an module's items and initial items state
+ * Reset a module's items and initial items state
  *
  * @param {Boolean} isCollection
  */
 export function resetItemsMutation (isCollection) {
   /* eslint-disable no-new */
   return new Proxy((state) => {}, {
-    apply (target, thisArg, state) {
+    apply (target, thisArg, argArray) {
+      const [state] = argArray
       let initial = initialState(isCollection)
 
       if (isCollection) {
@@ -18,8 +19,8 @@ export function resetItemsMutation (isCollection) {
       }
 
       if (!isCollection) {
-        Vue.set(state.item, initial.item)
-        Vue.set(state.item, initial.initial)
+        Vue.set(state, 'item', initial.item)
+        Vue.set(state, 'item', initial.initial)
       }
     }
   })
