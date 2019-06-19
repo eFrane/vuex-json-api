@@ -11,8 +11,10 @@ export function createPresetModule (store, api) {
 
       let methods = api[baseModule]
 
-      let builder = new Builder(store, api, `${baseModule}.${name}`, methods)
-      builder.build()
+      const moduleName = `${baseModule}.${name}`
+
+      const builder = new Builder(store, api, moduleName, methods)
+      store.registerModule(moduleName, builder.build())
     }
   })
 }
