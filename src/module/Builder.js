@@ -5,7 +5,7 @@ import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
 import { listAction } from './actions/listAction'
-import { listTypeAndId } from './getters/listTypeAndId'
+import { itemsInRelationshipFormat } from './getters/itemsInRelationshipFormat'
 import { resetItemsAction } from './actions/resetItemsAction'
 import { removeMutation } from './mutations/removeMutation'
 import { resetItemsMutation } from './mutations/resetItemsMutation'
@@ -144,7 +144,7 @@ export class Builder {
     }
 
     if (this.isCollection) {
-      getters['listTypeAndId'] = listTypeAndId
+      getters['itemsInRelationshipFormat'] = itemsInRelationshipFormat
     }
 
     return getters

@@ -5,7 +5,7 @@
  * @param {object} state
  * @returns {object}
  */
-export function listTypeAndId (state) {
+export function itemsInRelationshipFormat (state) {
   return Object.values(state.items).map(item => {
     return {
       id: item.id,
