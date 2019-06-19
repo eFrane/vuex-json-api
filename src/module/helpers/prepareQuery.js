@@ -9,5 +9,9 @@ export function prepareQuery (query, defaultQuery) {
     query = {}
   }
 
+  if (typeof defaultQuery === 'undefined') {
+    defaultQuery = {}
+  }
+
   return Object.assign(query, defaultQuery, query)
 }
