@@ -5,11 +5,11 @@
  * @param {Boolean} isRequiredProp
  */
 export function checkConfigProperty (config, property, isRequiredProp = true) {
-  if (typeof config === 'object' && config.hasOwnProperty(property) && isRequiredProp) {
+  if (config !== null && config.hasOwnProperty(property)) {
     return true
   }
 
-  if (isRequiredProp === false) {
+  if ((config === null || config.hasOwnProperty(property) === false) && !isRequiredProp) {
     return false
   }
 
