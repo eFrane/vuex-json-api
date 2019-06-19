@@ -27,7 +27,7 @@ export function initJsonApiPlugin (config) {
   }
 
   if (checkConfigProperty(config, 'preprocessingCallbacks', false)) {
-    api.setPreprocessingCallbacks(config.setPreprocessingCallbacks)
+    api.setPreprocessingCallbacks(config.preprocessingCallbacks)
   }
 
   let modulesToRegister = []
