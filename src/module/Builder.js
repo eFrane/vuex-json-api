@@ -1,5 +1,6 @@
 import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
 import { createAction } from './actions/createAction'
+import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
@@ -45,7 +46,8 @@ export class Builder {
     this.isCollection = isCollection(apiMethods)
 
     // is this a standalone module with no outside connections?
-    this.isStandalone = options.hasOwnProperty('standalone') && options.standalone
+    this.isStandalone = checkConfigProperty(options, 'standalone', false) && options.standalone
+    this.presetOptions = checkConfigProperty(options, 'presetOptions', false) ? options.presetOptions : null
 
     if (this.isStandalone) {
       // standalone modules are always collections
@@ -106,14 +108,16 @@ export class Builder {
   }
 
   buildActions () {
+    let defaultQuery = checkConfigProperty(this.presetOptions, 'defaultQuery', false) ? this.presetOptions.defaultQuery : {}
+
     let actions = {
-      get: getAction(this.api, this.moduleName),
+      get: getAction(this.api, this.moduleName, defaultQuery),
       resetItems: resetItemsAction,
       restoreFromInitial: restoreFromInitialAction(this.moduleName, this.isCollection)
     }
 
     if (this.isCollection) {
-      actions['list'] = listAction(this.api, this.moduleName)
+      actions['list'] = listAction(this.api, this.moduleName, defaultQuery)
     }
 
     if (allowsModification(this.apiMethods)) {

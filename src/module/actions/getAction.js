@@ -1,4 +1,5 @@
 import { processResponseData } from '../helpers/processResponseData'
+import { prepareQuery } from '../helpers/prepareQuery'
 
 /**
  * Get a resource
@@ -6,14 +7,12 @@ import { processResponseData } from '../helpers/processResponseData'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function getAction (api, moduleName) {
+export function getAction (api, moduleName, defaultQuery) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       let [ vuexFns, query ] = argArray
 
-      if (typeof query === 'undefined') {
-        query = {}
-      }
+      query = prepareQuery(query, defaultQuery)
 
       vuexFns.commit('startLoading')
 

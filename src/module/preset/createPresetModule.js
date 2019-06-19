@@ -13,7 +13,11 @@ export function createPresetModule (store, api) {
 
       const moduleName = `${baseModule}.${name}`
 
-      const builder = new Builder(store, api, moduleName, methods)
+      const builder = new Builder(store, api, moduleName, methods, {
+        presetOptions: {
+          defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
+        }
+      })
       store.registerModule(moduleName, builder.build())
     }
   })
