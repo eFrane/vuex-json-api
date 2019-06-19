@@ -17,6 +17,7 @@ import { setMutation } from './mutations/setMutation'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
+import { hasChanges } from './getters/isChanged'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -139,7 +140,11 @@ export class Builder {
   buildGetters () {
     let getters = {
       getProperty: getProperty,
-      listTypeAndId: listTypeAndId
+      hasChanges: hasChanges(this.isCollection)
+    }
+
+    if (this.isCollection) {
+      getters['listTypeAndId'] = listTypeAndId
     }
 
     return getters
