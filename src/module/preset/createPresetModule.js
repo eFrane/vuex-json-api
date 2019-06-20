@@ -11,14 +11,16 @@ export function createPresetModule (store, api) {
 
       let methods = api[baseModule]
 
-      const moduleName = `${baseModule}.${name}`
-
-      const builder = new Builder(store, api, moduleName, methods, {
+      const timerLabel = `Register preset ${name} for base ${baseModule}`
+      console.time(timerLabel)
+      const builder = new Builder(store, api, baseModule, methods, {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
         }
       })
-      store.registerModule(moduleName, builder.build())
+
+      store.registerModule([baseModule, name], builder.build())
+      console.timeEnd(timerLabel)
     }
   })
 }

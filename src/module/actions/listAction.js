@@ -24,9 +24,9 @@ export function listAction (api, moduleName, defaultQuery) {
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', meta.pagination)
         }
-      }).finally(
+
         vuexFns.commit('endLoading')
-      )
+      })
     }
   })
 }
