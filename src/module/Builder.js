@@ -47,7 +47,7 @@ export class Builder {
     this.isCollection = isCollection(apiMethods)
 
     // is this a standalone module with no outside connections?
-    this.isStandalone = checkConfigProperty(options, 'standalone', false) && options.standalone ? options.standalone : null
+    this.isStandalone = checkConfigProperty(options, 'standalone', false) && options.standalone ? options.standalone : false
     this.presetOptions = checkConfigProperty(options, 'presetOptions', false) ? options.presetOptions : null
 
     if (this.isStandalone) {
