@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
-import { checkConfigParameter } from '../misc/checkConfigParameter'
+import { checkConfigParameter } from '../helpers/checkConfigParameter'
 
 Vue.use(Vuex)
 
