@@ -23,11 +23,10 @@
     "deep-object-diff": "^1.1.0",
     "json-api-normalizer": "~0.4.14",
     "qs": "~6.7.0",
-    "vue": "2.*"
+    "vue": "2.*",
+    "vuex": "^2"
   },
-  "peerDependencies": {
-    "vuex": "^3.1"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
