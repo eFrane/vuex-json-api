@@ -7,7 +7,6 @@ import { initialState } from '../State'
  * @param {Boolean} isCollection
  */
 export function resetItemsMutation (isCollection) {
-  /* eslint-disable no-new */
   return new Proxy((state) => {}, {
     apply (target, thisArg, [state]) {
       let initial = initialState(isCollection)
