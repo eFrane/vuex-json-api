@@ -43,7 +43,7 @@ export function saveAction (api, isCollection, moduleName) {
         }
       ).then(({data}) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
-      }).finally(() => {
+
         vuexFns.commit('endLoading', null)
       })
     }

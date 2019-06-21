@@ -16,7 +16,7 @@ export function getAction (api, moduleName, defaultQuery) {
 
       return api[moduleName].get(query).then(({ data }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
-      }).finally(() => {
+
         vuexFns.commit('endLoading')
       })
     }

@@ -10,13 +10,13 @@ import { validateResourceObject } from '../helpers/validateResourceObject'
 export function createAction (api, moduleName) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [vuexFns, resourceObject]) {
-      validateResourceObject(resourceObject, createResource)
+      validateResourceObject(resourceObject, true)
 
       vuexFns.commit('startLoading')
 
       return api[moduleName].create({data: resourceObject}).then(({ data }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data)
-      }).finally(() => {
+
         vuexFns.commit('endLoading')
       })
     }

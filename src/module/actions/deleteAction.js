@@ -12,10 +12,9 @@ export function deleteAction (api, moduleName) {
 
       return api[moduleName].delete({id: id}).then(() => {
         vuexFns.commit('remove', id)
+
+        vuexFns.commit('endLoading')
       })
-        .finally(() => {
-          vuexFns.commit('endLoading')
-        })
     }
   })
 }
