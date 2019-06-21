@@ -31,8 +31,8 @@ export function initJsonApiPlugin (config) {
   }
 
   let modulesToRegister = []
-  if (checkConfigProperty(config, 'modules', false)) {
-    modulesToRegister = config.modules
+  if (checkConfigProperty(config, 'apiModules', false)) {
+    modulesToRegister = config.apiModules
   }
 
   return store => {
