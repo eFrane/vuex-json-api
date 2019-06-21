@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
-import { checkConfigParameter } from '../helpers/checkConfigParameter'
+import { checkConfigProperty } from '../helpers/checkConfigProperty'
 
 Vue.use(Vuex)
 
@@ -40,7 +40,7 @@ export function prepareModuleHashMap (modules) {
  * @returns {Promise<Store>}
  */
 export async function createVuexStore (config) {
-  let router = checkConfigParameter(config, 'router') ? config.router : null
+  let router = checkConfigProperty(config, 'router') ? config.router : null
 
   if (!router) {
     throw new Error('You must provide a router')
@@ -49,7 +49,7 @@ export async function createVuexStore (config) {
   return router
     .updateRoutes()
     .then(router => {
-      let staticModules = checkConfigParameter(config, 'staticModules', false)
+      let staticModules = checkConfigProperty(config, 'staticModules', false)
         ? config.staticModules
         : {}
 
