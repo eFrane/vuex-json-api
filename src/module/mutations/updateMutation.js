@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export function updateMutation (isCollection) {
-  return new Proxy((state, payload) => { }, {
+  return new Proxy(() => {}, {
     apply (target, thisArg, [state, { id, path, value, relationship, action }]) {
       let rootSelector = (isCollection) ? 'items' : 'item'
 

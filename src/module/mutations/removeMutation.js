@@ -16,11 +16,8 @@ import Vue from 'vue'
  */
 export function removeMutation (isCollection) {
   return new Proxy((state, payload) => {}, {
-    apply (target, thisArg, argArray) {
-      const state = argArray[0]
-
+    apply (target, thisArg, [state, id]) {
       if (isCollection) {
-        const id = argArray[1]
         Vue.delete(state.items, id)
       } else {
         Vue.set(state, 'item', {})

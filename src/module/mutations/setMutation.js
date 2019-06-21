@@ -20,10 +20,8 @@ import { ResourceObject } from '../ResourceObject'
  * @param {Boolean} isCollection
  */
 export function setMutation (store, isCollection) {
-  return new Proxy((state, payload) => {}, {
-    apply (target, thisArg, argArray) {
-      const [ state, payload ] = argArray
-
+  return new Proxy(() => {}, {
+    apply (target, thisArg, [state, payload]) {
       if (isCollection) {
         Vue.set(state.items, payload.id, new ResourceObject(store, payload))
         Vue.set(state.initial, payload.id, new ResourceObject(store, payload))

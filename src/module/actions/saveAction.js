@@ -8,11 +8,8 @@ import {processResponseData} from '../helpers/processResponseData'
  * @param {String} moduleName
  */
 export function saveAction (api, isCollection, moduleName) {
-  return new Proxy(() => {
-  }, {
-    apply (target, thisArg, argArray) {
-      let [vuexFns, id] = argArray
-
+  return new Proxy(() => {}, {
+    apply (target, thisArg, [vuexFns, id]) {
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
       }

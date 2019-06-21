@@ -9,9 +9,7 @@ import { prepareQuery } from '../helpers/prepareQuery'
  */
 export function listAction (api, moduleName, defaultQuery) {
   return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      let [vuexFns, query] = argArray
-
+    apply (target, thisArg, [vuexFns, query]) {
       query = prepareQuery(query, defaultQuery)
 
       vuexFns.commit('startLoading')

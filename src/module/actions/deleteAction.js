@@ -7,9 +7,7 @@
  */
 export function deleteAction (api, moduleName) {
   return new Proxy(() => {}, {
-    apply (target, thisArg, argArray) {
-      let [vuexFns, id] = argArray
-
+    apply (target, thisArg, [vuexFns, id]) {
       vuexFns.commit('startLoading')
 
       return api[moduleName].delete({id: id}).then(() => {

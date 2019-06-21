@@ -2,7 +2,7 @@ import { checkConfigProperty } from '../../helpers/checkConfigProperty'
 import { Builder } from '../Builder'
 
 export function createPresetModule (store, api) {
-  return new Proxy((name, config) => { }, {
+  return new Proxy(() => { }, {
     apply (target, thisArg, [name, config]) {
       let baseModule
       if (checkConfigProperty(config, 'base')) {
