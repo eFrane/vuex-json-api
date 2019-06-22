@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
+import { checkConfigProperty } from '../helpers/checkConfigProperty'
 
 Vue.use(Vuex)
 
@@ -34,19 +35,29 @@ export function prepareModuleHashMap (modules) {
 /**
  * Create Vuex Store with API Plugin
  *
- * @param {object} staticModules non-dynamic modules
- * @param {route.Router} router
+ * @see initJsonApiPlugin
+ * @param {Object|Router} Can either just pass a router or a full config object
  * @returns {Promise<Store>}
  */
-export async function createVuexStore (staticModules, router) {
+export async function createVuexStore (config) {
+  let router = checkConfigProperty(config, 'router') ? config.router : null
+
+  if (!router) {
+    throw new Error('You must provide a router')
+  }
+
   return router
     .updateRoutes()
     .then(router => {
+      let staticModules = checkConfigProperty(config, 'staticModules', false)
+        ? config.staticModules
+        : {}
+
       const store = new Vuex.Store({
         strict: true,
         modules: prepareModuleHashMap(staticModules),
         plugins: [
-          initJsonApiPlugin(router)
+          initJsonApiPlugin(config)
         ]
       })
 
