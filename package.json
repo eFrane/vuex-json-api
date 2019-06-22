@@ -7,7 +7,7 @@
     "eFrane <efrane@meanderingsoul.com>"
   ],
   "homepage": "https://vuex-json-api.efrane.com",
-  "main": "vuex-json-api.umd.js",
+  "main": "index.js",
   "scripts": {
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "yarn unit",
@@ -28,7 +28,6 @@
     "deep-object-diff": "1.*",
     "vuex": "3.*"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
