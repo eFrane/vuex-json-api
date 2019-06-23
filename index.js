@@ -1,4 +1,4 @@
-import { createVuexStore } from './src/init/createVuexStore'
+import { createVuexStore, prepareModuleHashMap } from './src/init/createVuexStore'
 import { initJsonApiPlugin } from './src/init/initJsonApiPlugin'
 import { StaticRouter } from './src/route/StaticRouter'
 import { JsonApiRouter } from './src/route/JsonApiRouter'
@@ -9,5 +9,6 @@ export {
   initJsonApiPlugin,
   StaticRouter,
   JsonApiRouter,
-  FosJsRoutingRouter
+  FosJsRoutingRouter,
+  prepareModuleHashMap
 }
