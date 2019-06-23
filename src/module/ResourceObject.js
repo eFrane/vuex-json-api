@@ -12,7 +12,22 @@ export class ResourceObject {
     }
 
     obj.hasRelationship = name => {
-      return obj.hasOwnProperty('relationships') && obj.relationships.hasOwnProperty(name) && obj.relationships[name].data.length !== 0
+      return obj.hasOwnProperty('relationships') &&
+        obj.relationships.hasOwnProperty(name) &&
+        obj.relationships[name].data.length !== 0
+    }
+
+    obj.hasLoadedRelationship = name => {
+      if (!obj.hasRelationship(name)) {
+        return false
+      }
+
+      try {
+        obj.relationships[name].get() || obj.relationships[name].list()
+        return true
+      } catch (e) {
+        return false
+      }
     }
 
     return obj
