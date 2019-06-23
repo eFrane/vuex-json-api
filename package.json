@@ -13,7 +13,6 @@
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "yarn lint && yarn test && rimraf ./dist && webpack --config webpack.config.js",
     "vuepress:apidoc": "YARN_SILENT=1 yarn jsdoc2md -f 'src/**/*' --private -l js --name-format --separators --template docs/.vuepress/jsdoctemplate.handlebars > docs/code/README.md",
     "vuepress:dev": "yarn vuepress:apidoc && vuepress dev docs",
     "vuepress:build": "yarn vuepress:apidoc && vuepress build docs"
@@ -21,12 +20,12 @@
   "dependencies": {
     "axios": "^0.*",
     "json-api-normalizer": "^0.4",
-    "qs": "~6.7.0",
-    "vue": "2.*"
+    "qs": "~6.7.0"
   },
   "peerDependencies": {
     "deep-object-diff": "1.*",
-    "vuex": "3.*"
+    "vuex": "3.*",
+    "vue": "2.*"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
