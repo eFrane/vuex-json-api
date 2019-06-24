@@ -38,7 +38,7 @@ export class ResourcefulAPI extends Api {
       currentModuleName = registerableModuleNames.pop()
 
       if (typeof currentModuleName !== 'undefined' && (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName))) {
-        this.registerModule(store, this.registerableModules[currentModuleName], currentModuleName)
+        this.registerModule(store, this[currentModuleName], currentModuleName)
       }
     } while (currentModuleName)
 
@@ -89,15 +89,16 @@ export class ResourcefulAPI extends Api {
   registerRelatedResourceMethod (routeName, methodName, route) {
     let [related, resource, relationMethod] = methodName.split('.')
 
-    if (!this[routeName][related]) {
+    if (typeof this[routeName][related] !== 'object') {
       this[routeName][related] = {}
     }
 
-    if (!this[routeName][related][resource]) {
+    if (typeof this[routeName][related][resource] !== 'object') {
       this[routeName][related][resource] = {}
     }
 
-    this[routeName][related][resource][relationMethod] = ResourcefulAPI.createApiProxy(this, relationMethod, route)
+    this[routeName][related][resource][relationMethod] =
+      ResourcefulAPI.createApiProxy(this, relationMethod, route)
   }
 
   /**

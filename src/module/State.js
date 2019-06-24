@@ -20,41 +20,6 @@ function initialState (isCollection) {
   })()
 }
 
-/**
- * Check whether the api supports collections
- *
- * @param {object} apiMethods supported api methods (list, get, update, delete)
- */
-function isCollection (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('list')
-}
-
-function allowsModification (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('update')
-}
-
-function allowsReplacement (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('replace')
-}
-
-function allowsCreation (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('create')
-}
-
-function allowsDeletion (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('delete')
-}
-
-function hasRelated (apiMethods) {
-  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('related') && typeof apiMethods.related === 'object'
-}
-
 export {
-  allowsCreation,
-  allowsDeletion,
-  allowsModification,
-  allowsReplacement,
-  hasRelated,
-  initialState,
-  isCollection
+  initialState
 }

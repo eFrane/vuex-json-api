@@ -1,4 +1,5 @@
-import { allowsDeletion, allowsCreation, allowsModification, hasRelated, initialState, isCollection } from './State'
+import { initialState } from './State'
+import { allowsDeletion, allowsCreation, allowsModification, hasRelated, isCollection } from './helpers/ApiMethodHelpers'
 import { createAction } from './actions/createAction'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
