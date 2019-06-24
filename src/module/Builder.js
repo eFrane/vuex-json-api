@@ -1,10 +1,11 @@
-import { initialState, isCollection, allowsDeletion, allowsModification, allowsCreation } from './State'
+import { allowsDeletion, allowsCreation, allowsModification, hasRelated, initialState, isCollection } from './State'
 import { createAction } from './actions/createAction'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
 import { listAction } from './actions/listAction'
+import { listRelatedAction } from './actions/listRelatedAction'
 import { itemsInRelationshipFormat } from './getters/itemsInRelationshipFormat'
 import { resetItemsAction } from './actions/resetItemsAction'
 import { removeMutation } from './mutations/removeMutation'
@@ -134,7 +135,27 @@ export class Builder {
       actions['delete'] = deleteAction(this.api, this.moduleName)
     }
 
+    if (hasRelated(this.apiMethods)) {
+      actions = Object.assign(actions, this.buildRelatedActions())
+    }
+
     return actions
+  }
+
+  buildRelatedActions () {
+    let relatedActions = {}
+
+    for (const relatedObjectType in this.apiMethods.related) {
+      const relatedObjectMethods = this.apiMethods.related[relatedObjectType]
+      const relatedObjectTypeActionName = relatedObjectType.charAt(0).toUpperCase() + relatedObjectType.slice(1)
+
+      if (isCollection(relatedObjectMethods)) {
+        const listActionName = `listRelated${relatedObjectTypeActionName}`
+        relatedActions[listActionName] = listRelatedAction(this.api, this.moduleName, relatedObjectType)
+      }
+    }
+
+    return relatedActions
   }
 
   buildGetters () {

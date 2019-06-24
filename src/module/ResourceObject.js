@@ -8,7 +8,7 @@ export class ResourceObject {
     let obj = JSON.parse(JSON.stringify(resultObject.data))
 
     if (obj.hasOwnProperty('relationships')) {
-      obj.relationships = this.addRelationshipResolvers(store, obj.relationships)
+      obj.relationships = this.addRelationshipResolvers(store, obj.id, obj.type, obj.relationships)
     }
 
     obj.hasRelationship = name => {
@@ -38,27 +38,39 @@ export class ResourceObject {
    * @param {Vuex.Store} store
    * @param {object} resultObjectRelationships
    */
-  addRelationshipResolvers (store, resultObjectRelationships) {
+  addRelationshipResolvers (store, currentObjectId, currentObjectType, resultObjectRelationships) {
     for (const relatedObjectType in resultObjectRelationships) {
       if (resultObjectRelationships.hasOwnProperty(relatedObjectType)) {
-        let isToManyRelationship = resultObjectRelationships[relatedObjectType].data.constructor === Array
+        const isToManyRelationship = resultObjectRelationships[relatedObjectType].data.constructor === Array
 
-        resultObjectRelationships[relatedObjectType].get = this.resolveToOneRelationship(
-          store,
-          resultObjectRelationships[relatedObjectType],
-          isToManyRelationship
-        )
+        let relatedObject = resultObjectRelationships[relatedObjectType]
+
+        relatedObject.get = this.resolveToOneRelationship(store, relatedObject, isToManyRelationship)
 
         if (isToManyRelationship) {
-          resultObjectRelationships[relatedObjectType].list = this.resolveToManyRelationship(
-            store,
-            resultObjectRelationships[relatedObjectType]
-          )
+          relatedObject.list = this.resolveToManyRelationship(store, relatedObject)
         }
+
+        relatedObject.load = this.addLoaderMethod(store, currentObjectId, currentObjectType, relatedObject, isToManyRelationship)
+
+        resultObjectRelationships[relatedObjectType] = relatedObject
       }
     }
 
     return resultObjectRelationships
+  }
+
+  addLoaderMethod (store, currentObjectId, currentObjectType, relatedObject, isToManyRelationship) {
+    return new Proxy(() => { }, {
+      apply (target, thisArg, argArray) {
+        let relatedObjectType = (isToManyRelationship) ? relatedObject.data[0].type : relatedObject.data.type
+        let relatedObjectNameForAction = relatedObjectType.getChar(0).toUpperCase() + relatedObjectType.slice(1)
+
+        if (isToManyRelationship) {
+          return store.dispatch(`${currentObjectType}/listRelated${relatedObjectNameForAction}`, { currentObjectId })
+        }
+      }
+    })
   }
 
   /**

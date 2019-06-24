@@ -45,11 +45,16 @@ function allowsDeletion (apiMethods) {
   return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('delete')
 }
 
+function hasRelated (apiMethods) {
+  return typeof apiMethods === 'object' && apiMethods.hasOwnProperty('related') && typeof apiMethods.related === 'object'
+}
+
 export {
   allowsCreation,
   allowsDeletion,
   allowsModification,
   allowsReplacement,
+  hasRelated,
   initialState,
   isCollection
 }
