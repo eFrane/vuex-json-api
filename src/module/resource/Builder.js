@@ -5,7 +5,7 @@ import { listRelationship } from './listRelationship'
 import { loadRelationship } from './loadRelationship'
 import { getRelationship } from './getRelationship'
 
-export class ResourceObjectBuilder {
+export class Builder {
   constructor (store) {
     this.store = store
   }
