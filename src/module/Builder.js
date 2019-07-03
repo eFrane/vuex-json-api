@@ -20,6 +20,7 @@ import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
 import { hasChanges } from './getters/isChanged'
+import { Builder as ResourceBuilder } from './resource/Builder'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -90,10 +91,12 @@ export class Builder {
    * Build the mutations
    */
   buildMutations () {
+    const resourceBuilder = ResourceBuilder(this.store)
+
     let mutations = {
       resetItems: resetItemsMutation(this.isCollection),
-      set: setMutation(this.store, this.isCollection),
-      setItem: setItemMutation(this.store, this.isCollection),
+      set: setMutation(resourceBuilder, this.isCollection),
+      setItem: setItemMutation(resourceBuilder, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,
       update: updateMutation

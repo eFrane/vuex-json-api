@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { ResourceObject } from '../ResourceObject'
 
 /**
  * Proxy for setting Resource Objects on a Module
@@ -17,20 +16,21 @@ import { ResourceObject } from '../ResourceObject'
  * the `item`/`items` property of the module state.
  *
  * @param {Vuex.Store} store
+ * @param {resource.Builder} resourceBuilder
  * @param {Boolean} isCollection
  */
-export function setMutation (store, isCollection) {
+export function setMutation (resourceBuilder, isCollection) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [state, payload]) {
       if (isCollection) {
-        Vue.set(state.items, payload.id, new ResourceObject(store, payload))
-        Vue.set(state.initial, payload.id, new ResourceObject(store, payload))
+        Vue.set(state.items, payload.id, resourceBuilder.build(payload))
+        Vue.set(state.initial, payload.id, resourceBuilder.build(payload))
 
         return
       }
 
-      Vue.set(state, 'item', new ResourceObject(store, payload))
-      Vue.set(state, 'initial', new ResourceObject(store, payload))
+      Vue.set(state, 'item', resourceBuilder.build(payload))
+      Vue.set(state, 'initial', resourceBuilder.build(payload))
     }
   })
 }

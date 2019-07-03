@@ -1,11 +1,15 @@
 import Vue from 'vue'
-import {ResourceObject} from '../ResourceObject'
 
-export function setItemMutation (store, isCollection) {
+/**
+ *
+ * @param {resource.Builder} resourceBuilder
+ * @param {boolean} isCollection
+ */
+export function setItemMutation (resourceBuilder, isCollection) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [state, payload]) {
       if (isCollection) {
-        Vue.set(state.items, payload.id, new ResourceObject(store, payload))
+        Vue.set(state.items, payload.id, resourceBuilder.build(payload))
         return
       }
 
