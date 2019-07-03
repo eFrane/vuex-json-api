@@ -37,7 +37,8 @@ export class ResourcefulAPI extends Api {
     do {
       currentModuleName = registerableModuleNames.pop()
 
-      if (typeof currentModuleName !== 'undefined' && (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName))) {
+      if (typeof currentModuleName !== 'undefined' &&
+        (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName))) {
         this.registerModule(store, this[currentModuleName], currentModuleName)
       }
     } while (currentModuleName)
