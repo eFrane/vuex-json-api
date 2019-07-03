@@ -91,7 +91,7 @@ export class Builder {
    * Build the mutations
    */
   buildMutations () {
-    const resourceBuilder = ResourceBuilder(this.store)
+    const resourceBuilder = new ResourceBuilder(this.store)
 
     let mutations = {
       resetItems: resetItemsMutation(this.isCollection),
