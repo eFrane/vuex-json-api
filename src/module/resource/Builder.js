@@ -1,11 +1,12 @@
 import { hasRelationship } from './hasRelationship'
-import { hasLoadableRelationship } from './hasLoadableRelationship';
-import { hasLoadedRelationship } from './hasLoadedRelationship';
-import { listRelationship } from './listRelationship';
-import { loadRelationship } from './loadRelationship';
+import { hasLoadableRelationship } from './hasLoadableRelationship'
+import { hasLoadedRelationship } from './hasLoadedRelationship'
+import { listRelationship } from './listRelationship'
+import { loadRelationship } from './loadRelationship'
+import { getRelationship } from './getRelationship'
 
 export class ResourceObjectBuilder {
-  constructor(store) {
+  constructor (store) {
     this.store = store
   }
 
