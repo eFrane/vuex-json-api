@@ -1,6 +1,6 @@
 {
   "name": "@efrane/vuex-json-api",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
@@ -24,8 +24,8 @@
   },
   "peerDependencies": {
     "deep-object-diff": "1.*",
-    "vuex": "3.*",
-    "vue": "2.*"
+    "vue": "2.*",
+    "vuex": "3.*"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
