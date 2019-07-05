@@ -23,7 +23,7 @@ module.exports = {
       '/usage/',
       '/usage/modules.html',
       '/usage/requests.html',
-      '/code/'
+      '/code/classes/'
     ]
   },
   evergreen: true
