@@ -13,7 +13,7 @@
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "prepublish": "node docs/.vuepress/jsdoc.js",
+    "prepublishOnly": "node docs/.vuepress/jsdoc.js",
     "vuepress:dev": "vuepress dev docs",
     "vuepress:build": "vuepress build docs"
   },
@@ -58,8 +58,10 @@
     "node-sass": "^4.12.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",
+    "sass-loader": "^7.1.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
+    "vue": "^2.6.10",
     "vue-jest": "^1.0.2",
     "vue-template-compiler": "^2.5.2",
     "vuepress": "^0.14.11"
