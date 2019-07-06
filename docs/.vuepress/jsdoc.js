@@ -48,8 +48,6 @@ function documentClasses (templateData) {
     return classNames
   }, [])
 
-  const classTemplate = loadTemplate('class')
-
   const classIndexData = {
     classes: {}
   }
@@ -61,22 +59,24 @@ function documentClasses (templateData) {
     }
   }
 
-  console.log(classIndexData)
-
+  const classTemplate = loadTemplate('class')
   classes.forEach(className => {
     const fileName = `docs/code/classes/${className}.md`
     const classData = templateData
       .filter(jsdocBlock => jsdocBlock.memberof === className)
       .sort((a, b) => {
         return a.order < b.order ? -1 : 1
-      }).forEach(classData => {
-        if (classData.kind === 'class') {
-          classIndexData.classes[className].description = classData.description
-        }
       })
 
+    classData.forEach(classData => {
+      if (classData.kind === 'class') {
+        classIndexData.classes[className].description = classData.description
+      }
+    })
+
     console.log(`rendering ${className} to ${fileName}`)
-    fs.writeFileSync(fileName, classTemplate({ className, classData }))
+    const context = { className, classData }
+    fs.writeFileSync(fileName, classTemplate(context))
   })
 
   console.log('rendering index for class documentation')
