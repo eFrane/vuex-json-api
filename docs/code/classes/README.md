@@ -1,6 +1,6 @@
 # Available Classes
 
-## Builder
+## ModuleBuilder
 
 JsonApi-based module builder for Vuex
 
@@ -10,7 +10,7 @@ working with valid json api resources.
 - the proposed json api 1.1 pagination style meta attributes
   (-> https://jsonapi.org/format/1.1/#fetching-pagination)
 
-<a href="Builder.html">Builder</a>
+<a href="ModuleBuilder.html">ModuleBuilder</a>
 ## FosJsRoutingRouter
 
 Pluggable api router if you're using Symfony and the FosJsRouting Bundle
