@@ -32,7 +32,7 @@ dirs.forEach(dir => {
 })
 
 const templateData = jsdoc2md.getTemplateDataSync({
-  files: path.resolve('src/**/*.js')
+  files: path.resolve('src/**/**/*.js')
 })
 
 documentClasses(templateData)
@@ -44,7 +44,14 @@ documentClasses(templateData)
  */
 function documentClasses (templateData) {
   const classes = templateData.reduce((classNames, identifier) => {
-    if (identifier.kind === 'class') classNames.push(identifier.name)
+    if (identifier.kind === 'class') {
+      let name = identifier.name
+      classNames.push({
+        name,
+        path: identifier.meta.path,
+        uniqueName: identifier.meta.path.replace(path.resolve(__dirname, '../../src'), '')
+      })
+    }
     return classNames
   }, [])
 
@@ -53,29 +60,29 @@ function documentClasses (templateData) {
   }
 
   for (const cls of classes) {
-    classIndexData.classes[cls] = {
-      name: cls,
-      link: cls + '.html'
+    classIndexData.classes[cls.name] = {
+      name: cls.name,
+      link: cls.name + '.html'
     }
   }
 
   const classTemplate = loadTemplate('class')
-  classes.forEach(className => {
-    const fileName = `docs/code/classes/${className}.md`
+  classes.forEach(classInfo => {
+    const fileName = `docs/code/classes/${classInfo.name}.md`
     const classData = templateData
-      .filter(jsdocBlock => jsdocBlock.memberof === className)
+      .filter(jsdocBlock => jsdocBlock.memberof === classInfo.name)
       .sort((a, b) => {
         return a.order < b.order ? -1 : 1
       })
 
     classData.forEach(classData => {
       if (classData.kind === 'class') {
-        classIndexData.classes[className].description = classData.description
+        classIndexData.classes[classInfo.name].description = classData.description
       }
     })
 
-    console.log(`rendering ${className} to ${fileName}`)
-    const context = { className, classData }
+    console.log(`rendering ${classInfo.name} to ${fileName}`)
+    const context = { className: classInfo.name, classData }
     fs.writeFileSync(fileName, classTemplate(context))
   })
 
