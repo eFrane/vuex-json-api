@@ -1,5 +1,5 @@
 import { checkConfigProperty } from '../../helpers/checkConfigProperty'
-import { Builder } from '../Builder'
+import { ModuleBuilder } from '../ModuleBuilder'
 
 export function createPresetModule (store, api) {
   return new Proxy(() => { }, {
@@ -13,7 +13,7 @@ export function createPresetModule (store, api) {
 
       const timerLabel = `Register preset ${name} for base ${baseModule}`
       console.time(timerLabel)
-      const builder = new Builder(store, api, baseModule, methods, {
+      const builder = new ModuleBuilder(store, api, baseModule, methods, {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
         }

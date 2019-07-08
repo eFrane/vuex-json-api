@@ -20,7 +20,7 @@ import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
 import { hasChanges } from './getters/isChanged'
-import { Builder as ResourceBuilder } from './resource/Builder'
+import { ResourceBuilder } from './resource/ResourceBuilder'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -31,7 +31,7 @@ import { Builder as ResourceBuilder } from './resource/Builder'
  * - the proposed json api 1.1 pagination style meta attributes
  *   (-> https://jsonapi.org/format/1.1/#fetching-pagination)
  */
-export class Builder {
+export class ModuleBuilder {
   /**
    * Module Builder for Json:Api bound Vuex Modules
    *

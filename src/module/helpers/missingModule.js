@@ -1,4 +1,4 @@
-import { Builder } from '../Builder'
+import { ModuleBuilder } from '../ModuleBuilder'
 
 /**
  * Check if a module is registered in the store
@@ -18,7 +18,7 @@ export function isMissingModule (store, moduleName) {
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-  let builder = new Builder(store, api, moduleName, {}, { standalone: true })
+  let builder = new ModuleBuilder(store, api, moduleName, {}, { standalone: true })
 
   store.registerModule(
     moduleName,

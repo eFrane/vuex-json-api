@@ -1,5 +1,5 @@
 import { Api } from './Api'
-import { Builder } from '../module/Builder'
+import { ModuleBuilder } from '../module/Builder'
 
 export class ResourcefulAPI extends Api {
   /**
@@ -54,7 +54,7 @@ export class ResourcefulAPI extends Api {
    * @param {Route} methods
    */
   registerModule (store, methods, moduleName) {
-    let moduleBuilder = new Builder(store, this, moduleName, methods)
+    let moduleBuilder = new ModuleBuilder(store, this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
       store.registerModule(moduleName, module)
