@@ -1,5 +1,5 @@
 <script>
-import mermaid from 'mermaid/src/mermaidAPI'
+import mermaid from 'mermaid'
 
 let graphIdCounter = 0
 
