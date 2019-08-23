@@ -11,14 +11,15 @@ class Api {
     this.preprocessingCallbacks = []
 
     this.defaultOptions = {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json'
-      },
       paramsSerializer (params) {
         return stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
       }
+    }
+
+    this.headers = {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'application/vnd.api+json'
     }
   }
 
@@ -54,9 +55,27 @@ class Api {
     this.preprocessingCallbacks = []
   }
 
+  /**
+   *
+   * @param {Array} headers
+   */
+  addHeaders (headers) {
+    if (headers.constructor !== Array) {
+      throw new Error('You must pass an array to this method')
+    }
+
+    this.headers = {
+      ...this.headers,
+      ...headers
+    }
+  }
+
   async doRequest (method, url, params, data, options) {
-    // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Objekte_mit_gleichen_Eigenschaften_zusammenf%C3%BChren
-    let config = Object.assign(options, this.defaultOptions, options)
+    let config = {
+      ...options,
+      ...this.defaultOptions,
+      headers: this.headers
+    }
 
     if (url instanceof Route) {
       url = url.prepare(params)

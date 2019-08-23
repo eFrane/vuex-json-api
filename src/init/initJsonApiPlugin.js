@@ -35,6 +35,10 @@ export function initJsonApiPlugin (config) {
     modulesToRegister = config.apiModules
   }
 
+  if (checkConfigProperty(config, 'headers', false)) {
+    api.addHeaders(config.headers)
+  }
+
   return store => {
     api.setupModules(store, modulesToRegister)
 
