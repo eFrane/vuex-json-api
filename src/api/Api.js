@@ -57,11 +57,11 @@ class Api {
 
   /**
    *
-   * @param {Array} headers
+   * @param {Object} headers
    */
   addHeaders (headers) {
-    if (headers.constructor !== Array) {
-      throw new Error('You must pass an array to this method')
+    if (headers.constructor !== Object) {
+      throw new Error('You must pass an object to this method')
     }
 
     this.headers = {
