@@ -1,5 +1,5 @@
 // import Vuex from 'vuex'
-import { initialState } from '../../src/module/State'
+import { initialState } from '../../../src/module/State'
 // import { collection } from '../../src/module/state/collection'
 // import { item } from '../../src/module/state/item'
 
