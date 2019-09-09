@@ -1,7 +1,7 @@
-const FakeServer = require('fake-json-api-server/src/nodeServer')
+// const FakeServer = require('fake-json-api-server/src/nodeServer')
+import { JsonApiServerAdapter } from './JsonApiServerAdapter'
 
-new FakeServer({
-  port: 3000,
+let serverConfig = {
   resources: {
     tag: {
       data: [
@@ -53,4 +53,13 @@ new FakeServer({
       ]
     }
   }
-});
+}
+
+function getTestServer (port) {
+  const adapter = new JsonApiServerAdapter(serverConfig)
+  const app = adapter.getApp()
+
+  return app.listen(port)
+
+}
+export { getTestServer }
