@@ -64,6 +64,11 @@ class Api {
       throw new Error('You must pass an object to this method')
     }
 
+    // make sure there is a spreadable object in headers
+    if (!headers || headers.getOwnPropertyNames().length < 1) {
+      headers = {}
+    }
+
     this.headers = {
       ...this.headers,
       ...headers
