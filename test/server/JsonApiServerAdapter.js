@@ -9,28 +9,25 @@ import dataset from 'fake-json-api-server/src/dataset'
 import toolkit from 'fake-json-api-server/src/toolkit'
 
 const assign = toolkit.assign
-const each = toolkit.each
 const pick = toolkit.pick
 
-function formatRequest(request) {
-
+function formatRequest (request) {
   return {
-      requestBody: request.body,
-      queryParams: request.query,
-      params: request.params
+    requestBody: request.body,
+    queryParams: request.query,
+    params: request.params
   }
-
 }
 
-function dataToResponse([ status, headers, responseText ], response) {
+function dataToResponse ([ status, headers, responseText ], response) {
   response
-      .status(status)
-      .set(headers)
-      .json(responseText === '""' ? undefined : JSON.parse(responseText))
+    .status(status)
+    .set(headers)
+    .json(responseText === '""' ? undefined : JSON.parse(responseText))
 }
 
 export class JsonApiServerAdapter {
-  constructor(serverConfig) {
+  constructor (serverConfig) {
     this.app = express()
 
     this.app.use(bodyParser.json({ type: 'application/*+json' }))
@@ -53,7 +50,7 @@ export class JsonApiServerAdapter {
       let config = serverConfig.resources[resourceType]
 
       let ResourceController = BaseController.extend({
-          resourceType: resourceType
+        resourceType: resourceType
       })
 
       let resourceSlug = serverConfig.getResourceSlug(resourceType)
@@ -62,56 +59,56 @@ export class JsonApiServerAdapter {
 
       // Index
       this.app.get(resourceUrl, (request, response) => {
-          dataToResponse(
-              resourceController.list(formatRequest(request)),
-              response
-          )
+        dataToResponse(
+          resourceController.list(formatRequest(request)),
+          response
+        )
       })
 
       // Show
       this.app.get(resourceUrl + '/:id', (request, response) => {
-          dataToResponse(
-              resourceController.show(request.params.id, formatRequest(request)),
-              response
-          )
+        dataToResponse(
+          resourceController.show(request.params.id, formatRequest(request)),
+          response
+        )
       })
 
       // Create
       this.app.post(resourceUrl, (request, response) => {
-          dataToResponse(
-              resourceController.create(formatRequest(request)),
-              response
-          )
+        dataToResponse(
+          resourceController.create(formatRequest(request)),
+          response
+        )
       })
 
       // Update
       this.app.post(resourceUrl + '/:id', (request, response) => {
         dataToResponse(
-            resourceController.edit(request.params.id, formatRequest(request)),
-            response
+          resourceController.edit(request.params.id, formatRequest(request)),
+          response
         )
       })
 
       this.app.put(resourceUrl + '/:id', (request, response) => {
         dataToResponse(
-            resourceController.edit(request.params.id, formatRequest(request)),
-            response
+          resourceController.edit(request.params.id, formatRequest(request)),
+          response
         )
       })
 
       this.app.patch(resourceUrl + '/:id', (request, response) => {
         dataToResponse(
-            resourceController.edit(request.params.id, formatRequest(request)),
-            response
+          resourceController.edit(request.params.id, formatRequest(request)),
+          response
         )
       })
 
       // Delete
       this.app.delete(resourceUrl + '/:id', (request, response) => {
-          dataToResponse(
-              resourceController.delete(request.params.id, formatRequest(request)),
-              response
-          )
+        dataToResponse(
+          resourceController.delete(request.params.id, formatRequest(request)),
+          response
+        )
       })
     }
   }

@@ -3,21 +3,23 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint'
+    ecmaVersion: 2018
   },
   env: {
     browser: true,
+    "jest/globals": true
   },
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential', 
+    'plugin:vue/essential',
+    'plugin:jest/recommended',
     // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
-  // required to lint *.vue files
   plugins: [
-    'vue'
+    'vue',
+    'jest'
   ],
   // add your custom rules here
   rules: {

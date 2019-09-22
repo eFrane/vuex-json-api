@@ -2,7 +2,7 @@ import { getTestServer } from '../server/getTestServer'
 import { Api } from '@/api/Api'
 
 // test constructor defaults
-describe('Api', () => {
+describe('Api configuration', () => {
   it('has no default base url', () => {
     expect(Api.baseUrl).toBeUndefined()
 
@@ -11,7 +11,7 @@ describe('Api', () => {
   })
 })
 
-describe('Api', () => {
+describe('Api server interaction', () => {
   let api = null
   let testServer = null
 

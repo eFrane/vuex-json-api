@@ -60,6 +60,5 @@ function getTestServer (port) {
   const app = adapter.getApp()
 
   return app.listen(port)
-
 }
 export { getTestServer }
