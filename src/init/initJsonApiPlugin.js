@@ -1,5 +1,4 @@
 import { ResourcefulAPI } from '../api/ResourcefulApi'
-import { Router } from '../route/Router'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { createPresetModule } from '../module/preset/createPresetModule'
 
@@ -14,11 +13,7 @@ import { createPresetModule } from '../module/preset/createPresetModule'
 export function initJsonApiPlugin (config) {
   const api = new ResourcefulAPI()
 
-  let router
-
-  if (config instanceof Router) {
-    api.setupResourcefulRequests(router)
-  } else if (checkConfigProperty(config, 'router')) {
+  if (checkConfigProperty(config, 'router')) {
     api.setupResourcefulRequests(config.router)
   }
 
