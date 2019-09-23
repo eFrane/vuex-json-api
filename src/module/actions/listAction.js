@@ -17,7 +17,7 @@ export function listAction (api, moduleName, defaultQuery) {
       return api[moduleName].list(query).then(({ data, meta }) => {
         vuexFns.commit('resetItems')
 
-        processResponseData(thisArg, vuexFns, api, moduleName, data)
+        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list')
 
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', meta.pagination)

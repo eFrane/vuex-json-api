@@ -16,7 +16,7 @@ export function createAction (api, moduleName) {
 
       // It is currently not supported to pass query params when creating a new resource
       return api[moduleName].create(null, {data: resourceObject}).then(({ data }) => {
-        processResponseData(thisArg, vuexFns, api, moduleName, data)
+        processResponseData(thisArg, vuexFns, api, moduleName, data, 'create')
 
         vuexFns.commit('endLoading')
       })

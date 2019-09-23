@@ -3,5 +3,6 @@ export const collection = {
   items: {},
   initial: {},
   currentPage: null,
-  totalPages: null
+  totalPages: null,
+  urlInfo: {}
 }

@@ -18,13 +18,13 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {String} currentModule
  * @param {Object} data
  */
-export function processResponseData (vuexInstance, vuexFns, api, currentModule, data) {
+export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '') {
   for (let destinationModule in data) {
     if (!data.hasOwnProperty(destinationModule)) {
       continue
     }
 
-    if (isMissingModule(vuexInstance, destinationModule)) {
+    if (!vuexInstance.state[currentModule].options.absoluteMethods.includes(currentMethod) && isMissingModule(vuexInstance, destinationModule)) {
       registerMissingModule(vuexInstance, api, destinationModule)
     }
 

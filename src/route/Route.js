@@ -46,4 +46,8 @@ export class Route {
       return parameter === checkParam
     }).length > 0
   }
+
+  isAbsolute () {
+    return this.url.subString(0, 3) === 'http'
+  }
 }

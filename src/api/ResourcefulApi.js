@@ -7,6 +7,8 @@ export class ResourcefulAPI extends Api {
    * @param {route.Router} router
    */
   setupResourcefulRequests (router) {
+    this.router = router
+
     console.time('api: setup resourceful routing')
     const routes = router.getRoutes()
     this.registerableModules = {}

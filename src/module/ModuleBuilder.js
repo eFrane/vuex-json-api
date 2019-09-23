@@ -76,6 +76,8 @@ export class ModuleBuilder {
       state () { return initialState(isCollection) }
     }
 
+    module['state']['options'] = this.buildOptions()
+
     module['mutations'] = this.buildMutations()
 
     if (!this.isStandalone) {
@@ -85,6 +87,20 @@ export class ModuleBuilder {
 
     console.timeEnd(storeModuleBuildTimer)
     return module
+  }
+
+  buildOptions () {
+    let options = {
+      absoluteMethods: []
+    }
+
+    for (const method in this.apiMethods) {
+      if (this.apiMethods.hasOwnProperty(method) && this.api.router[method].isAbsolute()) {
+        options.absoluteMethods.push(method)
+      }
+    }
+
+    return options
   }
 
   /**
