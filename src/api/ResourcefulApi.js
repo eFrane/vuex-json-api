@@ -54,6 +54,11 @@ export class ResourcefulAPI extends Api {
    * @param {Route} methods
    */
   registerModule (store, methods, moduleName) {
+    // prevent double registration
+    if (store.state.hasOwnProperty(moduleName)) {
+      return
+    }
+
     let moduleBuilder = new ModuleBuilder(store, this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
