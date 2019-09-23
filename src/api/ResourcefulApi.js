@@ -28,7 +28,7 @@ export class ResourcefulAPI extends Api {
    * @param {Vuex.Store} store
    * @param {Array} modulesToRegister
    */
-  setupModules (store, modulesToRegister) {
+  setupModules (store, modulesToRegister = []) {
     console.time('api: setup modules')
 
     let registerableModuleNames = Object.keys(this.registerableModules)
