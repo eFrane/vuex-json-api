@@ -48,6 +48,6 @@ export class Route {
   }
 
   isAbsolute () {
-    return this.url.subString(0, 3) === 'http'
+    return this.url.substring(0, 3) === 'http'
   }
 }
