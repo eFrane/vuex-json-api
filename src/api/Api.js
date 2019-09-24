@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { stringify } from 'qs'
-import normalize from 'json-api-normalizer'
 
 import {Route} from '../route/Route'
 
