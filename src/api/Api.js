@@ -80,11 +80,13 @@ class Api {
       url = url.prepare(params)
     }
 
-    url = this.baseUrl + url
+    if (url.indexOf('://') <= 0) {
+      url = this.baseUrl + url
+    }
 
     // make cross domain requests if necessary
     let crossDomain = false
-    if (this.baseUrl.length > 0 && this.baseUrl.indexOf('://') > 0) {
+    if (url.length > 0 && url.indexOf('://') > 0) {
       crossDomain = true
     }
 
