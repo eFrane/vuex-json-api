@@ -6,7 +6,8 @@ module.exports = api => {
       plugins: [
         ["@babel/plugin-transform-modules-commonjs", {
           "allowTopLevelThis": true
-        }]
+        }],
+        "@babel/plugin-proposal-object-rest-spread"
       ],
       presets: [
         [
