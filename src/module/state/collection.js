@@ -4,5 +4,6 @@ export const collection = {
   initial: {},
   currentPage: null,
   totalPages: null,
-  urlInfo: {}
+  urlInfo: {},
+  options: {}
 }

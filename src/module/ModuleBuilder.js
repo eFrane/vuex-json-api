@@ -81,7 +81,7 @@ export class ModuleBuilder {
     module['mutations'] = this.buildMutations()
 
     if (!this.isStandalone) {
-      module['actions'] = this.buildActions()
+      module['actions'] = this.buildActions(module)
       module['getters'] = this.buildGetters()
     }
 
@@ -129,7 +129,7 @@ export class ModuleBuilder {
     return mutations
   }
 
-  buildActions () {
+  buildActions (module) {
     let defaultQuery = checkConfigProperty(this.presetOptions, 'defaultQuery', false) ? this.presetOptions.defaultQuery : {}
 
     let actions = {
@@ -139,7 +139,7 @@ export class ModuleBuilder {
     }
 
     if (this.isCollection) {
-      actions['list'] = listAction(this.api, this.moduleName, defaultQuery)
+      actions['list'] = listAction(this.api, this.moduleName, defaultQuery, module)
     }
 
     if (allowsModification(this.apiMethods)) {
