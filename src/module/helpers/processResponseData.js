@@ -26,16 +26,14 @@ export function processResponseData (vuexInstance, vuexFns, api, currentModule, 
     } else if (!data.hasOwnProperty(itemType)) {
       continue
     }
-
-    if (!vuexInstance.state[currentModule].options.absoluteMethods.includes(currentMethod) && isMissingModule(vuexInstance, destinationModule)) {
-      registerMissingModule(vuexInstance, api, destinationModule)
+    if (isMissingModule(vuexInstance, registeredModule)) {
+      registerMissingModule(vuexInstance, api, registeredModule)
     }
-
     setResourceObjectsForModule(
       vuexFns,
       currentModule,
-      destinationModule,
-      data[destinationModule]
+      registeredModule,
+      data[itemType]
     )
   }
 }
