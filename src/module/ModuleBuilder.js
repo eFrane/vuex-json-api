@@ -95,7 +95,7 @@ export class ModuleBuilder {
     }
 
     for (const method in this.apiMethods) {
-      if (this.apiMethods.hasOwnProperty(method) && this.api.router[method].isAbsolute()) {
+      if (this.apiMethods.hasOwnProperty(method) && this.api.router.routes[this.moduleName][method].isAbsolute()) {
         options.absoluteMethods.push(method)
       }
     }
