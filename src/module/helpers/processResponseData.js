@@ -7,8 +7,10 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {Vuex} vuexInstance
  * @param {Object} vuexFns
  * @param {ResourcefulApi} api
- * @param {String} currentModule
- * @param {Object} data
+ * @param {String} currentModule  name of the current storeModule
+ * @param {Object} data           payload from request
+ * @param {String} currentMethod  default = ''
+ * @param {Object} module         storeModule
  */
 /**
  *
