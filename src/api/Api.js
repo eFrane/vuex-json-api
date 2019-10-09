@@ -96,7 +96,13 @@ class Api {
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
-      .then(Promise.all(this.preprocessingCallbacks))
+      .then(async response => {
+        for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
+          await this.preprocessingCallbacks[i]
+        }
+
+        return response
+      })
       .then((response) => {
         return {
           data: normalize(response.data),
