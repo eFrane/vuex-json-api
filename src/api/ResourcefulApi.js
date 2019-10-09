@@ -2,8 +2,17 @@ import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
+import { Route } from '../route/Route'
 
 export class ResourcefulApi extends Api {
+  /**
+   *
+   * @param {String} method
+   * @param {String} url
+   * @param {Object} params
+   * @param {Object} data
+   * @param {Object} options
+   */
   async doRequest (method, url, params, data, options) {
     return super.doRequest(method, url, params, data, options)
       .then((response) => {
@@ -131,8 +140,13 @@ export class ResourcefulApi extends Api {
   static createApiProxy (api, method, route) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
+        if (!(route instanceof Route)) {
+          throw new Error('Expected Route object')
+        }
+
         // add actual route as first param
-        argArray.unshift(route)
+        let url = route.prepare(argArray[0])
+        argArray.unshift(url)
 
         switch (method) {
           case 'list':

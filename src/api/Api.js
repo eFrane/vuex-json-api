@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { stringify } from 'qs'
 
-import {Route} from '../route/Route'
-
 class Api {
   constructor () {
     this.baseUrl = ''
@@ -107,9 +105,9 @@ class Api {
     let config = Object.assign(options, this.defaultOptions)
     config['headers'] = this.headers
 
-    if (url instanceof Route) {
-      url = url.prepare(params)
-    }
+    // if (this.baseUrl.length > 0) {
+    //   url = this.baseUrl + (this.baseUrl.endsWith('/')) ? '' : '/' + url
+    // }
 
     if (url.indexOf('://') <= 0) {
       url = this.baseUrl + url

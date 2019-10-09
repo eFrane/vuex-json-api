@@ -9,6 +9,12 @@ describe('Api configuration', () => {
     const api = new Api()
     expect(api.baseUrl).toBe('')
   })
+
+  it('allows changing the base url', () => {
+    const api = new Api()
+    api.setBaseUrl('/api/')
+    expect(api.baseUrl).toBe('/api/')
+  })
 })
 
 describe('Api server interaction', () => {
