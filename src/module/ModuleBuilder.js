@@ -89,6 +89,9 @@ export class ModuleBuilder {
     return module
   }
 
+  /**
+   * Build the options
+   */
   buildOptions () {
     let options = {
       absoluteMethods: []
