@@ -21,10 +21,11 @@
     "axios": "^0.*",
     "eslint-plugin-jest": "^22.17.0",
     "json-api-normalizer": "^0.4",
-    "qs": "~6.7.0"
+    "qs": "~6.7.0",
+    "vuex": "^3.1.1"
   },
   "peerDependencies": {
-    "deep-object-diff": "1.*",
+    "deep-object-diff": "1.1.0",
     "vue": "2.*",
     "vuex": "3.*"
   },

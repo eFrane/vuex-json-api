@@ -9,6 +9,7 @@ class Api {
     this.baseUrl = ''
 
     this.preprocessingCallbacks = []
+    this.errorCallbacks = []
 
     this.defaultOptions = {
       paramsSerializer (params) {
@@ -35,6 +36,18 @@ class Api {
 
     this.preprocessingCallbacks = callbacks
   }
+  /**
+   *
+   * @param {Array} callbacks
+   */
+  setErrorCallbacks (callbacks) {
+    if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
+      callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true) === false) {
+      throw new Error('You must pass an array of callbacks to this method')
+    }
+
+    this.errorCallbacks = callbacks
+  }
 
   /**
    *
@@ -49,10 +62,29 @@ class Api {
   }
 
   /**
+   *
+   * @param {Function} callback
+   */
+  addErrorCallback (callback) {
+    if (callback.constructor !== Function) {
+      throw new Error('You must pass a valid callback to this method')
+    }
+
+    this.errorCallbacks.push(callback)
+  }
+
+  /**
    * Reset the response preprocessing to the default behaviour
    */
   resetPreprocessing () {
     this.preprocessingCallbacks = []
+  }
+
+  /**
+   * Reset the response error to the default behaviour
+   */
+  resetErrorCallbacks () {
+    this.errorCallbacks = []
   }
 
   /**
