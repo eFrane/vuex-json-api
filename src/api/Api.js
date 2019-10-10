@@ -97,7 +97,7 @@ class Api {
     }
 
     // make sure there is a spreadable object in headers
-    if (!headers || headers.getOwnPropertyNames().length < 1) {
+    if (!headers || Object.getOwnPropertyNames(headers).length < 1) {
       headers = {}
     }
 
