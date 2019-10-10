@@ -1,6 +1,4 @@
 <script>
-import mermaid from 'mermaid'
-
 let graphIdCounter = 0
 
 export default {
@@ -15,20 +13,22 @@ export default {
     return h('div', { domProps: { innerHTML: this.svg }})
   },
   mounted() {
-    mermaid.initialize({ startOnLoad: true })
+    import('mermaid').then(mermaid => {
+      mermaid.initialize({ startOnLoad: true })
 
-    let renderDiv = document.createElement('div')
-    document.body.appendChild(renderDiv)
+      let renderDiv = document.createElement('div')
+      document.body.appendChild(renderDiv)
 
-    mermaid.render(
-      'mermaid' + ++graphIdCounter,
-      this.graph,
-      (svg) => {
-        this.svg = svg
-        document.body.removeChild(renderDiv)
-      },
-      renderDiv
-    )
+      mermaid.render(
+        'mermaid' + ++graphIdCounter,
+        this.graph,
+        (svg) => {
+          this.svg = svg
+          document.body.removeChild(renderDiv)
+        },
+        renderDiv
+      )
+    })
   }
 }
 </script>

@@ -1,7 +1,19 @@
+import normalize from 'json-api-normalizer'
+
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 
-export class ResourcefulAPI extends Api {
+export class ResourcefulApi extends Api {
+  async doRequest (method, url, params, data, options) {
+    return super.doRequest(method, url, params, data, options)
+      .then((response) => {
+        return {
+          data: normalize(response.data),
+          meta: response.data.meta
+        }
+      })
+  }
+
   /**
    *
    * @param {route.Router} router
@@ -87,7 +99,7 @@ export class ResourcefulAPI extends Api {
           continue
         }
 
-        this[routeName][methodName] = ResourcefulAPI.createApiProxy(this, methodName, route)
+        this[routeName][methodName] = ResourcefulApi.createApiProxy(this, methodName, route)
       }
     }
 
@@ -106,7 +118,7 @@ export class ResourcefulAPI extends Api {
     }
 
     this[routeName][related][resource][relationMethod] =
-      ResourcefulAPI.createApiProxy(this, relationMethod, route)
+      ResourcefulApi.createApiProxy(this, relationMethod, route)
   }
 
   /**
