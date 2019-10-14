@@ -1,4 +1,4 @@
-import {diff} from 'deep-object-diff'
+import { diff } from 'deep-object-diff'
 
 /**
  * Determine if an object has been changed
