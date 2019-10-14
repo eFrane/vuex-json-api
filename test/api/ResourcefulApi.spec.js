@@ -35,4 +35,10 @@ describe('ResourcefulApi', () => {
         })
       })
   })
+
+  it('provides a status code', () => {
+    return api.get('tag/1').then( response => {
+      expect(response.status).toBe(200)
+    })
+  })
 })
