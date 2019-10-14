@@ -6,8 +6,9 @@ import { prepareQuery } from '../helpers/prepareQuery'
  *
  * @param {ResourcefulApi} api
  * @param {String} moduleName
+ * @param {Object} module     storeModule at point of initialisation
  */
-export function listAction (api, moduleName, defaultQuery) {
+export function listAction (api, moduleName, defaultQuery, module) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [vuexFns, query]) {
       query = prepareQuery(query, defaultQuery)
@@ -16,8 +17,7 @@ export function listAction (api, moduleName, defaultQuery) {
 
       return api[moduleName].list(query).then(({ data, meta }) => {
         vuexFns.commit('resetItems')
-
-        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list')
+        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list', module)
 
         if (meta.hasOwnProperty('pagination')) {
           vuexFns.commit('setPagination', meta.pagination)

@@ -7,8 +7,10 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {Vuex} vuexInstance
  * @param {Object} vuexFns
  * @param {ResourcefulApi} api
- * @param {String} currentModule
- * @param {Object} data
+ * @param {String} currentModule  name of the current storeModule
+ * @param {Object} data           payload from request
+ * @param {String} currentMethod  default = ''
+ * @param {Object} module         storeModule
  */
 /**
  *
@@ -18,21 +20,22 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {String} currentModule
  * @param {Object} data
  */
-export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '') {
-  for (let destinationModule in data) {
-    if (!data.hasOwnProperty(destinationModule)) {
+export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '', module = null) {
+  for (let itemType in data) {
+    let registeredModule = itemType
+    if (typeof module !== 'undefined' && module.state.options.absoluteMethods.includes(currentMethod)) {
+      registeredModule = currentModule
+    } else if (!data.hasOwnProperty(itemType)) {
       continue
     }
-
-    if (!vuexInstance.state[currentModule].options.absoluteMethods.includes(currentMethod) && isMissingModule(vuexInstance, destinationModule)) {
-      registerMissingModule(vuexInstance, api, destinationModule)
+    if (isMissingModule(vuexInstance, registeredModule)) {
+      registerMissingModule(vuexInstance, api, registeredModule)
     }
-
     setResourceObjectsForModule(
       vuexFns,
       currentModule,
-      destinationModule,
-      data[destinationModule]
+      registeredModule,
+      data[itemType]
     )
   }
 }

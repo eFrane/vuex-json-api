@@ -101,24 +101,20 @@ class Api {
       headers = {}
     }
 
-    this.headers = {
-      ...this.headers,
-      ...headers
-    }
+    this.headers = Object.assign(this.headers, headers)
   }
 
   async doRequest (method, url, params, data, options) {
-    let config = {
-      ...options,
-      ...this.defaultOptions,
-      headers: this.headers
-    }
+    let config = Object.assign(options, this.defaultOptions)
+    config['headers'] = this.headers
 
     if (url instanceof Route) {
       url = url.prepare(params)
     }
 
-    url = this.baseUrl + url
+    if (url.indexOf('://') <= 0) {
+      url = this.baseUrl + url
+    }
 
     // make cross domain requests if necessary
     let crossDomain = false
