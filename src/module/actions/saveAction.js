@@ -30,6 +30,14 @@ export function saveAction (api, isCollection, moduleName) {
         }
       }
 
+      const expectedResponse = {
+        id: id,
+        data: Object.assign(currentItemState, {
+          id: id,
+          type: currentItemState.type
+        })
+      }
+
       vuexFns.commit('startLoading', null)
 
       return api[moduleName].update(
@@ -41,7 +49,10 @@ export function saveAction (api, isCollection, moduleName) {
               type: currentItemState.type
             })
         }
-      ).then(({data}) => {
+      ).then(({data, status}) => {
+        if (status === 204) {
+          vuexFns.commit('set', expectedResponse)
+        }
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
 
         vuexFns.commit('endLoading', null)
