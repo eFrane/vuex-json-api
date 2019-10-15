@@ -1,5 +1,6 @@
 import {diff} from 'deep-object-diff'
 import {processResponseData} from '../helpers/processResponseData'
+import {getExpectedResponse} from '../helpers/getExpectedResponse'
 
 /**
  * Update an existing resource
@@ -41,7 +42,10 @@ export function saveAction (api, isCollection, moduleName) {
               type: currentItemState.type
             })
         }
-      ).then(({data}) => {
+      ).then(({data, status}) => {
+        if (status === 204) {
+          vuexFns.commit('set', getExpectedResponse(currentItemState))
+        }
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
 
         vuexFns.commit('endLoading', null)
