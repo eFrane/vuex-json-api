@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { stringify } from 'qs'
-import normalize from 'json-api-normalizer'
 
 import {Route} from '../route/Route'
 
@@ -130,12 +129,6 @@ class Api {
         }
 
         return response
-      })
-      .then((response) => {
-        return {
-          data: normalize(response.data),
-          meta: response.data.meta
-        }
       })
   }
 
