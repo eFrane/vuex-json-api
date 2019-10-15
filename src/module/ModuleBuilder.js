@@ -19,7 +19,7 @@ import { setMutation } from './mutations/setMutation'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
-import { hasChanges } from './getters/isChanged'
+import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
 
 /**
