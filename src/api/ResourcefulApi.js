@@ -10,7 +10,7 @@ export class ResourcefulApi extends Api {
         return {
           data: normalize(response.data),
           meta: response.data.meta,
-          status: status
+          status: response.status
         }
       })
   }

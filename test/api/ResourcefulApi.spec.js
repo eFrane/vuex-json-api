@@ -31,7 +31,8 @@ describe('ResourcefulApi', () => {
               }
             }
           },
-          meta: undefined
+          meta: undefined,
+          status: 200
         })
       })
   })
