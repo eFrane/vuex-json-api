@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { stringify } from 'qs'
+import { validateCallbackFn } from '../helpers/validateCallbackFn'
 
 class Api {
   constructor () {
@@ -27,7 +28,7 @@ class Api {
    */
   setPreprocessingCallbacks (callbacks) {
     if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
-      callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true) === false) {
+      callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
       throw new Error('You must pass an array of callbacks to this method')
     }
 
@@ -39,7 +40,7 @@ class Api {
    */
   setErrorCallbacks (callbacks) {
     if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
-      callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true) === false) {
+      callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
       throw new Error('You must pass an array of callbacks to this method')
     }
 
@@ -51,7 +52,7 @@ class Api {
    * @param {Function} callback
    */
   addPreprocessingCallback (callback) {
-    if (callback.constructor !== Function) {
+    if (validateCallbackFn(callback)) {
       throw new Error('You must pass a valid callback to this method')
     }
 
@@ -63,7 +64,7 @@ class Api {
    * @param {Function} callback
    */
   addErrorCallback (callback) {
-    if (callback.constructor !== Function) {
+    if (validateCallbackFn(callback)) {
       throw new Error('You must pass a valid callback to this method')
     }
 
