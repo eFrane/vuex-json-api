@@ -125,11 +125,11 @@ class Api {
           }
 
           return response
-        },
-
+        }
+      ).catch(
         async errorResponse => {
-          for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
-            await this.preprocessingCallbacks[i](errorResponse)
+          for (let i = 0; i < this.errorCallbacks.length; i++) {
+            await this.errorCallbacks[i](errorResponse)
           }
 
           return errorResponse
