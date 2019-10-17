@@ -23,7 +23,8 @@ module.exports = {
       '/usage/',
       '/usage/modules.html',
       '/usage/requests.html',
-      '/usage/router.html'
+      '/usage/router.html',
+      '/usage/deep-dive.html'
     ]
   },
   evergreen: true,
