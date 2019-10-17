@@ -105,10 +105,6 @@ class Api {
     let config = Object.assign(options, this.defaultOptions)
     config['headers'] = this.headers
 
-    // if (this.baseUrl.length > 0) {
-    //   url = this.baseUrl + (this.baseUrl.endsWith('/')) ? '' : '/' + url
-    // }
-
     if (url.indexOf('://') <= 0) {
       url = this.baseUrl + url
     }
@@ -121,13 +117,23 @@ class Api {
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
-      .then(async response => {
-        for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
-          await this.preprocessingCallbacks[i]
-        }
+      .then(
+        async response => {
+          for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
+            await this.preprocessingCallbacks[i](response)
+          }
 
-        return response
-      })
+          return response
+        },
+
+        async errorResponse => {
+          for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
+            await this.preprocessingCallbacks[i](errorResponse)
+          }
+
+          return errorResponse
+        }
+      )
   }
 
   get (url, params = null, options = {}) {
