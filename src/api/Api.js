@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { stringify } from 'qs'
 import { validateCallbackFn } from '../helpers/validateCallbackFn'
+import { setCallbacksFn } from '../helpers/setCallbacksFn'
 
 class Api {
   constructor () {
@@ -27,24 +28,14 @@ class Api {
    * @param {Array} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
-      callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
-      throw new Error('You must pass an array of callbacks to this method')
-    }
-
-    this.preprocessingCallbacks = callbacks
+    this.preprocessingCallbacks = setCallbacksFn(callbacks)
   }
   /**
    *
    * @param {Array} callbacks
    */
   setErrorCallbacks (callbacks) {
-    if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
-      callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
-      throw new Error('You must pass an array of callbacks to this method')
-    }
-
-    this.errorCallbacks = callbacks
+    this.errorCallbacks = setCallbacksFn(callbacks)
   }
 
   /**
