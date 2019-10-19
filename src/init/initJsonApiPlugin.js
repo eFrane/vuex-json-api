@@ -39,9 +39,13 @@ export function initJsonApiPlugin (config) {
   }
 
   return store => {
+    api.setStore(store)
     api.setupModules(store, modulesToRegister)
 
     store.api = api
+
+    store.getAvailableApiModules = api.getAvailableApiModules
+    store.registerApiModule = api.registerApiModule
 
     store.createPresetModule = createPresetModule(store, api)
 

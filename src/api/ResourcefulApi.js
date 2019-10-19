@@ -3,10 +3,16 @@ import normalize from 'json-api-normalizer'
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { Route } from '../route/Route'
+import { createResourcefulApiMethod } from './createApiResourceMethodProxy'
 
 export class ResourcefulApi extends Api {
   /**
+   * Extends `Api::doRequest()` to handle some data preprocessing.
    *
+   * The api modules don't require access to all of the response
+   * and they expect the response data to be normalized.
+   *
+   * @inheritdoc
    * @param {String} method
    * @param {String} url
    * @param {Object} params
@@ -25,6 +31,7 @@ export class ResourcefulApi extends Api {
   }
 
   /**
+   * Prepare the routable requests
    *
    * @param {route.Router} router
    */
@@ -50,24 +57,21 @@ export class ResourcefulApi extends Api {
   /**
    *
    * @param {Vuex.Store} store
+   */
+  setStore (store) {
+    this.store = store
+  }
+
+  /**
+   *
    * @param {Array} modulesToRegister
    */
-  setupModules (store, modulesToRegister = []) {
+  setupModules (modulesToRegister = []) {
     console.time('api: setup modules')
 
-    const registerableModuleNames = Object.keys(this.registerableModules)
-
-    let currentModuleName
-    do {
-      currentModuleName = registerableModuleNames.pop()
-
-      if (typeof currentModuleName !== 'undefined' &&
-        (modulesToRegister.length === 0 || modulesToRegister.indexOf(currentModuleName))) {
-        this.registerModule(store, this[currentModuleName], currentModuleName)
-      }
-    } while (currentModuleName)
-
-    delete this.registerableModules
+    for (let moduleName in modulesToRegister) {
+      this.registerModule(this[moduleName], moduleName)
+    }
 
     console.timeEnd('api: setup modules')
   }
@@ -77,16 +81,16 @@ export class ResourcefulApi extends Api {
    * @param {Vuex} store
    * @param {Route} methods
    */
-  registerModule (store, methods, moduleName) {
+  registerModule (methods, moduleName) {
     // prevent double registration
     if (Object.prototype.hasOwnProperty.call(store.state, moduleName)) {
       return
     }
 
-    const moduleBuilder = new ModuleBuilder(store, this, moduleName, methods)
+    let moduleBuilder = new ModuleBuilder(this.store, this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
-      store.registerModule(moduleName, module)
+      this.store.registerModule(moduleName, module)
     }
   }
 
@@ -109,7 +113,7 @@ export class ResourcefulApi extends Api {
           continue
         }
 
-        this[routeName][methodName] = ResourcefulApi.createApiProxy(this, methodName, route)
+        this[routeName][methodName] = createResourcefulApiMethod(this, methodName, route)
       }
     }
 
@@ -117,7 +121,7 @@ export class ResourcefulApi extends Api {
   }
 
   registerRelatedResourceMethod (routeName, methodName, route) {
-    const [related, resource, relationMethod] = methodName.split('.')
+    let [related, resource, relationMethod] = methodName.split('.')
 
     if (typeof this[routeName][related] !== 'object') {
       this[routeName][related] = {}
@@ -128,47 +132,40 @@ export class ResourcefulApi extends Api {
     }
 
     this[routeName][related][resource][relationMethod] =
-      ResourcefulApi.createApiProxy(this, relationMethod, route)
+      createResourcefulApiMethod(this, relationMethod, route)
   }
 
   /**
+   * Register an api module
    *
-   * @param {Api} api
-   * @param {String} method
-   * @param {Route} route
+   * After api initialization, this is the way to register
+   * non-default modules.
+   *
+   * @param {String} moduleName
    */
-  static createApiProxy (api, method, route) {
-    return new Proxy(() => {}, {
-      apply (target, thisArg, argArray) {
-        if (!(route instanceof Route)) {
-          throw new Error('Expected Route object')
-        }
+  registerApiModule (moduleName) {
+    return this.registerModule(this[moduleName], moduleName)
+  }
 
-        // add actual route as first param
-        const url = route.prepare(argArray[0])
-        argArray.unshift(url)
+  /**
+   * Get a list of available api modules
+   *
+   * A module is available if it has defined routing.
+   * If `onlyUnregistered` is set to false, this list
+   * will also return already registered modules.
+   *
+   * @param {Boolean} onlyUnregistered
+   * @returns {Array}
+   */
+  getAvailableApiModules (onlyUnregistered = true) {
+    let availableModules = Object.keys(this.registerableModules)
 
-        switch (method) {
-          case 'list':
-          case 'get':
-            return api.get.apply(api, argArray)
+    if (onlyUnregistered) {
+      return availableModules.filter((moduleName) => {
+        return !this.state.hasOwnProperty(moduleName)
+      })
+    }
 
-          case 'create':
-            return api.post.apply(api, argArray)
-
-          case 'replace':
-            return api.put.apply(api, argArray)
-
-          case 'update':
-            return api.patch.apply(api, argArray)
-
-          case 'delete':
-            return api.delete.apply(api, argArray)
-
-          default:
-            throw new Error('unsupported api method: ' + method)
-        }
-      }
-    })
+    return availableModules
   }
 }
