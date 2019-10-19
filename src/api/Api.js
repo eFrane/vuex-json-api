@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { stringify } from 'qs'
 import { validateCallbackFn } from '../helpers/validateCallbackFn'
-import { setCallbacksFn } from '../helpers/setCallbacksFn'
+import { setCallbackFns } from '../helpers/setCallbackFns'
 
 class Api {
   constructor () {
@@ -28,14 +28,14 @@ class Api {
    * @param {Array} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    this.preprocessingCallbacks = setCallbacksFn(callbacks)
+    this.preprocessingCallbacks = setCallbackFns(callbacks)
   }
   /**
    *
    * @param {Array} callbacks
    */
   setErrorCallbacks (callbacks) {
-    this.errorCallbacks = setCallbacksFn(callbacks)
+    this.errorCallbacks = setCallbackFns(callbacks)
   }
 
   /**
