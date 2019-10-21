@@ -1,3 +1,5 @@
+import { Route } from '../route/Route'
+
 /**
 *
 * @param {Api} api
@@ -18,22 +20,22 @@ export function createApiResourceMethodProxy (api, method, route) {
       switch (method) {
         case 'list':
         case 'get':
-        return api.get.apply(api, argArray)
+          return api.get.apply(api, argArray)
 
         case 'create':
-        return api.post.apply(api, argArray)
+          return api.post.apply(api, argArray)
 
         case 'replace':
-        return api.put.apply(api, argArray)
+          return api.put.apply(api, argArray)
 
         case 'update':
-        return api.patch.apply(api, argArray)
+          return api.patch.apply(api, argArray)
 
         case 'delete':
-        return api.delete.apply(api, argArray)
+          return api.delete.apply(api, argArray)
 
         default:
-        throw new Error('unsupported api method: ' + method)
+          throw new Error('unsupported api method: ' + method)
       }
     }
   })

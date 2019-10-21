@@ -2,7 +2,6 @@ import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
-import { Route } from '../route/Route'
 import { createResourcefulApiMethod } from './createApiResourceMethodProxy'
 
 export class ResourcefulApi extends Api {
