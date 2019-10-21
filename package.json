@@ -34,7 +34,7 @@
     "babel-jest": "^24.9.0",
     "vuepress-plugin-mermaidjs": "^1.0.0",
     "eslint": "^5.0.0",
-    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jest": "^22.17.0",
