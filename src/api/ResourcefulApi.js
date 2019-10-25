@@ -2,7 +2,7 @@ import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
-import { createResourcefulApiMethod } from './createApiResourceMethodProxy'
+import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
 
 export class ResourcefulApi extends Api {
   /**
@@ -69,7 +69,7 @@ export class ResourcefulApi extends Api {
     console.time('api: setup modules')
 
     for (let moduleName in modulesToRegister) {
-      this.registerModule(this[moduleName], moduleName)
+      this.registerModule(moduleName, this[moduleName])
     }
 
     console.timeEnd('api: setup modules')
@@ -77,10 +77,10 @@ export class ResourcefulApi extends Api {
 
   /**
    *
-   * @param {Vuex} store
+   * @param {String} moduleName
    * @param {Route} methods
    */
-  registerModule (methods, moduleName) {
+  registerModule (moduleName, methods) {
     // prevent double registration
     if (Object.prototype.hasOwnProperty.call(store.state, moduleName)) {
       return
@@ -112,7 +112,7 @@ export class ResourcefulApi extends Api {
           continue
         }
 
-        this[routeName][methodName] = createResourcefulApiMethod(this, methodName, route)
+        this[routeName][methodName] = createApiResourceMethodProxy(this, methodName, route)
       }
     }
 
@@ -131,7 +131,7 @@ export class ResourcefulApi extends Api {
     }
 
     this[routeName][related][resource][relationMethod] =
-      createResourcefulApiMethod(this, relationMethod, route)
+      createApiResourceMethodProxy(this, relationMethod, route)
   }
 
   /**
@@ -143,7 +143,7 @@ export class ResourcefulApi extends Api {
    * @param {String} moduleName
    */
   registerApiModule (moduleName) {
-    return this.registerModule(this[moduleName], moduleName)
+    return this.registerModule(moduleName, this[moduleName])
   }
 
   /**
@@ -164,7 +164,6 @@ export class ResourcefulApi extends Api {
         return !this.state.hasOwnProperty(moduleName)
       })
     }
-
     return availableModules
   }
 }

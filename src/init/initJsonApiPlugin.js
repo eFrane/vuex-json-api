@@ -40,7 +40,7 @@ export function initJsonApiPlugin (config) {
 
   return store => {
     api.setStore(store)
-    api.setupModules(store, modulesToRegister)
+    api.setupModules(modulesToRegister)
 
     store.api = api
 
