@@ -140,10 +140,13 @@ export class ResourcefulApi extends Api {
    * After api initialization, this is the way to register
    * non-default modules.
    *
+   * its purpose is to get called from store, where its referenced from the initJsonApiPlugin.
+   * At that point `this` is the store and not the api object
+   *
    * @param {String} moduleName
    */
   registerApiModule (moduleName) {
-    return this.registerModule(moduleName, this[moduleName])
+    return this.api.registerModule(moduleName, this.api[moduleName])
   }
 
   /**
