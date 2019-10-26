@@ -23,14 +23,18 @@ import { isMissingModule, registerMissingModule } from './missingModule'
 export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '', module = null) {
   for (const itemType in data) {
     let registeredModule = itemType
-    if (typeof module !== 'undefined' && module.state.options.absoluteMethods.includes(currentMethod)) {
+
+    if (typeof module !== 'undefined' &&
+      module.state.options.absoluteMethods.includes(currentMethod)) {
       registeredModule = currentModule
-    } else if (!data.hasOwnProperty(itemType)) {
+    } else if (!Object.prototype.hasOwnProperty.call(data, itemType)) {
       continue
     }
+
     if (isMissingModule(vuexInstance, registeredModule)) {
       registerMissingModule(vuexInstance, api, registeredModule)
     }
+
     setResourceObjectsForModule(
       vuexFns,
       currentModule,

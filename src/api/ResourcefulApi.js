@@ -36,7 +36,7 @@ export class ResourcefulApi extends Api {
     this.registerableModules = {}
 
     for (const routeName in routes) {
-      if (routes.hasOwnProperty(routeName)) {
+      if (Object.prototype.hasOwnProperty.call(routes, routeName)) {
         const methods = routes[routeName]
 
         this.registerResourceMethods(routeName, methods)
@@ -79,7 +79,7 @@ export class ResourcefulApi extends Api {
    */
   registerModule (store, methods, moduleName) {
     // prevent double registration
-    if (store.state.hasOwnProperty(moduleName)) {
+    if (Object.prototype.hasOwnProperty.call(store.state, moduleName)) {
       return
     }
 
@@ -101,7 +101,7 @@ export class ResourcefulApi extends Api {
     console.time('api: add method proxies for route ' + routeName)
 
     for (const methodName in methods) {
-      if (methods.hasOwnProperty(methodName)) {
+      if (Object.prototype.hasOwnProperty.call(methods, methodName)) {
         const route = methods[methodName]
 
         if (methodName.indexOf('related.') === 0) {

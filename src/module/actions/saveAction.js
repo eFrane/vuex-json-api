@@ -25,7 +25,7 @@ export function saveAction (api, isCollection, moduleName) {
 
       const changedItemState = diff(initialItemState, currentItemState)
 
-      if (changedItemState.hasOwnProperty('relationships')) {
+      if (Object.prototype.hasOwnProperty.call(changedItemState, 'relationships')) {
         for (const relationship in changedItemState.relationships) {
           changedItemState.relationships[relationship] = currentItemState.relationships[relationship]
         }

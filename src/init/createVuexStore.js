@@ -23,7 +23,7 @@ export function prepareModuleHashMap (modules) {
   const moduleHashMap = {}
 
   for (const idx in modules) {
-    if (modules.hasOwnProperty(idx)) {
+    if (Object.prototype.hasOwnProperty.call(modules, idx)) {
       const module = modules[idx]
       moduleHashMap[module.name] = module
     }

@@ -1,5 +1,5 @@
 function checkPropertyOnObject (obj, property) {
-  return typeof obj === 'object' && obj.hasOwnProperty(property)
+  return typeof obj === 'object' && Object.prototype.hasOwnProperty.call(obj, property)
 }
 
 /**

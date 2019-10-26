@@ -7,7 +7,7 @@
  */
 export function setResourceObjectsForModule (vuexFns, currentModule, destinationModule, objects) {
   for (const id in objects) {
-    if (objects.hasOwnProperty(id)) {
+    if (Object.prototype.hasOwnProperty.call(objects, id)) {
       const isRootMutation = currentModule !== destinationModule
       let mutation = 'set'
 

@@ -55,7 +55,7 @@ export class JsonApiRouter extends Router {
       .then(({ data }) => {
         console.time('router_setup')
         for (const idx in data.route) {
-          if (data.route.hasOwnProperty(idx)) {
+          if (Object.prototype.hasOwnProperty.call(data.route, idx)) {
             const route = data.route[idx]
 
             const module = route.type.toLower()

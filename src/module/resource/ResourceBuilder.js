@@ -27,7 +27,7 @@ export class ResourceBuilder {
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
     obj.hasLoadedRelationship = hasLoadedRelationship(obj)
 
-    if (obj.hasOwnProperty('relationships')) {
+    if (obj.hasRelationship()) {
       this.buildRelationshipMethods(obj)
     }
 
@@ -38,7 +38,7 @@ export class ResourceBuilder {
     const relationships = obj.relationships
 
     for (const currentRelationshipName in relationships) {
-      if (relationships.hasOwnProperty(currentRelationshipName)) {
+      if (Object.prototype.hasOwnProperty.call(relationships, currentRelationshipName)) {
         const relatedObject = relationships[currentRelationshipName]
 
         const relationshipConfig = {

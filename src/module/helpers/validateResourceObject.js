@@ -15,15 +15,17 @@
  */
 export function validateResourceObject (resourceObject, isCreateResource) {
   const conformsToBasicStructure = typeof resourceObject === 'object' &&
-    resourceObject.hasOwnProperty('type') &&
-    resourceObject.hasOwnProperty('data')
+    Object.prototype.hasOwnProperty.call(resourceObject, 'type') &&
+    Object.prototype.hasOwnProperty.call(resourceObject, 'data')
 
   if (isCreateResource) {
-    return conformsToBasicStructure && !resourceObject.hasOwnProperty('id')
+    return conformsToBasicStructure &&
+      !Object.prototype.hasOwnProperty.call(resourceObject, 'id')
   }
 
   if (!isCreateResource) {
-    return conformsToBasicStructure && resourceObject.hasOwnProperty('id')
+    return conformsToBasicStructure &&
+      Object.prototype.hasOwnProperty.call(resourceObject, 'id')
   }
 
   throw new Error('Detected potentially invalid json:api resource object')
