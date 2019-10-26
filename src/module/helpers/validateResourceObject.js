@@ -14,7 +14,7 @@
  * @param {Boolean} isCreateResource
  */
 export function validateResourceObject (resourceObject, isCreateResource) {
-  let conformsToBasicStructure = typeof resourceObject === 'object' &&
+  const conformsToBasicStructure = typeof resourceObject === 'object' &&
     resourceObject.hasOwnProperty('type') &&
     resourceObject.hasOwnProperty('data')
 

@@ -20,11 +20,11 @@ Vue.use(Vuex)
  * @param {object|array} modules
  */
 export function prepareModuleHashMap (modules) {
-  let moduleHashMap = {}
+  const moduleHashMap = {}
 
-  for (let idx in modules) {
+  for (const idx in modules) {
     if (modules.hasOwnProperty(idx)) {
-      let module = modules[idx]
+      const module = modules[idx]
       moduleHashMap[module.name] = module
     }
   }
@@ -40,7 +40,7 @@ export function prepareModuleHashMap (modules) {
  * @returns {Promise<Store>}
  */
 export async function createVuexStore (config) {
-  let router = checkConfigProperty(config, 'router') ? config.router : null
+  const router = checkConfigProperty(config, 'router') ? config.router : null
 
   if (!router) {
     throw new Error('You must provide a router')
@@ -49,7 +49,7 @@ export async function createVuexStore (config) {
   return router
     .updateRoutes()
     .then(router => {
-      let staticModules = checkConfigProperty(config, 'staticModules', false)
+      const staticModules = checkConfigProperty(config, 'staticModules', false)
         ? config.staticModules
         : {}
 

@@ -19,7 +19,7 @@ function formatRequest (request) {
   }
 }
 
-function dataToResponse ([ status, headers, responseText ], response) {
+function dataToResponse ([status, headers, responseText], response) {
   response
     .status(status)
     .set(headers)
@@ -46,16 +46,16 @@ export class JsonApiServerAdapter {
 
     dataset.import(serverConfig.resources)
 
-    for (let resourceType in serverConfig.resources) {
-      let config = serverConfig.resources[resourceType]
+    for (const resourceType in serverConfig.resources) {
+      const config = serverConfig.resources[resourceType]
 
-      let ResourceController = BaseController.extend({
+      const ResourceController = BaseController.extend({
         resourceType: resourceType
       })
 
-      let resourceSlug = serverConfig.getResourceSlug(resourceType)
-      let resourceController = new ResourceController(pick({}, config, ['filters', 'validationRules']))
-      let resourceUrl = serverConfig.baseApiUrl + resourceSlug
+      const resourceSlug = serverConfig.getResourceSlug(resourceType)
+      const resourceController = new ResourceController(pick({}, config, ['filters', 'validationRules']))
+      const resourceUrl = serverConfig.baseApiUrl + resourceSlug
 
       // Index
       this.app.get(resourceUrl, (request, response) => {

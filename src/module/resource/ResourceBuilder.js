@@ -21,7 +21,7 @@ export class ResourceBuilder {
   * @param {Vuex.Store} store
   */
   build (jsonResourceObject) {
-    let obj = JSON.parse(JSON.stringify(jsonResourceObject.data)) // why tho?
+    const obj = JSON.parse(JSON.stringify(jsonResourceObject.data)) // why tho?
 
     obj.hasRelationship = hasRelationship(obj)
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)

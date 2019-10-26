@@ -26,7 +26,7 @@ export class Route {
   prepare (parameters) {
     let url = this.url
 
-    for (let param in parameters) {
+    for (const param in parameters) {
       if (parameters.hasOwnProperty(param) && this.hasParameter(param)) {
         url = url.replace('{' + param + '}', parameters[param])
         delete parameters[param]

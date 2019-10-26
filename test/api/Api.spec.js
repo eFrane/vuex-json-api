@@ -36,15 +36,15 @@ describe('Api server interaction', () => {
       data => {
         expect(data).toBeDefined()
         expect(data.data).toStrictEqual({
-          'data': {
-            'attributes': {
-              'title': 'Tag 1'
+          data: {
+            attributes: {
+              title: 'Tag 1'
             },
-            'id': '1',
-            'type': 'tag'
+            id: '1',
+            type: 'tag'
           },
-          'jsonapi': {
-            'version': '1.0'
+          jsonapi: {
+            version: '1.0'
           }
         })
       }

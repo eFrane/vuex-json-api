@@ -5,12 +5,12 @@
 export function listRelationship (store, relatedObjects) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let moduleName = relatedObjects.data[0].type
-      let relatedModule = store.state[moduleName]
+      const moduleName = relatedObjects.data[0].type
+      const relatedModule = store.state[moduleName]
 
-      let relatedObjectIds = relatedObjects.data.map(obj => obj.id)
+      const relatedObjectIds = relatedObjects.data.map(obj => obj.id)
 
-      let relatedItems = {}
+      const relatedItems = {}
       relatedObjectIds.forEach(id => {
         relatedItems[id] = relatedModule.items[id]
       })

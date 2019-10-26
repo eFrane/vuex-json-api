@@ -19,7 +19,7 @@ class Api {
     this.headers = {
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/vnd.api+json',
-      'Accept': 'application/vnd.api+json'
+      Accept: 'application/vnd.api+json'
     }
   }
 
@@ -30,6 +30,7 @@ class Api {
   setPreprocessingCallbacks (callbacks) {
     this.preprocessingCallbacks = setCallbackFns(callbacks)
   }
+
   /**
    *
    * @param {Array} callbacks
@@ -94,8 +95,8 @@ class Api {
   }
 
   async doRequest (method, url, params, data, options) {
-    let config = Object.assign(options, this.defaultOptions)
-    config['headers'] = this.headers
+    const config = Object.assign(options, this.defaultOptions)
+    config.headers = this.headers
 
     if (url.indexOf('://') <= 0) {
       url = this.baseUrl + url

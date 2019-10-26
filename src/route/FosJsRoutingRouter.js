@@ -33,7 +33,7 @@ export class FosJsRoutingRouter extends Router {
     // TODO: extract routes from fosRouter based on naming scheme or something
     this.fosRouter.map(this.fosRouter.getRoutes(), name => {
       if (this.matchRouteName(name)) {
-        let route = Route.fromPojo()
+        const route = Route.fromPojo()
         this.addRoute(route)
       }
     })
@@ -44,7 +44,7 @@ export class FosJsRoutingRouter extends Router {
   }
 
   prepareResourceMatchRegex () {
-    let pattern = this.routeExtractionOptions.routePatterns.resourceRoute
+    const pattern = this.routeExtractionOptions.routePatterns.resourceRoute
       .replace(
         '{prefix}',
         this.routeExtractionOptions.prefix

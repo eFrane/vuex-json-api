@@ -1,4 +1,4 @@
-import {validateCallbackFn} from './validateCallbackFn'
+import { validateCallbackFn } from './validateCallbackFn'
 
 /**
  *

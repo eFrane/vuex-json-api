@@ -22,7 +22,7 @@ describe('ResourcefulApi', () => {
         expect(data).toStrictEqual({
           data: {
             tag: {
-              '1': {
+              1: {
                 id: '1',
                 type: 'tag',
                 attributes: {

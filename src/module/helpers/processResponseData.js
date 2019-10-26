@@ -21,7 +21,7 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {Object} data
  */
 export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '', module = null) {
-  for (let itemType in data) {
+  for (const itemType in data) {
     let registeredModule = itemType
     if (typeof module !== 'undefined' && module.state.options.absoluteMethods.includes(currentMethod)) {
       registeredModule = currentModule

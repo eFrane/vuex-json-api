@@ -2,11 +2,11 @@ import { setCallbackFns } from '@/helpers/setCallbackFns'
 
 describe('setCallbackFns', () => {
   it('returns valid arrays', () => {
-    let cbArr1 = [
+    const cbArr1 = [
       () => {}
     ]
 
-    let cbArr2 = [
+    const cbArr2 = [
       (foo) => { return foo },
       (bar) => { return bar }
     ]
@@ -16,7 +16,7 @@ describe('setCallbackFns', () => {
   })
 
   it('throws on invalid arrays', () => {
-    let cbArr3 = [
+    const cbArr3 = [
       (foo) => { return foo },
       42,
       (bar) => { return bar }

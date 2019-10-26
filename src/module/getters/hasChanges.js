@@ -7,8 +7,8 @@ import { diff } from 'deep-object-diff'
 export function hasChanges (isCollection) {
   return new Proxy(() => { }, {
     apply (target, thisArg, [state]) {
-      let currentState = (isCollection) ? state.items : state.item
-      let initialState = this.initial
+      const currentState = (isCollection) ? state.items : state.item
+      const initialState = this.initial
 
       return diff(initialState, currentState) === {}
     }

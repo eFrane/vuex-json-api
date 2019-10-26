@@ -1,6 +1,6 @@
-import {diff} from 'deep-object-diff'
-import {processResponseData} from '../helpers/processResponseData'
-import {getExpectedResponse} from '../helpers/getExpectedResponse'
+import { diff } from 'deep-object-diff'
+import { processResponseData } from '../helpers/processResponseData'
+import { getExpectedResponse } from '../helpers/getExpectedResponse'
 
 /**
  * Update an existing resource
@@ -26,7 +26,7 @@ export function saveAction (api, isCollection, moduleName) {
       const changedItemState = diff(initialItemState, currentItemState)
 
       if (changedItemState.hasOwnProperty('relationships')) {
-        for (let relationship in changedItemState.relationships) {
+        for (const relationship in changedItemState.relationships) {
           changedItemState.relationships[relationship] = currentItemState.relationships[relationship]
         }
       }
@@ -34,7 +34,7 @@ export function saveAction (api, isCollection, moduleName) {
       vuexFns.commit('startLoading', null)
 
       return api[moduleName].update(
-        {id},
+        { id },
         {
           data: Object.assign(
             changedItemState, {
@@ -42,7 +42,7 @@ export function saveAction (api, isCollection, moduleName) {
               type: currentItemState.type
             })
         }
-      ).then(({data, status}) => {
+      ).then(({ data, status }) => {
         if (status === 204) {
           vuexFns.commit('set', getExpectedResponse(currentItemState))
         }

@@ -1,7 +1,7 @@
 // const FakeServer = require('fake-json-api-server/src/nodeServer')
 import { JsonApiServerAdapter } from './JsonApiServerAdapter'
 
-let serverConfig = {
+const serverConfig = {
   resources: {
     tag: {
       data: [
@@ -13,7 +13,7 @@ let serverConfig = {
         {
           type: 'tag',
           id: '2',
-          attributes: {title: 'Tag 2'}
+          attributes: { title: 'Tag 2' }
         }
       ]
     },

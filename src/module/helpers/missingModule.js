@@ -18,7 +18,7 @@ export function isMissingModule (store, moduleName) {
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-  let builder = new ModuleBuilder(store, api, moduleName, {}, { standalone: true })
+  const builder = new ModuleBuilder(store, api, moduleName, {}, { standalone: true })
 
   store.registerModule(
     moduleName,
