@@ -1,7 +1,7 @@
 # Example Setup
 ## prepare the store
 
-```
+``` js
 import Vue from 'vue'
 import Vuex from 'vuex'
 ...
@@ -46,7 +46,7 @@ export { store }
 ## Mount Vue
 
 
-```
+``` js
 import { store } from '<the-place-of-the-above-file>/Store'
 
 // The Module names has
