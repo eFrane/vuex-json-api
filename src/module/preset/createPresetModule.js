@@ -10,11 +10,11 @@ export function createPresetModule (store, api) {
       }
 
       // if there is no baseModule, create it
-      if (!store.state.hasOwnProperty(baseModule)) {
+      if (!Object.prototype.hasOwnProperty.call(store.state, baseModule)) {
         registerBaseModule(store, api, baseModule)
       }
 
-      let methods = api[baseModule]
+      const methods = api[baseModule]
 
       const timerLabel = `Register preset ${name} for base ${baseModule}`
       console.time(timerLabel)
@@ -31,7 +31,7 @@ export function createPresetModule (store, api) {
 }
 
 function registerBaseModule (store, api, moduleName) {
-  let moduleBuilder = new ModuleBuilder(store, api, moduleName)
+  const moduleBuilder = new ModuleBuilder(store, api, moduleName)
   const module = moduleBuilder.build()
   if (moduleName) {
     store.registerModule(moduleName, module)

@@ -14,7 +14,7 @@ export function createApiResourceMethodProxy (api, method, route) {
       }
 
       // add actual route as first param
-      let url = route.prepare(argArray[0])
+      const url = route.prepare(argArray[0])
       argArray.unshift(url)
 
       switch (method) {

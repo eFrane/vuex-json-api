@@ -68,7 +68,7 @@ export class ResourcefulApi extends Api {
   setupModules (modulesToRegister = []) {
     console.time('api: setup modules')
 
-    for (let moduleName in modulesToRegister) {
+    for (const moduleName in modulesToRegister) {
       this.registerModule(moduleName, this[moduleName])
     }
 
@@ -82,11 +82,11 @@ export class ResourcefulApi extends Api {
    */
   registerModule (moduleName, methods) {
     // prevent double registration
-    if (Object.prototype.hasOwnProperty.call(store.state, moduleName)) {
+    if (Object.prototype.hasOwnProperty.call(this.store.state, moduleName)) {
       return
     }
 
-    let moduleBuilder = new ModuleBuilder(this.store, this, moduleName, methods)
+    const moduleBuilder = new ModuleBuilder(this.store, this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
       this.store.registerModule(moduleName, module)
@@ -120,7 +120,7 @@ export class ResourcefulApi extends Api {
   }
 
   registerRelatedResourceMethod (routeName, methodName, route) {
-    let [related, resource, relationMethod] = methodName.split('.')
+    const [related, resource, relationMethod] = methodName.split('.')
 
     if (typeof this[routeName][related] !== 'object') {
       this[routeName][related] = {}
@@ -160,11 +160,11 @@ export class ResourcefulApi extends Api {
    * @returns {Array}
    */
   getAvailableApiModules (onlyUnregistered = true) {
-    let availableModules = Object.keys(this.registerableModules)
+    const availableModules = Object.keys(this.registerableModules)
 
     if (onlyUnregistered) {
       return availableModules.filter((moduleName) => {
-        return !this.state.hasOwnProperty(moduleName)
+        return !Object.prototype.hasOwnProperty.call(this.state, moduleName)
       })
     }
     return availableModules
