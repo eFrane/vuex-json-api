@@ -50,12 +50,12 @@ export class JsonApiRouter extends Router {
    * @returns {*}
    */
   async updateRoutes () {
-    let api = new Api()
+    const api = new Api()
     return api.get(this.fetchPath)
       .then(({ data }) => {
         console.time('router_setup')
-        for (let idx in data.route) {
-          if (data.route.hasOwnProperty(idx)) {
+        for (const idx in data.route) {
+          if (Object.prototype.hasOwnProperty.call(data.route, idx)) {
             const route = data.route[idx]
 
             const module = route.type.toLower()

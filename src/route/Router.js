@@ -34,7 +34,7 @@ export class Router {
    * @param {Route} route
    */
   addRoute (module, action, route) {
-    if (!this.routes.hasOwnProperty(module)) {
+    if (!Object.prototype.hasOwnProperty.call(this.routes, module)) {
       this.routes[module] = {}
     }
 

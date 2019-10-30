@@ -9,7 +9,7 @@ import { initialState } from '../State'
 export function resetItemsMutation (isCollection) {
   return new Proxy((state) => {}, {
     apply (target, thisArg, [state]) {
-      let initial = initialState(isCollection)
+      const initial = initialState(isCollection)
 
       if (isCollection) {
         Vue.set(state, 'items', initial.items)

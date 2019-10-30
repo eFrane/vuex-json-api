@@ -18,9 +18,9 @@ export function listRelatedAction (api, moduleName, relatedModuleName) {
       vuexFns.commit(`${relatedModuleName}/startLoading`, null, { root: true })
 
       return api[moduleName].related[relatedModuleName].list(query).then(({ data, meta }) => {
-        processResponseData(thisArg, vuexFns, api, moduleName, data)
+        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list')
 
-        if (meta.hasOwnProperty('pagination')) {
+        if (Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
           vuexFns.commit(`${relatedModuleName}setPagination`, meta.pagination)
         }
 

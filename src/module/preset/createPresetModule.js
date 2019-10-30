@@ -9,7 +9,7 @@ export function createPresetModule (store, api) {
         baseModule = config.base
       }
 
-      let methods = api[baseModule]
+      const methods = api[baseModule]
 
       const timerLabel = `Register preset ${name} for base ${baseModule}`
       console.time(timerLabel)

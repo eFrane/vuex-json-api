@@ -19,7 +19,7 @@ import { setMutation } from './mutations/setMutation'
 import { setPaginationMutation } from './mutations/setPaginationMutation'
 import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
-import { hasChanges } from './getters/isChanged'
+import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
 
 /**
@@ -71,20 +71,40 @@ export class ModuleBuilder {
     const storeModuleBuildTimer = 'api: build module ' + this.moduleName
     console.time(storeModuleBuildTimer)
 
-    let module = {
+    const module = {
       namespaced: true,
       state () { return initialState(isCollection) }
     }
 
-    module['mutations'] = this.buildMutations()
+    module.state.options = this.buildOptions()
+
+    module.mutations = this.buildMutations()
 
     if (!this.isStandalone) {
-      module['actions'] = this.buildActions()
-      module['getters'] = this.buildGetters()
+      module.actions = this.buildActions(module)
+      module.getters = this.buildGetters()
     }
 
     console.timeEnd(storeModuleBuildTimer)
     return module
+  }
+
+  /**
+   * Build the options
+   */
+  buildOptions () {
+    const options = {
+      absoluteMethods: []
+    }
+
+    for (const method in this.apiMethods) {
+      if (Object.prototype.hasOwnProperty.call(this.apiMethods, method) &&
+        this.api.router.routes[this.moduleName][method].isAbsolute()) {
+        options.absoluteMethods.push(method)
+      }
+    }
+
+    return options
   }
 
   /**
@@ -93,7 +113,7 @@ export class ModuleBuilder {
   buildMutations () {
     const resourceBuilder = new ResourceBuilder(this.store)
 
-    let mutations = {
+    const mutations = {
       resetItems: resetItemsMutation(this.isCollection),
       set: setMutation(resourceBuilder, this.isCollection),
       setItem: setItemMutation(resourceBuilder, this.isCollection),
@@ -103,18 +123,18 @@ export class ModuleBuilder {
     }
 
     if (allowsDeletion(this.apiMethods)) {
-      mutations['remove'] = removeMutation(this.isCollection)
+      mutations.remove = removeMutation(this.isCollection)
     }
 
     if (this.isCollection) {
-      mutations['setPagination'] = setPaginationMutation
+      mutations.setPagination = setPaginationMutation
     }
 
     return mutations
   }
 
-  buildActions () {
-    let defaultQuery = checkConfigProperty(this.presetOptions, 'defaultQuery', false) ? this.presetOptions.defaultQuery : {}
+  buildActions (module) {
+    const defaultQuery = checkConfigProperty(this.presetOptions, 'defaultQuery', false) ? this.presetOptions.defaultQuery : {}
 
     let actions = {
       get: getAction(this.api, this.moduleName, defaultQuery),
@@ -123,20 +143,20 @@ export class ModuleBuilder {
     }
 
     if (this.isCollection) {
-      actions['list'] = listAction(this.api, this.moduleName, defaultQuery)
+      actions.list = listAction(this.api, this.moduleName, defaultQuery, module)
     }
 
     if (allowsModification(this.apiMethods)) {
-      actions['set'] = setAction
-      actions['save'] = saveAction(this.api, this.isCollection, this.moduleName)
+      actions.set = setAction
+      actions.save = saveAction(this.api, this.isCollection, this.moduleName)
     }
 
     if (allowsCreation(this.apiMethods)) {
-      actions['create'] = createAction(this.api, this.moduleName)
+      actions.create = createAction(this.api, this.moduleName)
     }
 
     if (allowsDeletion(this.apiMethods)) {
-      actions['delete'] = deleteAction(this.api, this.moduleName)
+      actions.delete = deleteAction(this.api, this.moduleName)
     }
 
     if (hasRelated(this.apiMethods)) {
@@ -147,7 +167,7 @@ export class ModuleBuilder {
   }
 
   buildRelatedActions () {
-    let relatedActions = {}
+    const relatedActions = {}
 
     for (const relatedObjectType in this.apiMethods.related) {
       const relatedObjectMethods = this.apiMethods.related[relatedObjectType]
@@ -163,13 +183,13 @@ export class ModuleBuilder {
   }
 
   buildGetters () {
-    let getters = {
+    const getters = {
       getProperty: getProperty,
       hasChanges: hasChanges(this.isCollection)
     }
 
     if (this.isCollection) {
-      getters['itemsInRelationshipFormat'] = itemsInRelationshipFormat
+      getters.itemsInRelationshipFormat = itemsInRelationshipFormat
     }
 
     return getters

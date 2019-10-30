@@ -6,11 +6,11 @@
 export function getRelationship (store, relatedObject, config) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      let moduleName = relatedObject.data.type
-      let relatedModule = store.state[moduleName]
+      const moduleName = relatedObject.data.type
+      const relatedModule = store.state[moduleName]
 
       if (config.isToMany) {
-        let [requestedId] = argArray
+        const [requestedId] = argArray
 
         try {
           return relatedModule.items[requestedId]

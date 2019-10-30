@@ -16,3 +16,4 @@ yarn-error.log*
 
 dist
 docs/.vuepress/dist
+yarn.lock

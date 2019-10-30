@@ -14,11 +14,11 @@ export function isMissingModule (store, moduleName) {
  * Register a standalone module to the store.
  *
  * @param {Vuex} store
- * @param {ResourcefulAPI} api
+ * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-  let builder = new ModuleBuilder(store, api, moduleName, {}, { standalone: true })
+  const builder = new ModuleBuilder(store, api, moduleName, {}, { standalone: true })
 
   store.registerModule(
     moduleName,

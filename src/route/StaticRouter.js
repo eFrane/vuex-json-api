@@ -21,8 +21,8 @@ export class StaticRouter extends Router {
     super()
 
     for (const idx in routes) {
-      let routeData = routes[idx]
-      let route = Route.fromPOJO(routeData)
+      const routeData = routes[idx]
+      const route = Route.fromPOJO(routeData)
       this.addRoute(routeData.module, routeData.action, route)
     }
   }

@@ -1,7 +1,7 @@
 export function hasRelationship (obj) {
   return name => {
-    return obj.hasOwnProperty('relationships') &&
-    obj.relationships.hasOwnProperty(name) &&
+    return Object.prototype.hasOwnProperty.call(obj, 'relationships') &&
+    Object.prototype.hasOwnProperty.call(obj.relationships, name) &&
     obj.relationships[name].data.length !== 0
   }
 }

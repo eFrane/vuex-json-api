@@ -23,8 +23,12 @@ module.exports = {
       '/usage/',
       '/usage/modules.html',
       '/usage/requests.html',
-      '/code/classes/'
+      '/usage/router.html',
+      '/usage/deep-dive.html'
     ]
   },
-  evergreen: true
+  evergreen: true,
+  plugins: [
+    "vuepress-plugin-mermaidjs", {}
+  ],
 }

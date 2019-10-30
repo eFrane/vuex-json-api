@@ -1,5 +1,4 @@
-import { ResourcefulAPI } from '../api/ResourcefulApi'
-import { Router } from '../route/Router'
+import { ResourcefulApi } from '../api/ResourcefulApi'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { createPresetModule } from '../module/preset/createPresetModule'
 
@@ -12,13 +11,9 @@ import { createPresetModule } from '../module/preset/createPresetModule'
  * @param {Router|Object} config or router
  */
 export function initJsonApiPlugin (config) {
-  const api = new ResourcefulAPI()
+  const api = new ResourcefulApi()
 
-  let router
-
-  if (config instanceof Router) {
-    api.setupResourcefulRequests(router)
-  } else if (checkConfigProperty(config, 'router')) {
+  if (checkConfigProperty(config, 'router')) {
     api.setupResourcefulRequests(config.router)
   }
 
@@ -30,9 +25,17 @@ export function initJsonApiPlugin (config) {
     api.setPreprocessingCallbacks(config.preprocessingCallbacks)
   }
 
+  if (checkConfigProperty(config, 'errorCallbacks', false)) {
+    api.setErrorCallbacks(config.errorCallbacks)
+  }
+
   let modulesToRegister = []
   if (checkConfigProperty(config, 'apiModules', false)) {
     modulesToRegister = config.apiModules
+  }
+
+  if (checkConfigProperty(config, 'headers', false)) {
+    api.addHeaders(config.headers)
   }
 
   return store => {

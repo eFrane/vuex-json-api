@@ -1,19 +1,43 @@
+import normalize from 'json-api-normalizer'
+
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
+import { Route } from '../route/Route'
 
-export class ResourcefulAPI extends Api {
+export class ResourcefulApi extends Api {
+  /**
+   *
+   * @param {String} method
+   * @param {String} url
+   * @param {Object} params
+   * @param {Object} data
+   * @param {Object} options
+   */
+  async doRequest (method, url, params, data, options) {
+    return super.doRequest(method, url, params, data, options)
+      .then((response) => {
+        return {
+          data: normalize(response.data),
+          meta: response.data.meta,
+          status: response.status
+        }
+      })
+  }
+
   /**
    *
    * @param {route.Router} router
    */
   setupResourcefulRequests (router) {
+    this.router = router
+
     console.time('api: setup resourceful routing')
     const routes = router.getRoutes()
     this.registerableModules = {}
 
     for (const routeName in routes) {
-      if (routes.hasOwnProperty(routeName)) {
-        let methods = routes[routeName]
+      if (Object.prototype.hasOwnProperty.call(routes, routeName)) {
+        const methods = routes[routeName]
 
         this.registerResourceMethods(routeName, methods)
         this.registerableModules[routeName] = methods
@@ -28,10 +52,10 @@ export class ResourcefulAPI extends Api {
    * @param {Vuex.Store} store
    * @param {Array} modulesToRegister
    */
-  setupModules (store, modulesToRegister) {
+  setupModules (store, modulesToRegister = []) {
     console.time('api: setup modules')
 
-    let registerableModuleNames = Object.keys(this.registerableModules)
+    const registerableModuleNames = Object.keys(this.registerableModules)
 
     let currentModuleName
     do {
@@ -54,7 +78,12 @@ export class ResourcefulAPI extends Api {
    * @param {Route} methods
    */
   registerModule (store, methods, moduleName) {
-    let moduleBuilder = new ModuleBuilder(store, this, moduleName, methods)
+    // prevent double registration
+    if (Object.prototype.hasOwnProperty.call(store.state, moduleName)) {
+      return
+    }
+
+    const moduleBuilder = new ModuleBuilder(store, this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
       store.registerModule(moduleName, module)
@@ -71,16 +100,16 @@ export class ResourcefulAPI extends Api {
 
     console.time('api: add method proxies for route ' + routeName)
 
-    for (let methodName in methods) {
-      if (methods.hasOwnProperty(methodName)) {
-        let route = methods[methodName]
+    for (const methodName in methods) {
+      if (Object.prototype.hasOwnProperty.call(methods, methodName)) {
+        const route = methods[methodName]
 
         if (methodName.indexOf('related.') === 0) {
           this.registerRelatedResourceMethod(routeName, methodName, route)
           continue
         }
 
-        this[routeName][methodName] = ResourcefulAPI.createApiProxy(this, methodName, route)
+        this[routeName][methodName] = ResourcefulApi.createApiProxy(this, methodName, route)
       }
     }
 
@@ -88,7 +117,7 @@ export class ResourcefulAPI extends Api {
   }
 
   registerRelatedResourceMethod (routeName, methodName, route) {
-    let [related, resource, relationMethod] = methodName.split('.')
+    const [related, resource, relationMethod] = methodName.split('.')
 
     if (typeof this[routeName][related] !== 'object') {
       this[routeName][related] = {}
@@ -99,7 +128,7 @@ export class ResourcefulAPI extends Api {
     }
 
     this[routeName][related][resource][relationMethod] =
-      ResourcefulAPI.createApiProxy(this, relationMethod, route)
+      ResourcefulApi.createApiProxy(this, relationMethod, route)
   }
 
   /**
@@ -111,8 +140,13 @@ export class ResourcefulAPI extends Api {
   static createApiProxy (api, method, route) {
     return new Proxy(() => {}, {
       apply (target, thisArg, argArray) {
+        if (!(route instanceof Route)) {
+          throw new Error('Expected Route object')
+        }
+
         // add actual route as first param
-        argArray.unshift(route)
+        const url = route.prepare(argArray[0])
+        argArray.unshift(url)
 
         switch (method) {
           case 'list':

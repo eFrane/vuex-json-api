@@ -1,24 +1,25 @@
 import axios from 'axios'
 import { stringify } from 'qs'
-import normalize from 'json-api-normalizer'
-
-import {Route} from '../route/Route'
+import { validateCallbackFn } from '../helpers/validateCallbackFn'
+import { setCallbackFns } from '../helpers/setCallbackFns'
 
 class Api {
   constructor () {
     this.baseUrl = ''
 
     this.preprocessingCallbacks = []
+    this.errorCallbacks = []
 
     this.defaultOptions = {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json'
-      },
       paramsSerializer (params) {
         return stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
       }
+    }
+
+    this.headers = {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/vnd.api+json',
+      Accept: 'application/vnd.api+json'
     }
   }
 
@@ -27,12 +28,15 @@ class Api {
    * @param {Array} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    if (typeof callbacks === 'undefined' || callbacks.constructor !== Array ||
-      callbacks.reduce((carry, cb) => cb.constructor === Function && carry, true) === false) {
-      throw new Error('You must pass an array of callbacks to this method')
-    }
+    this.preprocessingCallbacks = setCallbackFns(callbacks)
+  }
 
-    this.preprocessingCallbacks = callbacks
+  /**
+   *
+   * @param {Array} callbacks
+   */
+  setErrorCallbacks (callbacks) {
+    this.errorCallbacks = setCallbackFns(callbacks)
   }
 
   /**
@@ -40,11 +44,23 @@ class Api {
    * @param {Function} callback
    */
   addPreprocessingCallback (callback) {
-    if (callback.constructor !== Function) {
+    if (validateCallbackFn(callback)) {
       throw new Error('You must pass a valid callback to this method')
     }
 
     this.preprocessingCallbacks.push(callback)
+  }
+
+  /**
+   *
+   * @param {Function} callback
+   */
+  addErrorCallback (callback) {
+    if (validateCallbackFn(callback)) {
+      throw new Error('You must pass a valid callback to this method')
+    }
+
+    this.errorCallbacks.push(callback)
   }
 
   /**
@@ -54,31 +70,63 @@ class Api {
     this.preprocessingCallbacks = []
   }
 
-  async doRequest (method, url, params, data, options) {
-    // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Objekte_mit_gleichen_Eigenschaften_zusammenf%C3%BChren
-    let config = Object.assign(options, this.defaultOptions, options)
+  /**
+   * Reset the response error to the default behaviour
+   */
+  resetErrorCallbacks () {
+    this.errorCallbacks = []
+  }
 
-    if (url instanceof Route) {
-      url = url.prepare(params)
+  /**
+   *
+   * @param {Object} headers
+   */
+  addHeaders (headers) {
+    if (headers.constructor !== Object) {
+      throw new Error('You must pass an object to this method')
     }
 
-    url = this.baseUrl + url
+    // make sure there is a spreadable object in headers
+    if (!headers || Object.getOwnPropertyNames(headers).length < 1) {
+      headers = {}
+    }
+
+    this.headers = Object.assign(this.headers, headers)
+  }
+
+  async doRequest (method, url, params, data, options) {
+    const config = Object.assign(options, this.defaultOptions)
+    config.headers = this.headers
+
+    if (url.indexOf('://') <= 0) {
+      url = this.baseUrl + url
+    }
 
     // make cross domain requests if necessary
     let crossDomain = false
-    if (this.baseUrl.length > 0 && this.baseUrl.indexOf('://') > 0) {
+    if (url.length > 0 && url.indexOf('://') > 0) {
       crossDomain = true
     }
 
     return axios.create(config)
       .request({ method, url, params, data, crossDomain })
-      .then(Promise.all(this.preprocessingCallbacks))
-      .then((response) => {
-        return {
-          data: normalize(response.data),
-          meta: response.data.meta
+      .then(
+        async response => {
+          for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
+            await this.preprocessingCallbacks[i](response)
+          }
+
+          return response
         }
-      })
+      ).catch(
+        async errorResponse => {
+          for (let i = 0; i < this.errorCallbacks.length; i++) {
+            await this.errorCallbacks[i](errorResponse)
+          }
+
+          return errorResponse
+        }
+      )
   }
 
   get (url, params = null, options = {}) {

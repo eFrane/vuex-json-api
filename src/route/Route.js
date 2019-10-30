@@ -26,8 +26,9 @@ export class Route {
   prepare (parameters) {
     let url = this.url
 
-    for (let param in parameters) {
-      if (parameters.hasOwnProperty(param) && this.hasParameter(param)) {
+    for (const param in parameters) {
+      if (Object.prototype.hasOwnProperty.call(parameters, param) &&
+        this.hasParameter(param)) {
         url = url.replace('{' + param + '}', parameters[param])
         delete parameters[param]
       }
@@ -45,5 +46,9 @@ export class Route {
     return this.parameters.constructor === Array && this.parameters.filter((checkParam) => {
       return parameter === checkParam
     }).length > 0
+  }
+
+  isAbsolute () {
+    return this.url.substring(0, 4) === 'http'
   }
 }
