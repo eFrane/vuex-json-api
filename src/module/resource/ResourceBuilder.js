@@ -18,7 +18,6 @@ export class ResourceBuilder {
   * methods to simplify access to relationships.
   *
   * @param {Object} jsonResourceObject
-  * @param {Vuex.Store} store
   */
   build (jsonResourceObject) {
     const obj = JSON.parse(JSON.stringify(jsonResourceObject.data)) // why tho?
@@ -27,7 +26,7 @@ export class ResourceBuilder {
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
     obj.hasLoadedRelationship = hasLoadedRelationship(obj)
 
-    if (obj.hasRelationship()) {
+    if (obj.hasRelationship) {
       this.buildRelationshipMethods(obj)
     }
 
