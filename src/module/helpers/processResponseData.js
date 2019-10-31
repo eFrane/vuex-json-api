@@ -12,19 +12,11 @@ import { isMissingModule, registerMissingModule } from './missingModule'
  * @param {String} currentMethod  default = ''
  * @param {Object} module         storeModule
  */
-/**
- *
- * @param {Store} vuexInstance
- * @param {Object} vuexFns
- * @param {ResourcefulApi} api
- * @param {String} currentModule
- * @param {Object} data
- */
 export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '', module = null) {
   for (const itemType in data) {
     let registeredModule = itemType
 
-    if (typeof module !== 'undefined' &&
+    if (module !== null &&
       module.state.options.absoluteMethods.includes(currentMethod)) {
       registeredModule = currentModule
     } else if (!Object.prototype.hasOwnProperty.call(data, itemType)) {
