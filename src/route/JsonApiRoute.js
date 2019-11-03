@@ -16,6 +16,8 @@ export class JsonApiRoute extends Route {
    * {
    *   "type": "VuexJsonApiRoute",
    *   "attributes": {
+   *     "module": "themodule",
+   *     "method": "thehttpmethod"
    *     "url": "The URL of the Resource, can be relative to baseURL",
    *     "parameters": ["Parameters", "for", "the", "above", url"]
    *   }
@@ -30,11 +32,15 @@ export class JsonApiRoute extends Route {
       throw new Error('Expected json:api-like object structure')
     }
 
+    if (routeResource.type.toLowerCase() !== 'vuexjsonapiroute') {
+      throw new Error('Invalid resource type')
+    }
+
     const module = getRequiredAttribute(routeResource, 'module')
-    const action = getRequiredAttribute(routeResource, 'action')
+    const method = getRequiredAttribute(routeResource, 'method')
     const url = getRequiredAttribute(routeResource, 'url')
     const parameters = routeResource.attributes.parameters || []
 
-    super(module, action, url, parameters)
+    super(module, method, url, parameters)
   }
 }
