@@ -1,20 +1,16 @@
 export class Route {
   /**
-   * @param apiRouteObject
+   *
+   * @param {String} module
+   * @param {String} action
+   * @param {String} url
+   * @param {Array} parameters
    */
-  constructor (apiRouteObject) {
-    this.url = apiRouteObject.attributes.url || ''
-    this.parameters = apiRouteObject.attributes.parameters || {}
-  }
-
-  static fromPOJO ({ module, _, url, parameters }) {
-    return new Route({
-      type: module,
-      attributes: {
-        url,
-        parameters
-      }
-    })
+  constructor (module, action, url, parameters) {
+    this.module = module
+    this.action = action
+    this.url = url
+    this.parameters = parameters
   }
 
   /**
@@ -39,6 +35,7 @@ export class Route {
 
   /**
    * Check if a parameter is allowed
+   *
    * @param parameter
    * @returns {boolean}
    */

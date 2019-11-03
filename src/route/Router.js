@@ -29,15 +29,13 @@ export class Router {
 
   /**
    *
-   * @param {String} module
-   * @param {String} action
    * @param {Route} route
    */
-  addRoute (module, action, route) {
-    if (!Object.prototype.hasOwnProperty.call(this.routes, module)) {
-      this.routes[module] = {}
+  addRoute (route) {
+    if (!Object.prototype.hasOwnProperty.call(this.routes, route.module)) {
+      this.routes[route.module] = {}
     }
 
-    this.routes[module][action] = route
+    this.routes[route.module][route.action] = route
   }
 }

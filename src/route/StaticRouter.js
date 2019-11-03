@@ -1,5 +1,5 @@
 import { Router } from './Router'
-import { Route } from './Route'
+import { StaticRoute } from './StaticRoute'
 
 /**
  * Static router
@@ -14,7 +14,9 @@ import { Route } from './Route'
  */
 export class StaticRouter extends Router {
   /**
+   * Requires an array of route data objects.
    *
+   * @see StaticRoute
    * @param {Array} routes
    */
   constructor (routes) {
@@ -22,8 +24,7 @@ export class StaticRouter extends Router {
 
     for (const idx in routes) {
       const routeData = routes[idx]
-      const route = Route.fromPOJO(routeData)
-      this.addRoute(routeData.module, routeData.action, route)
+      this.addRoute(new StaticRoute(routeData))
     }
   }
 }
