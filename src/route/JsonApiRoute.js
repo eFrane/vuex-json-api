@@ -30,8 +30,8 @@ export class JsonApiRoute extends Route {
       throw new Error('Expected json:api-like object structure')
     }
 
-    const module = getRequiredAttribute(routeResource, 'module').toLower()
-    const action = getRequiredAttribute(routeResource, 'action').toLower()
+    const module = getRequiredAttribute(routeResource, 'module')
+    const action = getRequiredAttribute(routeResource, 'action')
     const url = getRequiredAttribute(routeResource, 'url')
     const parameters = routeResource.attributes.parameters || []
 

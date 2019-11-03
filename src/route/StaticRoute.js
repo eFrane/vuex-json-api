@@ -17,7 +17,7 @@ import { Route } from './Route'
 export class StaticRoute extends Route {
   constructor (routeData) {
     const module = routeData.module
-    const action = routeData.action.toLower()
+    const action = routeData.action
     const url = routeData.url
     const parameters = routeData.parameters || []
 

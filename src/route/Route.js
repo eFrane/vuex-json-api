@@ -8,7 +8,7 @@ export class Route {
    */
   constructor (module, action, url, parameters) {
     this.module = module
-    this.action = action
+    this.action = action.toLowerCase()
     this.url = url
     this.parameters = parameters
   }
