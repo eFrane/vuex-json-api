@@ -7,10 +7,35 @@ export class Route {
    * @param {Array} parameters
    */
   constructor (module, action, url, parameters) {
+    if (typeof module !== 'string') {
+      throw new Error('Module name must be string')
+    }
+
+    if (!this.isValidAction(action)) {
+      throw new Error('Action must be valid http verb string')
+    }
+
+    if (typeof url !== 'string') {
+      throw new Error('URL must be string')
+    }
+
+    if (parameters.constructor !== Array) {
+      throw new Error('Parameters must be array')
+    }
+
     this.module = module
     this.action = action.toLowerCase()
     this.url = url
     this.parameters = parameters
+  }
+
+  get supportedHttpVerbs () {
+    return [
+      'get',
+      'delete',
+      'patch',
+      'post'
+    ]
   }
 
   /**
@@ -40,12 +65,20 @@ export class Route {
    * @returns {boolean}
    */
   hasParameter (parameter) {
-    return this.parameters.constructor === Array && this.parameters.filter((checkParam) => {
+    return this.parameters.filter((checkParam) => {
       return parameter === checkParam
     }).length > 0
   }
 
   isAbsolute () {
     return this.url.substring(0, 4) === 'http'
+  }
+
+  /**
+   *
+   * @param {String} action
+   */
+  isValidAction (action) {
+    return typeof action === 'string' && this.supportedHttpVerbs.indexOf(action.toLowerCase()) > -1
   }
 }
