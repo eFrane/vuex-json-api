@@ -30,10 +30,17 @@ export function createPresetModule (store, api) {
   })
 }
 
+/**
+ *
+ * @param {Vuex.Store} store
+ * @param {ResourcefulApi} api
+ * @param {String} moduleName
+ */
 function registerBaseModule (store, api, moduleName) {
-  const moduleBuilder = new ModuleBuilder(store, api, moduleName)
-  const module = moduleBuilder.build()
-  if (moduleName) {
-    store.registerModule(moduleName, module)
+  if (typeof moduleName !== 'string') {
+    throw new Error('Module name must be string')
   }
+
+  const moduleBuilder = new ModuleBuilder(store, api, moduleName)
+  store.registerModule(moduleName, moduleBuilder.build())
 }
