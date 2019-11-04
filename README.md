@@ -5,7 +5,7 @@
 ## Contributing
 
 Contributions to this project are welcome from anyone and everyone.
-You can find more information at [/contributing](/CONTRIBUTING).
+You can find more information at [/CONTRIBUTING.md](/CONTRIBUTING.md).
 
 ## Documentation
 
