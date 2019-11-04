@@ -12,7 +12,7 @@ export class Route {
     }
 
     if (!this.isValidAction(action)) {
-      throw new Error('Action must be valid http verb string')
+      throw new Error('Action must be valid resourceful verb')
     }
 
     if (typeof url !== 'string') {
@@ -29,12 +29,14 @@ export class Route {
     this.parameters = parameters
   }
 
-  get supportedHttpVerbs () {
+  get supportedResourcefulVerbs () {
     return [
+      'list',
       'get',
-      'delete',
-      'patch',
-      'post'
+      'create',
+      'replace',
+      'update',
+      'delete'
     ]
   }
 
@@ -79,6 +81,6 @@ export class Route {
    * @param {String} action
    */
   isValidAction (action) {
-    return typeof action === 'string' && this.supportedHttpVerbs.indexOf(action.toLowerCase()) > -1
+    return typeof action === 'string' && this.supportedResourcefulVerbs.indexOf(action.toLowerCase()) > -1
   }
 }
