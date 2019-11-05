@@ -7,6 +7,11 @@ module.exports = {
 
   coverageDirectory: 'coverage',
 
+  collectCoverageFrom: [
+    "**/*.js",
+    "!**/node_modules/**"
+  ],
+
   notify: true,
   notifyMode: 'failure-change',
 
