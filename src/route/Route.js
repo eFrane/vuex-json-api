@@ -72,10 +72,6 @@ export class Route {
     }).length > 0
   }
 
-  isAbsolute () {
-    return this.url.substring(0, 4) === 'http'
-  }
-
   /**
    *
    * @param {String} action

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { stringify } from 'qs'
 import { validateCallbackFn } from '../helpers/validateCallbackFn'
 import { setCallbackFns } from '../helpers/setCallbackFns'
+import { isAbsoluteUri } from '../helpers/isAbsoluteUri'
 
 class Api {
   constructor () {
@@ -98,13 +99,13 @@ class Api {
     const config = Object.assign(options, this.defaultOptions)
     config.headers = this.headers
 
-    if (url.indexOf('://') <= 0) {
+    if (!isAbsoluteUri(url)) {
       url = this.baseUrl + url
     }
 
     // make cross domain requests if necessary
     let crossDomain = false
-    if (url.length > 0 && url.indexOf('://') > 0) {
+    if (url.length > 0 && isAbsoluteUri(url)) {
       crossDomain = true
     }
 
