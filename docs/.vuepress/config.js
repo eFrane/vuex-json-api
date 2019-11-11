@@ -30,6 +30,6 @@ module.exports = {
   evergreen: true,
   serviceWorker: true,
   plugins: [
-    "vuepress-plugin-mermaidjs", {}
+    'mermaidjs'
   ],
 }
