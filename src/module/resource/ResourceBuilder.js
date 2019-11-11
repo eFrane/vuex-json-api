@@ -26,6 +26,8 @@ export class ResourceBuilder {
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
     obj.hasLoadedRelationship = hasLoadedRelationship(obj)
 
+    obj.get = (attributeName) => Object.prototype.hasOwnProperty.call(obj.attributes, attributeName) ? obj.attributes[attributeName] : null
+
     if (obj.hasRelationship) {
       this.buildRelationshipMethods(obj)
     }
