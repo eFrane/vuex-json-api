@@ -38,26 +38,8 @@ export class ResourceBuilder {
   buildRelationshipMethods (obj) {
     const relationships = obj.relationships
 
-    for (const currentRelationshipName in relationships) {
-      if (Object.prototype.hasOwnProperty.call(relationships, currentRelationshipName)) {
-        const relatedObject = relationships[currentRelationshipName]
-
-        const relationshipConfig = {
-          isToMany: relatedObject.data.constructor === Array
-        }
-
-        relatedObject.get = getRelationship(this.store, relatedObject, relationshipConfig)
-        relatedObject.load = loadRelationship(this.store, obj.id, obj.type, relatedObject, relationshipConfig)
-
-        if (relationshipConfig.isToMany) {
-          relatedObject.list = listRelationship(this.store, relatedObject)
-        }
-
-        relationships[currentRelationshipName] = relatedObject
-      }
-    }
-
-    obj.relationships = relationships
+    obj.loadRel = (relationshipName) => loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+    obj.rel = (relationshipName) => getRelationshipConfig(relationships[relationshipName]).isToMany ? listRelationship(this.store, relationships[relationshipName])() : getRelationship(this.store, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
   }
 
   /**
@@ -68,5 +50,17 @@ export class ResourceBuilder {
   */
   static strip (functionalResourceObject) {
     return JSON.parse(JSON.stringify(functionalResourceObject))
+  }
+}
+
+/**
+ * Config Getter for the RelationshipMethod
+ *
+ * @param relatedObject
+ * @return {{isToMany: boolean}}
+ */
+function getRelationshipConfig (relatedObject) {
+  return {
+    isToMany: relatedObject.data.constructor === Array
   }
 }
