@@ -1,6 +1,6 @@
 {
   "name": "@efrane/vuex-json-api",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
@@ -49,7 +49,7 @@
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.5.2",
     "vuepress": "^1.2.0",
-    "vuepress-plugin-mermaidjs": "^1.0.0"
+    "vuepress-plugin-mermaidjs": "^1.1.0"
   },
   "engines": {
     "node": ">= 8.0.0",
