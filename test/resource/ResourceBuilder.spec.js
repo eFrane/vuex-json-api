@@ -1,4 +1,5 @@
 import { ResourceBuilder } from '@/module/resource/ResourceBuilder'
+import Vuex from 'vuex'
 
 describe('ResourceBuilder', () => {
   const jsonResourceMock = {
@@ -28,14 +29,27 @@ describe('ResourceBuilder', () => {
           ]
         }
       }
-    }
+    },
+    includeds: [{
+      id: 'cc1',
+      type: 'relObjs',
+      attributes: {
+        name: 'relative lame name',
+        anotherProp: 'test'
+      }
+    }]
   }
 
-  it('shoud add a "get" Method wich returns the vaue from the given attribute', () => {
-    const obj = new ResourceBuilder().build(jsonResourceMock)
+  const obj = new ResourceBuilder(Vuex).build(jsonResourceMock)
+  it('shoud add a "get" Method wich returns the value from the given attribute', () => {
     expect(typeof obj.get).toBe('function')
 
     expect(obj.get('name')).toBe(jsonResourceMock.data.attributes.name)
-    expect(obj.get('fail')).toBe(null)
+    expect(obj.get('fail')).toEqual(new Error(`attribute "fail" not found`))
+  })
+
+  it('shoud return the value from the given attribute', () => {
+    expect(obj.attributes.name).toBe(jsonResourceMock.data.attributes.name)
+    expect(obj.attributes.fail).toBe(undefined)
   })
 })
