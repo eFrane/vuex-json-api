@@ -36,4 +36,14 @@ describe('ResourcefulApi', () => {
         })
       })
   })
+
+  it('reads the initial module list', () => {
+    let registerModuleMock = jest.fn()
+
+    api.registerModule = registerModuleMock
+
+    api.setupModules(['foo', 'bar', 'baz'])
+
+    expect(registerModuleMock.mock.calls.length).toBe(3)
+  })
 })
