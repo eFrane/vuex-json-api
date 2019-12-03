@@ -26,6 +26,8 @@ export class ResourceBuilder {
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
     obj.hasLoadedRelationship = hasLoadedRelationship(obj)
 
+    obj.get = (attributeName) => Object.prototype.hasOwnProperty.call(obj.attributes, attributeName) ? obj.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
+
     if (obj.hasRelationship) {
       this.buildRelationshipMethods(obj)
     }
@@ -33,6 +35,12 @@ export class ResourceBuilder {
     return obj
   }
 
+  /**
+   * Adds Methods (get, load, list) to the relationships for getting / loading them
+   * Adds Shorthand Methods (rel / loadRel)
+   *
+   * @param {Object} jsonResourceObject
+   */
   buildRelationshipMethods (obj) {
     const relationships = obj.relationships
 
@@ -55,7 +63,17 @@ export class ResourceBuilder {
       }
     }
 
-    obj.relationships = relationships
+    // shorthand variant
+    obj.loadRel = (relationshipName) => {
+      return loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+    }
+    obj.rel = (relationshipName) => {
+      if (getRelationshipConfig(relationships[relationshipName]).isToMany) {
+        return listRelationship(this.store, relationships[relationshipName])()
+      } else {
+        return getRelationship(this.store, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+      }
+    }
   }
 
   /**
@@ -66,5 +84,17 @@ export class ResourceBuilder {
   */
   static strip (functionalResourceObject) {
     return JSON.parse(JSON.stringify(functionalResourceObject))
+  }
+}
+
+/**
+ * Config Getter for the RelationshipMethod
+ *
+ * @param relatedObject
+ * @return {{isToMany: boolean}}
+ */
+function getRelationshipConfig (relatedObject) {
+  return {
+    isToMany: relatedObject.data.constructor === Array
   }
 }
