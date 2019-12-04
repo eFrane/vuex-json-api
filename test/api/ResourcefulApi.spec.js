@@ -38,7 +38,7 @@ describe('ResourcefulApi', () => {
   })
 
   it('reads the initial module list', () => {
-    let registerModuleMock = jest.fn()
+    const registerModuleMock = jest.fn()
 
     api.registerModule = registerModuleMock
 
