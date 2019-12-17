@@ -1,4 +1,6 @@
-# Router
+# Routing in the context of this plugin
+
+# Router Implementations
 
 This plugin contains several router implementations. The main purpose of
 the router in vuex-json-api is to provide the resources for `ResourcefulApi`.

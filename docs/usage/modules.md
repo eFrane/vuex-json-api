@@ -1,5 +1,9 @@
 # Modules
 
+**Table of Contents**
+
+[[toc]]
+
 Modules are auto-configured to have just the right set of mutations, actions and getters.
 Generated modules always manage their own loading state, so you don't have to worry about
 that. They also know as much as possible about communicating with your backend, leaving you free
@@ -90,13 +94,13 @@ the possibly destructive consequences.
 
 ## Actions
 
-| Name     | Description
-|----------|------------
-| get      | Get a single item
-| reset    | Reset the module state
-| list     | Get a list of items
-| set      | Set an item's data
-| update   | Update an item on the server
+| Name     | Description                  |
+|----------|------------------------------|
+| get      | Get a single item            |
+| reset    | Reset the module state       |
+| list     | Get a list of items          |
+| set      | Set an item's data           |
+| update   | Update an item on the server |
 
 <mermaid>
 graph TD
