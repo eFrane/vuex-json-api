@@ -29,9 +29,9 @@ export function initJsonApiPlugin (config) {
     api.setErrorCallbacks(config.errorCallbacks)
   }
 
-  let modulesToRegister = []
+  let apiModulesToRegister = []
   if (checkConfigProperty(config, 'apiModules', false)) {
-    modulesToRegister = config.apiModules
+    apiModulesToRegister = config.apiModules
   }
 
   if (checkConfigProperty(config, 'headers', false)) {
@@ -40,7 +40,7 @@ export function initJsonApiPlugin (config) {
 
   return store => {
     api.setStore(store)
-    api.setupModules(modulesToRegister)
+    api.setupApiModules(apiModulesToRegister)
 
     store.api = api
 
