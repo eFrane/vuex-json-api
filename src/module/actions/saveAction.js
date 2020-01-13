@@ -1,6 +1,7 @@
 import { diff } from 'deep-object-diff'
 import { processResponseData } from '../helpers/processResponseData'
 import { getExpectedResponse } from '../helpers/getExpectedResponse'
+import { saveOptions as applySaveOptions } from './options/saveOptions'
 
 /**
  * Update an existing resource
@@ -10,7 +11,10 @@ import { getExpectedResponse } from '../helpers/getExpectedResponse'
  */
 export function saveAction (api, isCollection, moduleName) {
   return new Proxy(() => {}, {
-    apply (target, thisArg, [vuexFns, id]) {
+    apply (target, thisArg, [vuexFns, params]) {
+      const id = (typeof params === 'object') ? params.id : params
+      const options = params.hasOwnProperty('options') ? params.options : null
+
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
       }
@@ -23,12 +27,16 @@ export function saveAction (api, isCollection, moduleName) {
         ? thisArg.state[moduleName].initial[id]
         : thisArg.state[moduleName].initial))
 
-      const changedItemState = diff(initialItemState, currentItemState)
+      let changedItemState = diff(initialItemState, currentItemState)
 
       if (Object.prototype.hasOwnProperty.call(changedItemState, 'relationships')) {
         for (const relationship in changedItemState.relationships) {
           changedItemState.relationships[relationship] = currentItemState.relationships[relationship]
         }
+      }
+
+      if (options) {
+        changedItemState = applySaveOptions({currentItemState, changedItemState, initialItemState, options})
       }
 
       vuexFns.commit('startLoading', null)
