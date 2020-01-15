@@ -9,7 +9,7 @@ import { saveOptions as applySaveOptions } from './options/saveOptions'
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function saveAction (api, isCollection, moduleName) {
+export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [vuexFns, params]) {
       const id = (typeof params === 'object') ? params.id : params
@@ -19,13 +19,25 @@ export function saveAction (api, isCollection, moduleName) {
         throw new Error('You must pass an object id to this action')
       }
 
-      const currentItemState = JSON.parse(JSON.stringify((isCollection)
-        ? thisArg.state[moduleName].items[id]
-        : thisArg.state[moduleName].item))
+      let currentItemState = null
+      let initialItemState = null
+      if (defaultQuery.hasOwnProperty('group')) {
+        currentItemState = JSON.parse(JSON.stringify((isCollection)
+          ? thisArg.state[moduleName][defaultQuery.group].items[id]
+          : thisArg.state[moduleName][defaultQuery.group].item))
 
-      const initialItemState = JSON.parse(JSON.stringify((isCollection)
-        ? thisArg.state[moduleName].initial[id]
-        : thisArg.state[moduleName].initial))
+        initialItemState = JSON.parse(JSON.stringify((isCollection)
+          ? thisArg.state[moduleName][defaultQuery.group].initial[id]
+          : thisArg.state[moduleName][defaultQuery.group].initial))
+      } else {
+        currentItemState = JSON.parse(JSON.stringify((isCollection)
+          ? thisArg.state[moduleName].items[id]
+          : thisArg.state[moduleName].item))
+
+        initialItemState = JSON.parse(JSON.stringify((isCollection)
+          ? thisArg.state[moduleName].initial[id]
+          : thisArg.state[moduleName].initial))
+      }
 
       let changedItemState = diff(initialItemState, currentItemState)
 
