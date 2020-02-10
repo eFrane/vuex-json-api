@@ -22,7 +22,7 @@ export function createPresetModule (store, api) {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
         }
-      })
+      }, name)
 
       store.registerModule([baseModule, name], builder.build())
       console.timeEnd(timerLabel)
