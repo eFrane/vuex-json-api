@@ -4,21 +4,9 @@ export function restoreFromInitialAction (moduleName, presetModuleName, isCollec
       let item
 
       if (presetModuleName === null) {
-        if (isCollection) {
-          item = thisArg.state[moduleName].initial[id]
-        }
-
-        if (!isCollection) {
-          item = thisArg.state[moduleName].initial
-        }
+        item = isCollection ? thisArg.state[moduleName].initial[id] : thisArg.state[moduleName].initial
       } else {
-        if (isCollection) {
-          item = thisArg.state[moduleName][presetModuleName].initial[id]
-        }
-
-        if (!isCollection) {
-          item = thisArg.state[moduleName][presetModuleName].initial
-        }
+        item = isCollection ? thisArg.state[moduleName][presetModuleName].initial[id] : item = thisArg.state[moduleName][presetModuleName].initial
       }
 
       vuexFns.commit('set', { id: id, data: item })
