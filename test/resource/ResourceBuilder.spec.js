@@ -45,7 +45,7 @@ describe('ResourceBuilder', () => {
     expect(typeof obj.get).toBe('function')
 
     expect(obj.get('name')).toBe(jsonResourceMock.data.attributes.name)
-    expect(obj.get('fail')).toEqual(new Error(`attribute "fail" not found`))
+    expect(obj.get('fail')).toEqual(new Error('attribute "fail" not found'))
   })
 
   it('shoud return the value from the given attribute', () => {
