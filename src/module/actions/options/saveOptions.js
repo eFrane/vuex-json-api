@@ -1,5 +1,9 @@
-export function saveOptions ({currentItemState, changedItemState, initialItemState, options}) {
-  let newItemState = changedItemState
+export function saveOptions ({ currentItemState, changedItemState, initialItemState, options }) {
+  if (Object.keys(changedItemState).length === 0) {
+    changedItemState = currentItemState
+  }
+
+  const newItemState = changedItemState
   // Handle Options
   if (typeof options !== 'undefined') {
     if (Object.prototype.hasOwnProperty.call(options, 'sendFullAttributes')) {
