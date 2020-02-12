@@ -4,8 +4,9 @@ export function saveOptions ({ currentItemState, changedItemState, initialItemSt
   }
 
   const newItemState = changedItemState
+
   // Handle Options
-  if (typeof options !== 'undefined') {
+  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(newItemState, 'attributes')) {
     if (Object.prototype.hasOwnProperty.call(options, 'sendFullAttributes')) {
       options.sendFullAttributes.forEach(attr => {
         if (Object.prototype.hasOwnProperty.call(newItemState.attributes, attr)) {
@@ -19,5 +20,6 @@ export function saveOptions ({ currentItemState, changedItemState, initialItemSt
       })
     }
   }
+
   return newItemState
 }
