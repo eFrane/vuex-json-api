@@ -3,23 +3,22 @@ export function saveOptions ({ currentItemState, changedItemState, initialItemSt
     changedItemState = currentItemState
   }
 
-  const newItemState = changedItemState
+  const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
 
-  // Handle Options
-  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(newItemState, 'attributes')) {
+  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(returnedItemState, 'attributes')) {
     if (Object.prototype.hasOwnProperty.call(options, 'sendFullAttributes')) {
       options.sendFullAttributes.forEach(attr => {
-        if (Object.prototype.hasOwnProperty.call(newItemState.attributes, attr)) {
-          newItemState.attributes[attr] = currentItemState.attributes[attr]
+        if (Object.prototype.hasOwnProperty.call(returnedItemState.attributes, attr)) {
+          returnedItemState.attributes[attr] = currentItemState.attributes[attr]
         }
       })
     }
     if (Object.prototype.hasOwnProperty.call(options, 'sendUnchangedAttributes')) {
       options.sendUnchangedAttributes.forEach(attr => {
-        changedItemState.attributes[attr] = currentItemState.attributes[attr]
+        returnedItemState.attributes[attr] = currentItemState.attributes[attr]
       })
     }
   }
 
-  return newItemState
+  return returnedItemState
 }
