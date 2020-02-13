@@ -1,25 +1,20 @@
-export function saveOptions ({ currentItemState, changedItemState, initialItemState, options }) {
-  if (Object.keys(changedItemState).length === 0) {
-    changedItemState = currentItemState
-  }
+export function saveOptions ({ currentItemState, changedItemState, options }) {
+  const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
 
-  const newItemState = changedItemState
-
-  // Handle Options
-  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(newItemState, 'attributes')) {
+  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(returnedItemState, 'attributes')) {
     if (Object.prototype.hasOwnProperty.call(options, 'sendFullAttributes')) {
       options.sendFullAttributes.forEach(attr => {
-        if (Object.prototype.hasOwnProperty.call(newItemState.attributes, attr)) {
-          newItemState.attributes[attr] = currentItemState.attributes[attr]
+        if (Object.prototype.hasOwnProperty.call(returnedItemState.attributes, attr)) {
+          returnedItemState.attributes[attr] = currentItemState.attributes[attr]
         }
       })
     }
     if (Object.prototype.hasOwnProperty.call(options, 'sendUnchangedAttributes')) {
       options.sendUnchangedAttributes.forEach(attr => {
-        changedItemState.attributes[attr] = currentItemState.attributes[attr]
+        returnedItemState.attributes[attr] = currentItemState.attributes[attr]
       })
     }
   }
 
-  return newItemState
+  return returnedItemState
 }
