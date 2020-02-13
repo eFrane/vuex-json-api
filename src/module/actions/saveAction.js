@@ -50,7 +50,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
       }
 
       if (options) {
-        changedItemState = applySaveOptions({ currentItemState, changedItemState, initialItemState, options })
+        changedItemState = applySaveOptions({ currentItemState, changedItemState, options })
       }
 
       vuexFns.commit('startLoading', null)

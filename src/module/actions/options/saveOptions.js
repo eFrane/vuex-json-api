@@ -1,4 +1,4 @@
-export function saveOptions ({ currentItemState, changedItemState, initialItemState, options }) {
+export function saveOptions ({ currentItemState, changedItemState, options }) {
   const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
 
   if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(returnedItemState, 'attributes')) {
