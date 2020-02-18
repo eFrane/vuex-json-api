@@ -7,13 +7,15 @@ import { saveOptions as applySaveOptions } from './options/saveOptions'
  * Update an existing resource
  *
  * @param {ResourcefulApi} api
+ * @param {Boolean} isCollection
  * @param {String} moduleName
+ * @param {Object} defaultQuery
  */
 export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [vuexFns, params]) {
       const id = (typeof params === 'object') ? params.id : params
-      const options = params.hasOwnProperty('options') ? params.options : null
+      const options = Object.prototype.hasOwnProperty.call(params, 'options') ? params.options : null
 
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
@@ -21,7 +23,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
 
       let currentItemState = null
       let initialItemState = null
-      if (defaultQuery.hasOwnProperty('group')) {
+      if (Object.prototype.hasOwnProperty.call(defaultQuery, 'group')) {
         currentItemState = JSON.parse(JSON.stringify((isCollection)
           ? thisArg.state[moduleName][defaultQuery.group].items[id]
           : thisArg.state[moduleName][defaultQuery.group].item))
@@ -48,7 +50,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
       }
 
       if (options) {
-        changedItemState = applySaveOptions({currentItemState, changedItemState, initialItemState, options})
+        changedItemState = applySaveOptions({ currentItemState, changedItemState, options })
       }
 
       vuexFns.commit('startLoading', null)

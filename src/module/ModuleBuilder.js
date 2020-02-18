@@ -40,12 +40,14 @@ export class ModuleBuilder {
    * @param {String} moduleName
    * @param {Array} apiMethods
    * @param {Object} options additional objects for the module builder
+   * @param {String} presetModuleName
    */
-  constructor (store, api, moduleName, apiMethods, options = {}) {
+  constructor (store, api, moduleName, apiMethods, options = {}, presetModuleName = null) {
     this.store = store
     this.api = api
     this.moduleName = moduleName
     this.apiMethods = apiMethods || {}
+    this.presetModuleName = presetModuleName
 
     this.isCollection = isCollection(apiMethods)
 
@@ -139,7 +141,7 @@ export class ModuleBuilder {
     let actions = {
       get: getAction(this.api, this.moduleName, defaultQuery),
       resetItems: resetItemsAction,
-      restoreFromInitial: restoreFromInitialAction(this.moduleName, this.isCollection)
+      restoreFromInitial: restoreFromInitialAction(this.moduleName, this.presetModuleName, this.isCollection)
     }
 
     if (this.isCollection) {
