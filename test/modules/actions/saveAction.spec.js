@@ -14,8 +14,32 @@ describe('saveAction', () => {
   let requestData = null
   let requestMethod = null
   // Data to test with
-  const initData = { myItem: { id: 'myItem', name: 'myItem test', type: 'foo' } }
-  const itemData = { myItem: { id: 'myItem', name: 'myItem updated', type: 'foo' } }
+  const initData = {
+    myItem: {
+      id: 'myItem',
+      name: 'myItem test',
+      color: 'blue',
+      myArray: [
+        { id: 1, name: 'aa' },
+        { id: 2, name: 'bb' },
+        { id: 3, name: 'cc' }
+      ],
+      type: 'foo'
+    }
+  }
+  const itemData = {
+    myItem: {
+      id: 'myItem',
+      name: 'myItem updated',
+      color: 'blue',
+      myArray: [
+        { id: 1, name: 'aa' },
+        { id: 2, name: 'bb' },
+        { id: 3, name: 'dd' }
+      ],
+      type: 'foo'
+    }
+  }
 
   beforeAll(async () => {
     // reset requestCalls
@@ -71,7 +95,73 @@ describe('saveAction', () => {
         })
       })
     expect(doRequestCalls).toEqual(1)
-    expect(requestData.data).toMatchObject(itemData.myItem)
+    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
     expect(requestMethod).toMatch('patch')
+  })
+
+  it('sends the changed delta and the whole Attribue myArray', async () => {
+    const save = saveAction(api, true, 'foo').bind(vuex)
+    await save(vuex, {
+      id: 'myItem',
+      options: {
+        sendFullAttributes: 'myArray'
+      }
+    })
+      .then((...args) => {
+        const returnval = { ...args }
+        return new Promise((resolve) => {
+          process.nextTick(() => resolve(returnval))
+        })
+      })
+    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo', ...itemData.myArray })
+  })
+
+  it('sends the changed delta and additional attributes', async () => {
+    const save = saveAction(api, true, 'foo').bind(vuex)
+    await save(vuex, {
+      id: 'myItem',
+      options: {
+        sendUnchangedAttributes: 'color'
+      }
+    })
+      .then((...args) => {
+        const returnval = { ...args }
+        return new Promise((resolve) => {
+          process.nextTick(() => resolve(returnval))
+        })
+      })
+    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo', ...itemData.color })
+  })
+
+  it('sends the changed delta and doesnt break with invalid options', async () => {
+    const save = saveAction(api, true, 'foo').bind(vuex)
+    await save(vuex, {
+      id: 'myItem',
+      options: {
+        notDefinedOption: 'color'
+      }
+    })
+      .then((...args) => {
+        const returnval = { ...args }
+        return new Promise((resolve) => {
+          process.nextTick(() => resolve(returnval))
+        })
+      })
+    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
+  })
+
+  it('sends the changed delta and doesnt break with empty options', async () => {
+    const save = saveAction(api, true, 'foo').bind(vuex)
+    await save(vuex, {
+      id: 'myItem',
+      options: {}
+    })
+      .then((...args) => {
+        const returnval = { ...args }
+        return new Promise((resolve) => {
+          process.nextTick(() => resolve(returnval))
+        })
+      })
+    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
   })
 })
