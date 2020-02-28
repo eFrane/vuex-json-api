@@ -13,30 +13,75 @@ describe('saveAction', () => {
   let doRequestCalls = 0
   let requestData = null
   let requestMethod = null
+  let save = null
   // Data to test with
   const initData = {
     myItem: {
       id: 'myItem',
-      name: 'myItem test',
-      color: 'blue',
-      myArray: [
-        { id: 1, name: 'aa' },
-        { id: 2, name: 'bb' },
-        { id: 3, name: 'cc' }
-      ],
+      attributes: {
+        name: 'myItem test',
+        color: 'blue',
+        myArray: [
+          { id: 1, name: 'aa' },
+          { id: 2, name: 'bb' },
+          { id: 3, name: 'cc' }
+        ],
+        myObj: {
+          id: '1',
+          type: 'test',
+          attrs: {
+            name: 'test a',
+            test: 'test b',
+            foo: {
+              a: 'aa',
+              b: 'bb',
+              c: {
+                cca: 'cc a',
+                ccb: 'cc b'
+              },
+              d: {
+                dda: 'dd a',
+                ddb: 'dd b'
+              }
+            }
+          }
+        }
+      },
       type: 'foo'
     }
   }
   const itemData = {
     myItem: {
       id: 'myItem',
-      name: 'myItem updated',
-      color: 'blue',
-      myArray: [
-        { id: 1, name: 'aa' },
-        { id: 2, name: 'bb' },
-        { id: 3, name: 'dd' }
-      ],
+      attributes: {
+        name: 'myItem updated',
+        color: 'blue',
+        myArray: [
+          { id: 1, name: 'aa' },
+          { id: 2, name: 'bb' },
+          { id: 3, name: 'dd' }
+        ],
+        myObj: {
+          id: '1',
+          type: 'test',
+          attrs: {
+            name: 'test a',
+            test: 'test b',
+            foo: {
+              a: 'aa',
+              b: 'bb',
+              c: {
+                cca: 'cc a',
+                ccb: 'new value'
+              },
+              d: {
+                dda: 'dd a',
+                ddb: 'dd b'
+              }
+            }
+          }
+        }
+      },
       type: 'foo'
     }
   }
@@ -83,10 +128,10 @@ describe('saveAction', () => {
 
         return vuex
       })
+    save = saveAction(api, true, 'foo').bind(vuex)
   })
 
   it('sends the changed delta on patch', async () => {
-    const save = saveAction(api, true, 'foo').bind(vuex)
     await save(vuex, 'myItem')
       .then((...args) => {
         const returnval = { ...args }
@@ -95,16 +140,18 @@ describe('saveAction', () => {
         })
       })
     expect(doRequestCalls).toEqual(1)
-    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
     expect(requestMethod).toMatch('patch')
   })
 
   it('sends the changed delta and the whole Attribue myArray', async () => {
-    const save = saveAction(api, true, 'foo').bind(vuex)
     await save(vuex, {
       id: 'myItem',
       options: {
-        sendFullAttributes: 'myArray'
+        attributes: {
+          full: 'myArray'
+        }
       }
     })
       .then((...args) => {
@@ -113,15 +160,37 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo', ...itemData.myArray })
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+  })
+
+  it('sends the changed delta and the whole Attribue myObj', async () => {
+    await save(vuex, {
+      id: 'myItem',
+      options: {
+        attributes: {
+          full: 'myObj'
+        }
+      }
+    })
+      .then((...args) => {
+        const returnval = { ...args }
+        return new Promise((resolve) => {
+          process.nextTick(() => resolve(returnval))
+        })
+      })
+
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: itemData.myItem.attributes.myObj}, type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: itemData.myItem.attributes.myObj}, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and additional attributes', async () => {
-    const save = saveAction(api, true, 'foo').bind(vuex)
     await save(vuex, {
       id: 'myItem',
       options: {
-        sendUnchangedAttributes: 'color'
+        attributes: {
+          unchanged: 'color'
+        }
       }
     })
       .then((...args) => {
@@ -130,11 +199,11 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo', ...itemData.color })
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and doesnt break with invalid options', async () => {
-    const save = saveAction(api, true, 'foo').bind(vuex)
     await save(vuex, {
       id: 'myItem',
       options: {
@@ -147,11 +216,11 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and doesnt break with empty options', async () => {
-    const save = saveAction(api, true, 'foo').bind(vuex)
     await save(vuex, {
       id: 'myItem',
       options: {}
@@ -162,6 +231,7 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', name: 'myItem updated', type: 'foo' })
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
+    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
   })
 })
