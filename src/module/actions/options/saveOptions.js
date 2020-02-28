@@ -1,4 +1,5 @@
-/* eslint-disable no-fallthrough */
+import { deepMerge } from '@/helpers/deepMerge'
+
 export function saveOptions ({ currentItemState, changedItemState, options }) {
   const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
 
