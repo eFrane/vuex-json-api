@@ -110,4 +110,22 @@ ModDec{allowsModification}-->update
 ModDec-->set
 </mermaid>
 
+### get
+
+### reset
+
+### list 
+
+instead of an Id-String, you can pass an Object with an Id-Key and and option key.
+
+| Available Options | Description
+|----------|------------
+| `sendUnchangedAttributes` | If you want to send explicit attributes that are not (necessarily) changed. (accepts an string or array of attributes)
+| `sendFullAttributes` | To send whole Attributes insead of the changed delta of an Array or Object. (accepts an string or array of attributes)
+
+
+### set
+
+### update
+
 ## Getters
