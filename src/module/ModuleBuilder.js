@@ -151,7 +151,7 @@ export class ModuleBuilder {
 
     if (allowsModification(this.apiMethods)) {
       actions.set = setAction
-      actions.save = saveAction(this.api, this.isCollection, this.moduleName)
+      actions.save = saveAction(this.api, this.isCollection, this.moduleName, defaultQuery)
     }
 
     if (allowsCreation(this.apiMethods)) {
