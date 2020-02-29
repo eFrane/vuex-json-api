@@ -102,9 +102,9 @@ describe('saveAction', () => {
 
     // setup store
     const router = new StaticRouter([{
-      'module': 'foo',
-      'action': 'update',
-      'url': '/'
+      module: 'foo',
+      action: 'update',
+      url: '/'
     }])
     api.setupResourcefulRequests(router)
     api.setBaseUrl('/')
@@ -140,8 +140,8 @@ describe('saveAction', () => {
         })
       })
     expect(doRequestCalls).toEqual(1)
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' })
     expect(requestMethod).toMatch('patch')
   })
 
@@ -160,8 +160,8 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: itemData.myItem.attributes.myArray, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and the whole Attribue myObj', async () => {
@@ -180,8 +180,8 @@ describe('saveAction', () => {
         })
       })
 
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: itemData.myItem.attributes.myObj}, type: 'foo' })
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: itemData.myItem.attributes.myObj}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: itemData.myItem.attributes.myObj }, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: itemData.myItem.attributes.myObj }, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and additional attributes', async () => {
@@ -199,8 +199,8 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and doesnt break with invalid options', async () => {
@@ -216,8 +216,8 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' }).toMatchObject(requestData.data)
   })
 
   it('sends the changed delta and doesnt break with empty options', async () => {
@@ -231,7 +231,7 @@ describe('saveAction', () => {
           process.nextTick(() => resolve(returnval))
         })
       })
-    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' })
-    expect({ id: 'myItem', attributes: {name: 'myItem updated', myArray: {2: { name: 'dd' }}, myObj: {attrs: {foo: {c: { ccb: 'new value' }}}}}, type: 'foo' }).toMatchObject(requestData.data)
+    expect(requestData.data).toMatchObject({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' })
+    expect({ id: 'myItem', attributes: { name: 'myItem updated', myArray: { 2: { name: 'dd' } }, myObj: { attrs: { foo: { c: { ccb: 'new value' } } } } }, type: 'foo' }).toMatchObject(requestData.data)
   })
 })
