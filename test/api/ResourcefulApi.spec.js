@@ -42,7 +42,7 @@ describe('ResourcefulApi', () => {
 
     api.registerModule = registerModuleMock
 
-    api.setupModules(['foo', 'bar', 'baz'])
+    api.setupApiModules(['foo', 'bar', 'baz'])
 
     expect(registerModuleMock.mock.calls.length).toBe(3)
   })
