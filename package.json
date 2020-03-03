@@ -9,7 +9,7 @@
   "homepage": "https://vuex-json-api.efrane.com",
   "main": "index.js",
   "scripts": {
-    "unit": "jest --config jest.config.js",
+    "unit": "jest --detectOpenHandles --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test",
@@ -45,6 +45,7 @@
     "husky": "^4.0.7",
     "jest": "^25.1.0",
     "jest-transform-stub": "^2.0.0",
+    "lint-staged": "^10.0.8",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.5.2",
@@ -55,9 +56,12 @@
     "node": ">= 8.0.0",
     "npm": ">= 3.0.0"
   },
+  "lint-staged": {
+    "*.js": "eslint"
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint",
+      "pre-commit": "yarn run lint-staged",
       "pre-push": "yarn test"
     }
   }
