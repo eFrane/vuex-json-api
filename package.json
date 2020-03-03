@@ -57,7 +57,7 @@
     "npm": ">= 3.0.0"
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.js": ["eslint --fix", "jest --bail --findRelatedTests"]
   },
   "husky": {
     "hooks": {
