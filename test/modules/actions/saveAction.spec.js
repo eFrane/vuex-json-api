@@ -86,7 +86,7 @@ describe('saveAction', () => {
     }
   }
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     // reset requestCalls
     doRequestCalls = 0
     api = new ResourcefulApi()
@@ -106,29 +106,28 @@ describe('saveAction', () => {
       action: 'update',
       url: '/'
     }])
+
     api.setupResourcefulRequests(router)
     api.setBaseUrl('/')
-    vuex = await router
-      .updateRoutes()
-      .then(router => {
-        const store = new Vuex.Store({
-          plugins: [
-            initJsonApiPlugin({
-              router: router,
-              baseUrl: ''
-            })
-          ]
+    vuex = new Vuex.Store({
+      plugins: [
+        initJsonApiPlugin({
+          router: router,
+          baseUrl: ''
         })
-        return store
-      })
-      .then(vuex => {
-        vuex.registerApiModule('foo')
-        vuex.state.foo.initial = initData
-        vuex.state.foo.items = itemData
+      ]
+    })
 
-        return vuex
-      })
     save = saveAction(api, true, 'foo').bind(vuex)
+
+    vuex.registerApiModule('foo')
+    vuex.state.foo.initial = initData
+    vuex.state.foo.items = itemData
+  })
+
+  afterEach(() => {
+    vuex = null
+    save = null
   })
 
   it('sends the changed delta on patch', async () => {
