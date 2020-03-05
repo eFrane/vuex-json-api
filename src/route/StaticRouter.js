@@ -10,7 +10,8 @@ import { StaticRoute } from './StaticRoute'
  * initialized with a POJO of { id, url, parameters }
  * whereas parameters are parts of the url which can be replaced.
  *
- *
+ * When using the StaticRouter it is not necessary to call
+ * `updateRoutes` before passing the Router onwards.
  */
 export class StaticRouter extends Router {
   /**
