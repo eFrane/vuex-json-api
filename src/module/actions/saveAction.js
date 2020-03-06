@@ -53,7 +53,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
         changedItemState = applySaveOptions({ currentItemState, changedItemState, options })
       }
 
-      vuexFns.commit(moduleName + '/startLoading', null)
+      vuexFns.commit('startLoading', null)
 
       return api[moduleName].update(
         { id },
@@ -70,7 +70,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
         }
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
 
-        vuexFns.commit(moduleName + '/endLoading', null)
+        vuexFns.commit('endLoading', null)
       })
     }
   })
