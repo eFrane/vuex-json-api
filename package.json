@@ -1,6 +1,6 @@
 {
   "name": "@efrane/vuex-json-api",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
@@ -57,7 +57,10 @@
     "npm": ">= 3.0.0"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "jest --bail --findRelatedTests"]
+    "*.js": [
+      "eslint --fix",
+      "jest --bail --findRelatedTests"
+    ]
   },
   "husky": {
     "hooks": {
