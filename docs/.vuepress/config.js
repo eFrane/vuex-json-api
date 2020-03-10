@@ -9,7 +9,11 @@ module.exports = {
       },
       {
         text: 'Guide',
-        link: '/guide/'
+        link: '/reference/'
+      },
+      {
+        text: 'Usage',
+        link: '/usage/'
       },
       {
         text: 'Development',
