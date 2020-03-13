@@ -73,7 +73,7 @@ store.then(store => {
     // register preset modules
     if (presetStoreModules) {
       for (let rootModule in presetStoreModules) {
-        if (presetStoreModules.hasOwnProperty(rootModule)) {
+        if (Object.prototype.hasOwnProperty.call(presetStoreModules, rootModule)) {
           presetStoreModules[rootModule].forEach(presetModule => {
             store.createPresetModule(presetModule.name, {
               base: rootModule,
