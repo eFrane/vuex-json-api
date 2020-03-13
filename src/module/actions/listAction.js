@@ -1,5 +1,6 @@
 import { processResponseData } from '../helpers/processResponseData'
 import { prepareQuery } from '../helpers/prepareQuery'
+import { hasOwn } from '../../shared/utils'
 
 /**
  * Get a resource list
@@ -20,7 +21,7 @@ export function listAction (api, moduleName, defaultQuery, module) {
         vuexFns.commit('resetItems')
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'list', module)
 
-        if (meta && Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
+        if (meta && hasOwn(meta, 'pagination')) {
           vuexFns.commit('setPagination', meta.pagination)
         }
 

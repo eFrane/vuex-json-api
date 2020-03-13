@@ -1,3 +1,5 @@
+import { hasOwn } from '../../shared/utils'
+
 /**
  *
  * @param {*} vuexFns
@@ -7,7 +9,7 @@
  */
 export function setResourceObjectsForModule (vuexFns, currentModule, destinationModule, objects) {
   for (const id in objects) {
-    if (Object.prototype.hasOwnProperty.call(objects, id)) {
+    if (hasOwn(objects, id)) {
       const isRootMutation = currentModule !== destinationModule
       let mutation = 'set'
 

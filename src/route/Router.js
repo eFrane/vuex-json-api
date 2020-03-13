@@ -1,3 +1,5 @@
+import { hasOwn } from '../shared/utils'
+
 /**
  * Basic router implementation for the ResourcefulApi.
  *
@@ -34,7 +36,7 @@ export class Router {
    * @param {Route} route
    */
   addRoute (module, action, route) {
-    if (!Object.prototype.hasOwnProperty.call(this.routes, module)) {
+    if (!hasOwn(this.routes, module)) {
       this.routes[module] = {}
     }
 

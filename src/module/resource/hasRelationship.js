@@ -1,7 +1,9 @@
+import { hasOwn } from '../../shared/utils'
+
 export function hasRelationship (obj) {
   return name => {
-    return Object.prototype.hasOwnProperty.call(obj, 'relationships') &&
-    Object.prototype.hasOwnProperty.call(obj.relationships, name) &&
+    return hasOwn(obj, 'relationships') &&
+    hasOwn(obj.relationships, name) &&
     obj.relationships[name].data.length !== 0
   }
 }

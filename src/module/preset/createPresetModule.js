@@ -1,5 +1,6 @@
 import { checkConfigProperty } from '../../helpers/checkConfigProperty'
 import { ModuleBuilder } from '../ModuleBuilder'
+import { hasOwn } from '../../shared/utils'
 
 export function createPresetModule (store, api) {
   return new Proxy(() => { }, {
@@ -10,7 +11,7 @@ export function createPresetModule (store, api) {
       }
 
       // if there is no baseModule, create it
-      if (!Object.prototype.hasOwnProperty.call(store.state, baseModule)) {
+      if (!hasOwn(store.state, baseModule)) {
         registerBaseModule(store, api, baseModule)
       }
 

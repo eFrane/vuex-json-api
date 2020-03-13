@@ -3,6 +3,7 @@ import normalize from 'json-api-normalizer'
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
+import { hasOwn } from '../shared/utils'
 
 export class ResourcefulApi extends Api {
   /**
@@ -42,7 +43,7 @@ export class ResourcefulApi extends Api {
     this.registerableModules = {}
 
     for (const routeName in routes) {
-      if (Object.prototype.hasOwnProperty.call(routes, routeName)) {
+      if (hasOwn(routes, routeName)) {
         const methods = routes[routeName]
 
         this.registerResourceMethods(routeName, methods)
@@ -80,7 +81,7 @@ export class ResourcefulApi extends Api {
    */
   registerModule (moduleName, methods) {
     // prevent double registration
-    if (Object.prototype.hasOwnProperty.call(this.store.state, moduleName)) {
+    if (hasOwn(this.store.state, moduleName)) {
       return
     }
 
@@ -102,7 +103,7 @@ export class ResourcefulApi extends Api {
     console.time('api: add method proxies for route ' + routeName)
 
     for (const methodName in methods) {
-      if (Object.prototype.hasOwnProperty.call(methods, methodName)) {
+      if (hasOwn(methods, methodName)) {
         const route = methods[methodName]
 
         if (methodName.indexOf('related.') === 0) {
@@ -162,7 +163,7 @@ export class ResourcefulApi extends Api {
 
     if (onlyUnregistered) {
       return availableModules.filter((moduleName) => {
-        return !Object.prototype.hasOwnProperty.call(this.state, moduleName)
+        return !hasOwn(this.state, moduleName)
       })
     }
     return availableModules

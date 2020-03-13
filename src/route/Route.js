@@ -1,3 +1,5 @@
+import { hasOwn } from '../shared/utils'
+
 export class Route {
   /**
    * @param apiRouteObject
@@ -27,7 +29,7 @@ export class Route {
     let url = this.url
 
     for (const param in parameters) {
-      if (Object.prototype.hasOwnProperty.call(parameters, param) &&
+      if (hasOwn(parameters, param) &&
         this.hasParameter(param)) {
         url = url.replace('{' + param + '}', parameters[param])
         delete parameters[param]

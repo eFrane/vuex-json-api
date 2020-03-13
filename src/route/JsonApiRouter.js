@@ -1,6 +1,7 @@
 import { Api } from '../api/Api'
 import { Router } from './Router'
 import { Route } from './Route'
+import { hasOwn } from '../shared/utils'
 
 /**
  * A simple router implementation querying a json:api endpoint which delivers all
@@ -55,7 +56,7 @@ export class JsonApiRouter extends Router {
       .then(({ data }) => {
         console.time('router_setup')
         for (const idx in data.route) {
-          if (Object.prototype.hasOwnProperty.call(data.route, idx)) {
+          if (hasOwn(data.route, idx)) {
             const route = data.route[idx]
 
             const module = route.type.toLower()

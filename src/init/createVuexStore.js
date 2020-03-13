@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
+import { hasOwn } from 'vue/src/shared/util'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,7 @@ export function prepareModuleHashMap (modules) {
   const moduleHashMap = {}
 
   for (const idx in modules) {
-    if (Object.prototype.hasOwnProperty.call(modules, idx)) {
+    if (hasOwn(modules, idx)) {
       const module = modules[idx]
       moduleHashMap[module.name] = module
     }

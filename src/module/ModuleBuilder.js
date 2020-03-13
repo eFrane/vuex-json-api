@@ -21,6 +21,7 @@ import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
 import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
+import { hasOwn } from '../shared/utils'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -100,7 +101,7 @@ export class ModuleBuilder {
     }
 
     for (const method in this.apiMethods) {
-      if (Object.prototype.hasOwnProperty.call(this.apiMethods, method) &&
+      if (hasOwn(this.apiMethods, method) &&
         this.api.router.routes[this.moduleName][method].isAbsolute()) {
         options.absoluteMethods.push(method)
       }
