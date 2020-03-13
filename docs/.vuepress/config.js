@@ -4,32 +4,42 @@ module.exports = {
   themeConfig: {
     nav: [
       {
-        text: 'Documentation',
+        text: 'Home',
         link: '/'
       },
       {
+        text: 'Guide',
+        link: '/reference/'
+      },
+      {
+        text: 'Usage',
+        link: '/usage/'
+      },
+      {
         text: 'Development',
-        link: '/development.html'
+        link: '/development.html',
+        items: [
+          'Contributing',
+          '/contributing/'
+        ]
       }
     ],
     repo: 'eFrane/vuex-json-api',
     editLinks: true,
     editLinkText: 'Help us improve this page!',
     displayAllHeaders: true,
-    activeHeaderLinks: true,
-    sidebar: [
-      ['/', 'Home'],
-      '/configuration/',
-      '/usage/',
-      '/usage/modules.html',
-      '/usage/requests.html',
-      '/usage/router.html',
-      '/usage/deep-dive.html'
-    ]
+    activeHeaderLinks: true
   },
   evergreen: true,
   serviceWorker: true,
-  plugins: [
-    'mermaidjs'
-  ],
+  plugins: {
+    'mermaidjs': {},
+
+    '@vuepress/active-header-links': {},
+
+    '@vuepress/pwa': {
+      serviceWorker: true,
+      updatePopup: true
+    }
+  }
 }

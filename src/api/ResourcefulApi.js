@@ -2,7 +2,7 @@ import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
-import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
+import { ResourceProxy } from './ResourceProxy'
 import { hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
@@ -110,22 +110,29 @@ export class ResourcefulApi extends Api {
    * @param {Route} methods
    */
   registerResourceMethods (routeName, methods) {
-    this[routeName] = {}
+    this[routeName] = new ResourceProxy(this)
 
     Performance.mark('api_setup_proxies_start')
 
+    const relationsToBeAdded = []
+
     for (const methodName in methods) {
       if (hasOwn(methods, methodName)) {
-        const route = methods[methodName]
+        if (this.isRelationMethodName(methodName)) {
+          relationsToBeAdded.push(methodName)
 
-        if (methodName.indexOf('related.') === 0) {
-          this.registerRelatedResourceMethod(routeName, methodName, route)
           continue
         }
 
-        this[routeName][methodName] = createApiResourceMethodProxy(this, methodName, route)
+        this[routeName].addRoute(methods[methodName])
       }
     }
+
+    relationsToBeAdded.forEach(relationToBeAdded => {
+      const [relationIdentifier, relationName] = relationToBeAdded.split('.')
+
+      this[relationIdentifier].addRelation(relationName, this[relationName])
+    })
 
     Performance.mark('api_setup_proxies_end')
     Performance.measure(
@@ -135,19 +142,8 @@ export class ResourcefulApi extends Api {
     )
   }
 
-  registerRelatedResourceMethod (routeName, methodName, route) {
-    const [related, resource, relationMethod] = methodName.split('.')
-
-    if (typeof this[routeName][related] !== 'object') {
-      this[routeName][related] = {}
-    }
-
-    if (typeof this[routeName][related][resource] !== 'object') {
-      this[routeName][related][resource] = {}
-    }
-
-    this[routeName][related][resource][relationMethod] =
-      createApiResourceMethodProxy(this, relationMethod, route)
+  isRelationMethodName (methodName) {
+    return methodName.indexOf('related.') === 0
   }
 
   /**

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Route it disallows invalid http verbs as action 1`] = `"Action must be valid resourceful verb"`;
+
+exports[`Route returns a reduced parameters object after preparation 1`] = `"/route/with/foo"`;

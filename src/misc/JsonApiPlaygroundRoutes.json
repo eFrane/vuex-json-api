@@ -22,12 +22,6 @@
     "url": "/v2/books"
   },
   {
-    "module": "books",
-    "action": "related.chapters.list",
-    "url": "/v2/books/{id}/chapters",
-    "parameters": ["id"]
-  },
-  {
     "module": "chapters",
     "action": "get",
     "url": "/v2/chapters/{id}",

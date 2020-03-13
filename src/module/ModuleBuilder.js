@@ -5,6 +5,7 @@ import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
+import { isAbsoluteUri } from '../helpers/isAbsoluteUri'
 import { listAction } from './actions/listAction'
 import { listRelatedAction } from './actions/listRelatedAction'
 import { itemsInRelationshipFormat } from './getters/itemsInRelationshipFormat'
@@ -108,7 +109,7 @@ export class ModuleBuilder {
 
     for (const method in this.apiMethods) {
       if (hasOwn(this.apiMethods, method) &&
-        this.api.router.routes[this.moduleName][method].isAbsolute()) {
+        isAbsoluteUri(this.api.router.routes[this.moduleName][method].url)) {
         options.absoluteMethods.push(method)
       }
     }

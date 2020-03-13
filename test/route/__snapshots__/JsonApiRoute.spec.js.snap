@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JsonApiRoute fails on wrong type 1`] = `"Invalid resource type"`;

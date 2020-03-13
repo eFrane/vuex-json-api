@@ -1,25 +1,37 @@
-# Router
+# Routing in the context of this plugin
 
-## `StaticRouter(routes)`
-Generates a Router with a set of manual configured Routes.
+# Router Implementations
 
-| Param | Type | Description |
-| --- | --- | --- |
-| routes | <code>Array</code> | accepts Array of Route-Objects (see Routes) |
+This plugin contains several router implementations. The main purpose of
+the router in vuex-json-api is to provide the resources for `ResourcefulApi`.
+In effect, routes define the available modules by defining the possible
+request space.
 
+## Available Router implementations
 
-***
+### StaticRouter
 
+Generates a Router with a set of manually configured Routes.
+
+### JsonApiRouter
+
+Generates a Router by requesting route data from a json:api endpoint.
 
 ## `Route`
-A Route is a POJO to configure the specific endpoint in relation to the baseUrl.
+
+A Route configures the specific endpoint in relation to the `baseUrl`.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | <code>String</code> | has to match the name of the requested type |
-| action | <code>String</code> | see supported [apiMethods][1] |
-| url | <code>String</code> | can be relative (to the baseUrl) or absolute (then it will bypass the "module name check" and create a storeModule named like the defined by the module param. independet of the type given by the response). |
-| parameters | <code>Array</code> | (Optional) |
+| module | `String` | has to match the name of the requested type |
+| action | `String` | see supported [apiMethods][1] |
+| url | `String` | can be relative (to the baseUrl) or absolute (then it will bypass the "module name check" and create a storeModule named like the defined by the module param. independet of the type given by the response). |
+| parameters | `Array` | (Optional) |
 
+## I want my own router
 
-[1]: /code/#isCollection
+If the provided router implementations don't suit your needs you can
+always just extend the `Router` class and write your own. In the simplest
+case, overriding `updateRoutes()` should do the trick.
+
+[1]: /usage/requests.html#the-two-api-classes

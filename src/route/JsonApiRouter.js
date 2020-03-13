@@ -1,6 +1,6 @@
-import { Api } from '../api/Api'
+import { ResourcefulApi } from '../api/ResourcefulApi'
 import { Router } from './Router'
-import { Route } from './Route'
+import { JsonApiRoute } from './JsonApiRoute'
 import { hasOwn } from '../shared/utils'
 
 /**
@@ -13,23 +13,25 @@ import { hasOwn } from '../shared/utils'
  * {
  *     "data": [
  *         {
- *             "type": "Route",
- *             "id": "api.route.list",
+ *             "type": "VuexJsonApiRoute",
+ *             "id": 1,
  *             "attributes": {
  *                 "parameters": [],
  *                 "url": "api/route",
- *                 "method": "list"
+ *                 "method": "list",
+ *                 "module": "route"
  *             }
  *        },
  *        {
- *            "type": "Route",
- *            "id": "api.route.get",
+ *            "type": "VuexJsonApiRoute",
+ *            "id": 2,
  *            "attributes": {
  *                "parameters": [
  *                    "id"
  *                ],
  *                "url": "api/route/{id}",
- *                "method": "get"
+ *                "method": "get",
+ *                 "module": "route"
  *            }
  *        }
  *     ]
@@ -40,8 +42,15 @@ import { hasOwn } from '../shared/utils'
  * e.g. `new JsonApiRouter('/api/route')`.
  */
 export class JsonApiRouter extends Router {
-  constructor (fetchPath) {
+  /**
+   *
+   * @param {String} baseUrl
+   * @param {String} fetchPath
+   */
+  constructor (baseUrl, fetchPath) {
     super()
+
+    this.baseUrl = baseUrl
     this.fetchPath = fetchPath
   }
 
@@ -51,22 +60,25 @@ export class JsonApiRouter extends Router {
    * @returns {*}
    */
   async updateRoutes () {
-    const api = new Api()
+    const api = new ResourcefulApi()
+    api.setBaseUrl(this.baseUrl)
+
     return api.get(this.fetchPath)
       .then(({ data }) => {
-        for (const idx in data.route) {
-          if (hasOwn(data.route, idx)) {
-            const route = data.route[idx]
-
-            const module = route.type.toLower()
-            const action = route.attributes.action.toLower()
-
-            this.addRoute(module, action, new Route(route))
-          }
-        }
+        this.parseApiResult(data)
 
         // returning self to make working with this in chained promises easier
         return this
       })
+  }
+
+  parseApiResult (data) {
+    for (const idx in data.vuexjsonapiroute) {
+      if (hasOwn(data.vuexjsonapiroute, idx)) {
+        const routeResource = data.vuexjsonapiroute[idx]
+
+        this.addRoute(new JsonApiRoute(routeResource))
+      }
+    }
   }
 }
