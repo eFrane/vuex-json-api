@@ -54,7 +54,6 @@ export class JsonApiRouter extends Router {
     const api = new Api()
     return api.get(this.fetchPath)
       .then(({ data }) => {
-        console.time('router_setup')
         for (const idx in data.route) {
           if (hasOwn(data.route, idx)) {
             const route = data.route[idx]
@@ -65,7 +64,6 @@ export class JsonApiRouter extends Router {
             this.addRoute(module, action, new Route(route))
           }
         }
-        console.timeEnd('router_setup')
 
         // returning self to make working with this in chained promises easier
         return this

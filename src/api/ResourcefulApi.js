@@ -4,6 +4,7 @@ import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
 import { hasOwn } from '../shared/utils'
+import { Performance } from '../shared/Performance'
 
 export class ResourcefulApi extends Api {
   /**
@@ -38,7 +39,8 @@ export class ResourcefulApi extends Api {
   setupResourcefulRequests (router) {
     this.router = router
 
-    console.time('api: setup resourceful routing')
+    Performance.mark('api_setup_routing_start')
+
     const routes = router.getRoutes()
     this.registerableModules = {}
 
@@ -51,7 +53,12 @@ export class ResourcefulApi extends Api {
       }
     }
 
-    console.timeEnd('api: setup resourceful routing')
+    Performance.mark('api_setup_routing_end')
+    Performance.measure(
+      'api: setup resourceful routing',
+      'api_setup_routing_start',
+      'api_setup_routing_end'
+    )
   }
 
   /**
@@ -67,11 +74,16 @@ export class ResourcefulApi extends Api {
    * @param {Array} apiModulesToRegister
    */
   setupApiModules (apiModulesToRegister = []) {
-    console.time('api: setup api modules')
+    Performance.mark('api_setup_modules_start')
 
     apiModulesToRegister.forEach(moduleName => this.registerModule(moduleName, this[moduleName]))
 
-    console.timeEnd('api: setup api modules')
+    Performance.mark('api_setup_modules_end')
+    Performance.measure(
+      'api: setup api modules',
+      'api_setup_modules_start',
+      'api_setup_modules_end'
+    )
   }
 
   /**
@@ -100,7 +112,7 @@ export class ResourcefulApi extends Api {
   registerResourceMethods (routeName, methods) {
     this[routeName] = {}
 
-    console.time('api: add method proxies for route ' + routeName)
+    Performance.mark('api_setup_proxies_start')
 
     for (const methodName in methods) {
       if (hasOwn(methods, methodName)) {
@@ -115,7 +127,12 @@ export class ResourcefulApi extends Api {
       }
     }
 
-    console.timeEnd('api: add method proxies for route ' + routeName)
+    Performance.mark('api_setup_proxies_end')
+    Performance.measure(
+      'api: add method proxies for route ' + routeName,
+      'api_setup_proxies_start',
+      'api_setup_proxies_end'
+    )
   }
 
   registerRelatedResourceMethod (routeName, methodName, route) {

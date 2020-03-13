@@ -1,6 +1,7 @@
 import { checkConfigProperty } from '../../helpers/checkConfigProperty'
 import { ModuleBuilder } from '../ModuleBuilder'
 import { hasOwn } from '../../shared/utils'
+import { Performance } from '../../shared/Performance'
 
 export function createPresetModule (store, api) {
   return new Proxy(() => { }, {
@@ -17,8 +18,8 @@ export function createPresetModule (store, api) {
 
       const methods = api[baseModule]
 
-      const timerLabel = `Register preset ${name} for base ${baseModule}`
-      console.time(timerLabel)
+      Performance.mark('module_register_preset_start')
+
       const builder = new ModuleBuilder(store, api, baseModule, methods, {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
@@ -26,7 +27,14 @@ export function createPresetModule (store, api) {
       }, name)
 
       store.registerModule([baseModule, name], builder.build())
-      console.timeEnd(timerLabel)
+
+      Performance.mark('module_register_preset_end')
+
+      Performance.measure(
+        `Register preset ${name} for base ${baseModule}`,
+        'module_register_preset_start',
+        'module_register_preset_end'
+      )
     }
   })
 }
