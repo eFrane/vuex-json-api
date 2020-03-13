@@ -1,20 +1,43 @@
 export class Route {
   /**
-   * @param apiRouteObject
+   *
+   * @param {String} module
+   * @param {String} action
+   * @param {String} url
+   * @param {Array} parameters
    */
-  constructor (apiRouteObject) {
-    this.url = apiRouteObject.attributes.url || ''
-    this.parameters = apiRouteObject.attributes.parameters || {}
+  constructor (module, action, url, parameters) {
+    if (typeof module !== 'string') {
+      throw new Error('Module name must be string')
+    }
+
+    if (!this.isValidAction(action)) {
+      throw new Error('Action must be valid resourceful verb')
+    }
+
+    if (typeof url !== 'string') {
+      throw new Error('URL must be string')
+    }
+
+    if (parameters.constructor !== Array) {
+      throw new Error('Parameters must be array')
+    }
+
+    this.module = module
+    this.action = action.toLowerCase()
+    this.url = url
+    this.parameters = parameters
   }
 
-  static fromPOJO ({ module, _, url, parameters }) {
-    return new Route({
-      type: module,
-      attributes: {
-        url,
-        parameters
-      }
-    })
+  get supportedResourcefulVerbs () {
+    return [
+      'list',
+      'get',
+      'create',
+      'replace',
+      'update',
+      'delete'
+    ]
   }
 
   /**
@@ -39,16 +62,21 @@ export class Route {
 
   /**
    * Check if a parameter is allowed
+   *
    * @param parameter
    * @returns {boolean}
    */
   hasParameter (parameter) {
-    return this.parameters.constructor === Array && this.parameters.filter((checkParam) => {
+    return this.parameters.filter((checkParam) => {
       return parameter === checkParam
     }).length > 0
   }
 
-  isAbsolute () {
-    return this.url.substring(0, 4) === 'http'
+  /**
+   *
+   * @param {String} action
+   */
+  isValidAction (action) {
+    return typeof action === 'string' && this.supportedResourcefulVerbs.indexOf(action.toLowerCase()) > -1
   }
 }

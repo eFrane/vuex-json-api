@@ -23,22 +23,23 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
 
       let currentItemState = null
       let initialItemState = null
+
       if (Object.prototype.hasOwnProperty.call(defaultQuery, 'group')) {
-        currentItemState = JSON.parse(JSON.stringify((isCollection)
-          ? thisArg.state[moduleName][defaultQuery.group].items[id]
-          : thisArg.state[moduleName][defaultQuery.group].item))
-
-        initialItemState = JSON.parse(JSON.stringify((isCollection)
-          ? thisArg.state[moduleName][defaultQuery.group].initial[id]
-          : thisArg.state[moduleName][defaultQuery.group].initial))
+        if (isCollection) {
+          currentItemState = thisArg.state[moduleName][defaultQuery.group].items[id]
+          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName][defaultQuery.group].initial[id]))
+        } else {
+          currentItemState = thisArg.state[moduleName][defaultQuery.group].item
+          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName][defaultQuery.group].initial))
+        }
       } else {
-        currentItemState = JSON.parse(JSON.stringify((isCollection)
-          ? thisArg.state[moduleName].items[id]
-          : thisArg.state[moduleName].item))
-
-        initialItemState = JSON.parse(JSON.stringify((isCollection)
-          ? thisArg.state[moduleName].initial[id]
-          : thisArg.state[moduleName].initial))
+        if (isCollection) {
+          currentItemState = thisArg.state[moduleName].items[id]
+          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName].initial[id]))
+        } else {
+          currentItemState = thisArg.state[moduleName].item
+          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName].initial))
+        }
       }
 
       let changedItemState = diff(initialItemState, currentItemState)

@@ -9,10 +9,11 @@
  * Since every endpoint is implemented differently and
  * the choice where this route information comes from
  * should be left to the endpoint developer, this
- * library only assumes that route loading is usually an
+ * library only assumes that route loading can be a
  * asynchronous process which eventually returns and
- * has a set of keyed-by-name `Route` objects in
- * `this.routes`.
+ * has a set of `Route` objects in `this.routes`,
+ * keyed by their module and methods. To ensure the latter,
+ * actually adding `Route`s should be done via `addRoute`.
  */
 export class Router {
   constructor () {
@@ -29,15 +30,13 @@ export class Router {
 
   /**
    *
-   * @param {String} module
-   * @param {String} action
    * @param {Route} route
    */
-  addRoute (module, action, route) {
-    if (!Object.prototype.hasOwnProperty.call(this.routes, module)) {
-      this.routes[module] = {}
+  addRoute (route) {
+    if (!Object.prototype.hasOwnProperty.call(this.routes, route.module)) {
+      this.routes[route.module] = {}
     }
 
-    this.routes[module][action] = route
+    this.routes[route.module][route.action] = route
   }
 }
