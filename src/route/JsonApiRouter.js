@@ -1,6 +1,7 @@
 import { ResourcefulApi } from '../api/ResourcefulApi'
 import { Router } from './Router'
 import { JsonApiRoute } from './JsonApiRoute'
+import { hasOwn } from '../shared/utils'
 
 /**
  * A simple router implementation querying a json:api endpoint which delivers all
@@ -73,7 +74,7 @@ export class JsonApiRouter extends Router {
 
   parseApiResult (data) {
     for (const idx in data.vuexjsonapiroute) {
-      if (Object.prototype.hasOwnProperty.call(data.vuexjsonapiroute, idx)) {
+      if (hasOwn(data.vuexjsonapiroute, idx)) {
         const routeResource = data.vuexjsonapiroute[idx]
 
         this.addRoute(new JsonApiRoute(routeResource))

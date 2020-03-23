@@ -2,6 +2,7 @@ import { diff } from 'deep-object-diff'
 import { processResponseData } from '../helpers/processResponseData'
 import { getExpectedResponse } from '../helpers/getExpectedResponse'
 import { saveOptions as applySaveOptions } from './options/saveOptions'
+import { hasOwn } from '../../shared/utils'
 
 /**
  * Update an existing resource
@@ -15,7 +16,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [vuexFns, params]) {
       const id = (typeof params === 'object') ? params.id : params
-      const options = Object.prototype.hasOwnProperty.call(params, 'options') ? params.options : null
+      const options = hasOwn(params, 'options') ? params.options : null
 
       if (typeof id === 'undefined') {
         throw new Error('You must pass an object id to this action')
@@ -24,7 +25,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
       let currentItemState = null
       let initialItemState = null
 
-      if (Object.prototype.hasOwnProperty.call(defaultQuery, 'group')) {
+      if (hasOwn(defaultQuery, 'group')) {
         if (isCollection) {
           currentItemState = thisArg.state[moduleName][defaultQuery.group].items[id]
           initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName][defaultQuery.group].initial[id]))
@@ -44,7 +45,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
 
       let changedItemState = diff(initialItemState, currentItemState)
 
-      if (Object.prototype.hasOwnProperty.call(changedItemState, 'relationships')) {
+      if (hasOwn(changedItemState, 'relationships')) {
         for (const relationship in changedItemState.relationships) {
           changedItemState.relationships[relationship] = currentItemState.relationships[relationship]
         }

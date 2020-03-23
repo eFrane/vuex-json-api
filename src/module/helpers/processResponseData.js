@@ -1,5 +1,6 @@
 import { setResourceObjectsForModule } from './setResourceObjectsForModule'
 import { isMissingModule, registerMissingModule } from './missingModule'
+import { hasOwn } from '../../shared/utils'
 
 /**
  * Process the (normalized) data part of a response
@@ -19,7 +20,7 @@ export function processResponseData (vuexInstance, vuexFns, api, currentModule, 
     if (module !== null &&
       module.state.options.absoluteMethods.includes(currentMethod)) {
       registeredModule = currentModule
-    } else if (!Object.prototype.hasOwnProperty.call(data, itemType)) {
+    } else if (!hasOwn(data, itemType)) {
       continue
     }
 

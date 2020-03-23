@@ -22,6 +22,8 @@ import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
 import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
+import { hasOwn } from '../shared/utils'
+import { Performance } from '../shared/Performance'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -71,8 +73,7 @@ export class ModuleBuilder {
    * Build the module for this builder instance
    */
   build () {
-    const storeModuleBuildTimer = 'api: build module ' + this.moduleName
-    console.time(storeModuleBuildTimer)
+    Performance.mark('api_build_module_start')
 
     const module = {
       namespaced: true,
@@ -88,7 +89,13 @@ export class ModuleBuilder {
       module.getters = this.buildGetters()
     }
 
-    console.timeEnd(storeModuleBuildTimer)
+    Performance.mark('api_build_module_end')
+    Performance.measure(
+      'api: build module ' + this.moduleName,
+      'api_build_module_start',
+      'api_build_module_end'
+    )
+
     return module
   }
 
@@ -101,7 +108,7 @@ export class ModuleBuilder {
     }
 
     for (const method in this.apiMethods) {
-      if (Object.prototype.hasOwnProperty.call(this.apiMethods, method) &&
+      if (hasOwn(this.apiMethods, method) &&
         isAbsoluteUri(this.api.router.routes[this.moduleName][method].url)) {
         options.absoluteMethods.push(method)
       }

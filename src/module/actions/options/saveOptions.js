@@ -1,8 +1,8 @@
-import { deepMerge } from '../../../helpers/deepMerge'
+import { deepMerge, hasOwn } from '../../../shared/utils'
 
 export function saveOptions ({ currentItemState, changedItemState, options }) {
   const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
-  if (typeof options !== 'undefined' && Object.prototype.hasOwnProperty.call(returnedItemState, 'attributes')) {
+  if (typeof options !== 'undefined' && hasOwn(returnedItemState, 'attributes')) {
     Object.keys(options).forEach(option => {
       switch (option) {
         case 'attributes':
@@ -19,12 +19,12 @@ const attributeOptions = ({ currentItemState, changedAttributes, options }) => {
     switch (option) {
       case 'full':
         if (typeof options.full === 'string') {
-          if (Object.prototype.hasOwnProperty.call(changedAttributes, options.full)) {
+          if (hasOwn(changedAttributes, options.full)) {
             changedAttributes[options.full] = deepMerge(currentItemState.attributes[options.full], changedAttributes[options.full])
           }
         } else {
           options.full.forEach(attr => {
-            if (Object.prototype.hasOwnProperty.call(changedAttributes, attr)) {
+            if (hasOwn(changedAttributes, attr)) {
               changedAttributes[options.full] = deepMerge(currentItemState.attributes[attr], changedAttributes[attr])
             }
           })
@@ -32,12 +32,12 @@ const attributeOptions = ({ currentItemState, changedAttributes, options }) => {
         break
       case 'unchanged':
         if (typeof options.unchanged === 'string') {
-          if (Object.prototype.hasOwnProperty.call(changedAttributes, options.unchanged)) {
+          if (hasOwn(changedAttributes, options.unchanged)) {
             changedAttributes[options.unchanged] = changedAttributes[options.unchanged] ? changedAttributes[options.unchanged] : currentItemState.attributes[options.unchanged]
           }
         } else {
           options.unchanged.forEach(attr => {
-            if (Object.prototype.hasOwnProperty.call(changedAttributes, attr)) {
+            if (hasOwn(changedAttributes, attr)) {
               changedAttributes[attr] = changedAttributes[attr] ? changedAttributes[attr] : currentItemState.attributes[attr]
             }
           })

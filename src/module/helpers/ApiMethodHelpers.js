@@ -1,5 +1,7 @@
+import { hasOwn } from '../../shared/utils'
+
 function checkPropertyOnObject (obj, property) {
-  return typeof obj === 'object' && Object.prototype.hasOwnProperty.call(obj, property)
+  return typeof obj === 'object' && hasOwn(obj, property)
 }
 
 /**

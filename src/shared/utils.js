@@ -1,3 +1,14 @@
+
+/**
+ * Convenience wrapper to shorten the hasOwnProperty call
+ *
+ * @param {Object|Array{*}} object
+ * @param {String} property
+ */
+export function hasOwn (object, property) {
+  return Object.prototype.hasOwnProperty.call(object, property)
+}
+
 /**
  * Performs a deep merge of `source` into `target`.
  * Mutates `target` only but not its objects and arrays.
@@ -9,7 +20,6 @@
  *
  * @return {Object} merged Orbject
  */
-
 export function deepMerge (target, source) {
   const isObject = (obj) => obj && typeof obj === 'object'
 

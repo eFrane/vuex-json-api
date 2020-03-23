@@ -4,6 +4,7 @@ import { hasLoadedRelationship } from './hasLoadedRelationship'
 import { listRelationship } from './listRelationship'
 import { loadRelationship } from './loadRelationship'
 import { getRelationship } from './getRelationship'
+import { hasOwn } from '../../shared/utils'
 
 export class ResourceBuilder {
   constructor (store) {
@@ -26,7 +27,7 @@ export class ResourceBuilder {
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
     obj.hasLoadedRelationship = hasLoadedRelationship(obj)
 
-    obj.get = (attributeName) => Object.prototype.hasOwnProperty.call(obj.attributes, attributeName) ? obj.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
+    obj.get = (attributeName) => hasOwn(obj.attributes, attributeName) ? obj.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
 
     if (obj.hasRelationship) {
       this.buildRelationshipMethods(obj)
@@ -45,7 +46,7 @@ export class ResourceBuilder {
     const relationships = obj.relationships
 
     for (const currentRelationshipName in relationships) {
-      if (Object.prototype.hasOwnProperty.call(relationships, currentRelationshipName)) {
+      if (hasOwn(relationships, currentRelationshipName)) {
         const relatedObject = relationships[currentRelationshipName]
 
         const relationshipConfig = {

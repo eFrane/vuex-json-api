@@ -1,3 +1,5 @@
+import { hasOwn } from '../shared/utils'
+
 /**
  *
  * @param {object} config
@@ -5,12 +7,12 @@
  * @param {Boolean} isRequiredProp
  */
 export function checkConfigProperty (config, property, isRequiredProp = true) {
-  if (config !== null && Object.prototype.hasOwnProperty.call(config, property)) {
+  if (config !== null && hasOwn(config, property)) {
     return true
   }
 
   if ((config === null ||
-    Object.prototype.hasOwnProperty.call(config, property) === false) &&
+    hasOwn(config, property) === false) &&
     !isRequiredProp) {
     return false
   }

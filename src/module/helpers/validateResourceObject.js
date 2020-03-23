@@ -1,3 +1,5 @@
+import { hasOwn } from '../../shared/utils'
+
 /**
  * Do a crude check for common json:api resource properties.
  * This is (probably) not a long-term solution!
@@ -15,17 +17,17 @@
  */
 export function validateResourceObject (resourceObject, isCreateResource) {
   const conformsToBasicStructure = typeof resourceObject === 'object' &&
-    Object.prototype.hasOwnProperty.call(resourceObject, 'type') &&
-    Object.prototype.hasOwnProperty.call(resourceObject, 'data')
+    hasOwn(resourceObject, 'type') &&
+    hasOwn(resourceObject, 'data')
 
   if (isCreateResource) {
     return conformsToBasicStructure &&
-      !Object.prototype.hasOwnProperty.call(resourceObject, 'id')
+      !hasOwn(resourceObject, 'id')
   }
 
   if (!isCreateResource) {
     return conformsToBasicStructure &&
-      Object.prototype.hasOwnProperty.call(resourceObject, 'id')
+      hasOwn(resourceObject, 'id')
   }
 
   throw new Error('Detected potentially invalid json:api resource object')

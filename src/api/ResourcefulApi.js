@@ -3,6 +3,8 @@ import normalize from 'json-api-normalizer'
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { ResourceProxy } from './ResourceProxy'
+import { hasOwn } from '../shared/utils'
+import { Performance } from '../shared/Performance'
 
 export class ResourcefulApi extends Api {
   /**
@@ -37,12 +39,13 @@ export class ResourcefulApi extends Api {
   setupResourcefulRequests (router) {
     this.router = router
 
-    console.time('api: setup resourceful routing')
+    Performance.mark('api_setup_routing_start')
+
     const routes = router.getRoutes()
     this.registerableModules = {}
 
     for (const routeName in routes) {
-      if (Object.prototype.hasOwnProperty.call(routes, routeName)) {
+      if (hasOwn(routes, routeName)) {
         const methods = routes[routeName]
 
         this.registerResourceMethods(routeName, methods)
@@ -50,7 +53,12 @@ export class ResourcefulApi extends Api {
       }
     }
 
-    console.timeEnd('api: setup resourceful routing')
+    Performance.mark('api_setup_routing_end')
+    Performance.measure(
+      'api: setup resourceful routing',
+      'api_setup_routing_start',
+      'api_setup_routing_end'
+    )
   }
 
   /**
@@ -66,11 +74,16 @@ export class ResourcefulApi extends Api {
    * @param {Array} apiModulesToRegister
    */
   setupApiModules (apiModulesToRegister = []) {
-    console.time('api: setup api modules')
+    Performance.mark('api_setup_modules_start')
 
     apiModulesToRegister.forEach(moduleName => this.registerModule(moduleName, this[moduleName]))
 
-    console.timeEnd('api: setup api modules')
+    Performance.mark('api_setup_modules_end')
+    Performance.measure(
+      'api: setup api modules',
+      'api_setup_modules_start',
+      'api_setup_modules_end'
+    )
   }
 
   /**
@@ -80,7 +93,7 @@ export class ResourcefulApi extends Api {
    */
   registerModule (moduleName, methods) {
     // prevent double registration
-    if (Object.prototype.hasOwnProperty.call(this.store.state, moduleName)) {
+    if (hasOwn(this.store.state, moduleName)) {
       return
     }
 
@@ -99,10 +112,12 @@ export class ResourcefulApi extends Api {
   registerResourceMethods (routeName, methods) {
     this[routeName] = new ResourceProxy(this)
 
+    Performance.mark('api_setup_proxies_start')
+
     const relationsToBeAdded = []
 
     for (const methodName in methods) {
-      if (Object.prototype.hasOwnProperty.call(methods, methodName)) {
+      if (hasOwn(methods, methodName)) {
         if (this.isRelationMethodName(methodName)) {
           relationsToBeAdded.push(methodName)
 
@@ -118,6 +133,13 @@ export class ResourcefulApi extends Api {
 
       this[relationIdentifier].addRelation(relationName, this[relationName])
     })
+
+    Performance.mark('api_setup_proxies_end')
+    Performance.measure(
+      'api: add method proxies for route ' + routeName,
+      'api_setup_proxies_start',
+      'api_setup_proxies_end'
+    )
   }
 
   isRelationMethodName (methodName) {
@@ -154,7 +176,7 @@ export class ResourcefulApi extends Api {
 
     if (onlyUnregistered) {
       return availableModules.filter((moduleName) => {
-        return !Object.prototype.hasOwnProperty.call(this.state, moduleName)
+        return !hasOwn(this.state, moduleName)
       })
     }
     return availableModules

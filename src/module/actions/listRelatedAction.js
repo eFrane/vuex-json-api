@@ -1,5 +1,6 @@
 import { processResponseData } from '../helpers/processResponseData'
 import { prepareQuery } from '../helpers/prepareQuery'
+import { hasOwn } from '../../shared/utils'
 
 /**
  * Get a resource list of a related resource
@@ -20,7 +21,7 @@ export function listRelatedAction (api, moduleName, relatedModuleName) {
       return api[moduleName].related[relatedModuleName].list(query).then(({ data, meta }) => {
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'list')
 
-        if (Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
+        if (hasOwn(meta, 'pagination')) {
           vuexFns.commit(`${relatedModuleName}setPagination`, meta.pagination)
         }
 
