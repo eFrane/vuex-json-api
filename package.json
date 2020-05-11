@@ -33,7 +33,7 @@
     "@babel/preset-env": "^7.6.0",
     "@vuepress/plugin-active-header-links": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
-    "babel-jest": "^25.1.0",
+    "babel-jest": "^26.0.1",
     "eslint": "6.8.0",
     "eslint-config-standard": "14.1.1",
     "eslint-friendly-formatter": "^4.0.1",
