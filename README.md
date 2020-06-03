@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/eFrane/vuex-json-api.svg?branch=master)](https://travis-ci.org/eFrane/vuex-json-api)
+
 # Vuex Json:Api
 
 > Automagic Json:Api integration for Vuex.
