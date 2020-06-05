@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
-import { hasOwn } from 'vue/src/shared/util'
+import { hasOwn } from '../shared/utils'
 
 Vue.use(Vuex)
 
