@@ -12,6 +12,8 @@ import { StaticRoute } from './StaticRoute'
  *
  * When using the StaticRouter it is not necessary to call
  * `updateRoutes` before passing the Router onwards.
+ *
+ * @class StaticRouter
  */
 export class StaticRouter extends Router {
   /**

@@ -1,3 +1,8 @@
+/**
+ * Wrapper around the performance markers api
+ *
+ * @class Performance
+ */
 export class Performance {
   static hasPerformanceApi () {
     const p = window.performance

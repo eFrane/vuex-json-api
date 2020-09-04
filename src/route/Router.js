@@ -16,6 +16,8 @@ import { hasOwn } from '../shared/utils'
  * has a set of `Route` objects in `this.routes`,
  * keyed by their module and methods. To ensure the latter,
  * actually adding `Route`s should be done via `addRoute`.
+ *
+ * @class Router
  */
 export class Router {
   constructor () {

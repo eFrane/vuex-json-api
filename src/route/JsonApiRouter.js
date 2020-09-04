@@ -40,6 +40,8 @@ import { hasOwn } from '../shared/utils'
  *
  * To initialize this router, simply `new` it with the desired fetch path,
  * e.g. `new JsonApiRouter('/api/route')`.
+ *
+ * @class JsonApiRouter
  */
 export class JsonApiRouter extends Router {
   /**

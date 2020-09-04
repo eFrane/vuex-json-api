@@ -4,7 +4,12 @@ import { validateCallbackFn } from '../helpers/validateCallbackFn'
 import { setCallbackFns } from '../helpers/setCallbackFns'
 import { isAbsoluteUri } from '../helpers/isAbsoluteUri'
 
-class Api {
+/**
+ * Wrapper around json:api requests, sets content type and other defaults.
+ *
+ * @class Api
+ */
+export class Api {
   constructor () {
     this.baseUrl = ''
 
@@ -154,5 +159,3 @@ class Api {
     this.baseUrl = baseUrl
   }
 }
-
-export { Api }

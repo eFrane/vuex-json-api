@@ -8,7 +8,7 @@ module.exports = {
         link: '/'
       },
       {
-        text: 'Guide',
+        text: 'Reference',
         link: '/reference/'
       },
       {

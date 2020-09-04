@@ -6,6 +6,9 @@ import { loadRelationship } from './loadRelationship'
 import { getRelationship } from './getRelationship'
 import { hasOwn } from '../../shared/utils'
 
+/**
+ * @class ResourceBuilder
+ */
 export class ResourceBuilder {
   constructor (store) {
     this.store = store

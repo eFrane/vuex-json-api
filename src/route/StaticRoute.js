@@ -13,6 +13,8 @@ import { Route } from './Route'
  *   }
  * ]
  * ```
+ *
+ * @class StaticRoute
  */
 export class StaticRoute extends Route {
   constructor (routeData) {
