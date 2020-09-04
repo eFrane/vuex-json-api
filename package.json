@@ -4,7 +4,7 @@
   "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
-    "eFrane <efrane@meanderingsoul.com>"
+    "Stefan Graupner <efrane@meanderingsoul.com>"
   ],
   "homepage": "https://vuex-json-api.efrane.com",
   "main": "index.js",
