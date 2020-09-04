@@ -14,14 +14,6 @@ module.exports = {
       {
         text: 'Usage',
         link: '/usage/'
-      },
-      {
-        text: 'Development',
-        link: '/development.html',
-        items: [
-          'Contributing',
-          '/contributing/'
-        ]
       }
     ],
     repo: 'eFrane/vuex-json-api',
@@ -32,14 +24,8 @@ module.exports = {
   },
   evergreen: true,
   serviceWorker: true,
-  plugins: {
-    'mermaidjs': {},
-
-    '@vuepress/active-header-links': {},
-
-    '@vuepress/pwa': {
-      serviceWorker: true,
-      updatePopup: true
-    }
-  }
+  plugins: [
+    'mermaidjs',
+    require('./plugins/jsdoc/jsdoc')
+  ]
 }

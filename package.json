@@ -13,8 +13,8 @@
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test",
-    "vuepress:dev": "vuepress dev docs",
-    "vuepress:build": "vuepress build docs"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "axios": "^0.*",
@@ -47,6 +47,7 @@
     "husky": "^4.0.7",
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
+    "jsdoc-to-markdown": "^6.0.1",
     "lint-staged": "^10.0.8",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.5",

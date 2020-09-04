@@ -22,6 +22,9 @@ export class Router {
     this.routes = {}
   }
 
+  /**
+   * @returns {Route[]}
+   */
   getRoutes () {
     return this.routes
   }

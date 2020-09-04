@@ -2,7 +2,7 @@
 /**
  * Convenience wrapper to shorten the hasOwnProperty call
  *
- * @param {Object|Array{*}} object
+ * @param {Object} object
  * @param {String} property
  */
 export function hasOwn (object, property) {
