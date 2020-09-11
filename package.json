@@ -31,6 +31,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/plugin-transform-modules-commonjs": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
+    "@pressdocs/lang-js": "^0.0.2",
+    "@pressdocs/vuepress-plugin-pressdocs": "^0.0.2",
     "@vuepress/plugin-active-header-links": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
     "babel-jest": "^26.0.1",
@@ -53,7 +55,7 @@
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.5.2",
     "vuepress": "^1.2.0",
-    "vuepress-plugin-mermaidjs": "^1.1.0"
+    "vuepress-plugin-mermaidjs": "^1.7.0"
   },
   "engines": {
     "node": ">= 8.0.0",

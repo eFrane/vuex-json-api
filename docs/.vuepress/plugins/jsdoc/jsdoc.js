@@ -7,16 +7,17 @@ module.exports = (options, ctx) => {
   return {
     name: 'jsdoc',
     additionalPages () {
-      const srcDir = __dirname + '/../../../../src/'
-
       let doc = jsdoc2md.getTemplateDataSync({
-        files: srcDir + '**/*.js'
+        files: options.src + '/**/*.js'
       })
+
+      const templatePath = __dirname + '/template.hbs'
+      const template = fs.readFileSync(templatePath, 'utf-8').toString()
 
       return [
         {
           path: '/reference/',
-          content: dmd(doc, { noCache: true, template: fs.readFileSync(__dirname + '/template.hbs', 'utf-8').toString() })
+          content: dmd(doc, { template })
         }
       ]
     }

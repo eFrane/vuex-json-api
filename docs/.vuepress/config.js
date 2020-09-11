@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   title: 'Json:Api for Vuex',
   description: 'Automagic Json:Api integration for Vuex',
@@ -26,6 +28,13 @@ module.exports = {
   serviceWorker: true,
   plugins: [
     'mermaidjs',
-    require('./plugins/jsdoc/jsdoc')
+    ['@pressdocs/vuepress-plugin-pressdocs', {
+      'languages': {
+        'js': {
+          sourceDir: path.resolve(__dirname + '/../../src'),
+          path: '/reference/'
+        }
+      }
+    }]
   ]
 }
