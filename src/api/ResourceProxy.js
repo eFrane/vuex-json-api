@@ -8,6 +8,8 @@ import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
  * a route. The actual proxied axios-clients
  * will only be created once the first request on
  * a method is made.
+ *
+ * @class ResourceProxy
  */
 export class ResourceProxy {
   constructor (resourcefulApi) {

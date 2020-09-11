@@ -1,5 +1,8 @@
 import { hasOwn } from '../shared/utils'
 
+/**
+ * @class Route
+ */
 export class Route {
   /**
    *

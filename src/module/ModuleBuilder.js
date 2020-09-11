@@ -33,6 +33,8 @@ import { Performance } from '../shared/Performance'
  *
  * - the proposed json api 1.1 pagination style meta attributes
  *   (-> https://jsonapi.org/format/1.1/#fetching-pagination)
+ *
+ * @class ModuleBuilder
  */
 export class ModuleBuilder {
   /**

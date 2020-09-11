@@ -4,6 +4,8 @@ import { Router } from './Router'
 /**
  * Pluggable api router if you're using Symfony and the FosJsRouting Bundle
  *
+ * @class FosJsRoutingRouter
+ *
  * @see https://github.com/isychev/fos-routing/
  * @see https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
  */

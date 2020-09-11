@@ -6,6 +6,9 @@ import { ResourceProxy } from './ResourceProxy'
 import { hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
+/**
+ * @class ResourcefulApi
+ */
 export class ResourcefulApi extends Api {
   /**
    * Extends `Api::doRequest()` to handle some data preprocessing.

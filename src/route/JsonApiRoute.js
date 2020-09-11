@@ -8,23 +8,27 @@ function getRequiredAttribute (routeResource, attributeName) {
   return routeResource.attributes[attributeName]
 }
 
+/**
+ *
+ * Create a route from a Json:Api resource of the VuexJsonApiRoute-type:
+ *
+ * ``` json
+ * {
+ *   "type": "VuexJsonApiRoute",
+ *   "attributes": {
+ *     "module": "themodule",
+ *     "method": "thehttpmethod"
+ *     "url": "The URL of the Resource, can be relative to baseURL",
+ *     "parameters": ["Parameters", "for", "the", "above", url"]
+ *   }
+ * }
+ * ```
+ * @class JsonApiRoute
+ */
 export class JsonApiRoute extends Route {
   /**
-   * Create a route from a Json:Api resource of the VuexJsonApiRoute-type:
    *
-   * ``` json
-   * {
-   *   "type": "VuexJsonApiRoute",
-   *   "attributes": {
-   *     "module": "themodule",
-   *     "method": "thehttpmethod"
-   *     "url": "The URL of the Resource, can be relative to baseURL",
-   *     "parameters": ["Parameters", "for", "the", "above", url"]
-   *   }
-   * }
-   * ```
-   *
-   * @param routeResource
+   * @param {Object} routeResource
    */
   constructor (routeResource) {
     if (!Object.prototype.hasOwnProperty.call(routeResource, 'attributes') ||
