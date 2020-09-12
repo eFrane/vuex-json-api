@@ -28,11 +28,11 @@ module.exports = {
   serviceWorker: true,
   plugins: [
     'mermaidjs',
-    ['@pressdocs/vuepress-plugin-pressdocs', {
+    ['pressdocs', {
       'languages': {
         'js': {
           sourceDir: path.resolve(__dirname + '/../../src'),
-          path: '/reference/'
+          path: '/reference/',
         }
       }
     }]
