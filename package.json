@@ -42,7 +42,7 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^6.0.0",
+    "eslint-plugin-vue": "^7.0.1",
     "fake-json-api-server": "^1.6.0",
     "husky": "^4.0.7",
     "jest": "^26.0.1",
