@@ -1,0 +1,10 @@
+{
+  "name": "vuex-json-api-documentation",
+  "version": "-",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-mermaidjs": "^1.1.0"
+  }
+}

@@ -12,9 +12,7 @@
     "unit": "jest --detectOpenHandles --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
-    "lint": "eslint --ext .js,.vue src test",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "lint": "eslint --ext .js,.vue src test"
   },
   "dependencies": {
     "axios": "^0.*",
@@ -51,9 +49,7 @@
     "lint-staged": "^10.0.8",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.5",
-    "vue-template-compiler": "^2.5.2",
-    "vuepress": "^1.2.0",
-    "vuepress-plugin-mermaidjs": "^1.1.0"
+    "vue-template-compiler": "^2.5.2"
   },
   "engines": {
     "node": ">= 8.0.0",

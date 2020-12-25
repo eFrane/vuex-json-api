@@ -28,11 +28,11 @@ below is a little more complicated.
 
 **Base state for items**
 
-<<< @/src/module/state/item.js
+<<< @/../src/module/state/item.js
 
 **Base state for collections**
 
-<<< @/src/module/state/collection.js
+<<< @/../src/module/state/collection.js
 
 ### The fields
 
@@ -118,7 +118,7 @@ ModDec-->set
 
 ### reset
 
-### list 
+### list
 
 instead of an Id-String, you can pass an Object with an Id-Key and and option key.
 
