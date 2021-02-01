@@ -70,6 +70,16 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
         if (status === 204) {
           vuexFns.commit('set', getExpectedResponse(currentItemState))
         }
+        
+        if (status === 200) {
+          const isEmptyArray = Array.isArray(data) === true && data.length === 0
+          const isEmptyObject = typeof data === 'object' && data !== null && Object.keys(data).length === 0
+          const isNull = data === null
+          if (isEmptyArray || isEmptyObject || isNull) {
+            vuexFns.commit('set', getExpectedResponse(currentItemState))
+          }
+        }
+        
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
 
         vuexFns.commit('endLoading', null)

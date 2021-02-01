@@ -16,3 +16,5 @@ dist
 docs/.vuepress/dist
 yarn.lock
 coverage
+
+docs/node_modules/

@@ -59,7 +59,7 @@ export class ResourceProxy {
   }
 
   createProxyForMethodIfMissing (methodName) {
-    const proxy = createApiResourceMethodProxy(this.api, methodName, this.routes[methodName])
+    const proxy = createApiResourceMethodProxy(this.resourcefulApi, methodName, this.routes[methodName])
 
     this.proxies[methodName] = proxy
   }
