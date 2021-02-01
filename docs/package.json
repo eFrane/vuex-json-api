@@ -4,10 +4,12 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@pressdocs/lang-js": "^0.1.1",
     "@vuepress/plugin-active-header-links": "^1.2.0",
     "@vuepress/plugin-pwa": "^1.2.0",
     "jsdoc-to-markdown": "^6.0.1",
     "vuepress": "^1.7.1",
-    "vuepress-plugin-mermaidjs": "^1.1.0"
+    "vuepress-plugin-mermaidjs": "^1.1.0",
+    "vuepress-plugin-pressdocs": "^0.0.6"
   }
 }
