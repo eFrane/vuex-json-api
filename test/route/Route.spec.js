@@ -9,7 +9,7 @@ describe('Route', () => {
     expect(route.action).toStrictEqual('get')
   })
 
-  it('it disallows invalid http verbs as action', () => {
+  it('disallows invalid http verbs as action', () => {
     const testInvalid = () => {
       /* eslint-disable no-new */
       new Route('foo', 'bar', '', [])
