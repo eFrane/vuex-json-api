@@ -10,10 +10,11 @@ export function deleteAction (api, moduleName) {
     apply (target, thisArg, [vuexFns, id]) {
       vuexFns.commit('startLoading')
 
-      return api[moduleName].delete({ id: id }).then(() => {
+      return api[moduleName].delete({ id: id }).then(response => {
         vuexFns.commit('remove', id)
-
         vuexFns.commit('endLoading')
+
+        return response
       })
     }
   })
