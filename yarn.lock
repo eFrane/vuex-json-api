@@ -4328,9 +4328,9 @@ jsesc@~0.5.0:
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
 json-api-normalizer@^1.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-api-normalizer/-/json-api-normalizer-1.0.0.tgz#183c53017aa8f8cfd96dbed45227bb4790bbfd04"
-  integrity sha512-usS3CbKJliWLVhARZF4sUlalLVetITDeGZghV9lpBbP25Gm8xx0GUmmMXM0aimCGb9ntva+1gvTbQ/MekcMucA==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-api-normalizer/-/json-api-normalizer-1.0.1.tgz#e31f0231a5baece6100735c7be4647abfedcecdf"
+  integrity sha512-FClOcObSFdHQWs165Nu3WpL3l3S1UdSvI13gd/QsDztoaDDveoEYCC1izw8R93sSN/ObEVXDc8itknisGqUV1w==
   dependencies:
     lodash "^4.17.15"
 
