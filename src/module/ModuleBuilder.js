@@ -109,8 +109,8 @@ export class ModuleBuilder {
       absoluteMethods: []
     }
 
-    for (const method in this.apiMethods) {
-      if (hasOwn(this.apiMethods, method) &&
+    for (const method in this.apiMethods.routes) {
+      if (hasOwn(this.apiMethods.routes, method) &&
         isAbsoluteUri(this.api.router.routes[this.moduleName][method].url)) {
         options.absoluteMethods.push(method)
       }
