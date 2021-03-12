@@ -65,26 +65,54 @@ export class ResourceProxy {
   }
 
   get () {
-    return ('get' in this.routes) ? this.getProxyForMethod('get') : this.methodNotAvailable('get')
+    return this.allowsItemAccess() ? this.getProxyForMethod('get') : this.methodNotAvailable('get')
   }
 
   list () {
-    return ('list' in this.routes) ? this.getProxyForMethod('list') : this.methodNotAvailable('list')
+    return this.isCollection() ? this.getProxyForMethod('list') : this.methodNotAvailable('list')
   }
 
   create () {
-    return ('create' in this.routes) ? this.getProxyForMethod('create') : this.methodNotAvailable('create')
+    return this.allowsCreation() ? this.getProxyForMethod('create') : this.methodNotAvailable('create')
   }
 
   replace () {
-    return ('replace' in this.routes) ? this.getProxyForMethod('replace') : this.methodNotAvailable('replace')
+    return this.allowsReplacement ? this.getProxyForMethod('replace') : this.methodNotAvailable('replace')
   }
 
   update () {
-    return ('update' in this.routes) ? this.getProxyForMethod('update') : this.methodNotAvailable('update')
+    return this.allowsModification() ? this.getProxyForMethod('update') : this.methodNotAvailable('update')
   }
 
   delete () {
-    return ('delete' in this.routes) ? this.getProxyForMethod('delete') : this.methodNotAvailable('delete')
+    return this.allowsDeletion() ? this.getProxyForMethod('delete') : this.methodNotAvailable('delete')
+  }
+
+  isCollection () {
+    return ('list' in this.routes)
+  }
+
+  allowsModification () {
+    return ('update' in this.routes)
+  }
+
+  allowsReplacement () {
+    return ('replace' in this.routes)
+  }
+
+  allowsCreation () {
+    return ('create' in this.routes)
+  }
+
+  allowsDeletion () {
+    return ('delete' in this.routes)
+  }
+
+  allowsItemAccess () {
+    return ('get' in this.routes)
+  }
+
+  hasRelated () {
+    return Object.keys(this.related).length > 0
   }
 }

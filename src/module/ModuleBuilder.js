@@ -1,5 +1,4 @@
 import { initialState } from './State'
-import { allowsDeletion, allowsCreation, allowsModification, hasRelated, isCollection } from './helpers/ApiMethodHelpers'
 import { createAction } from './actions/createAction'
 import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
@@ -43,7 +42,7 @@ export class ModuleBuilder {
    * @param {Vuex} store
    * @param {ResourcefulApi} api
    * @param {String} moduleName
-   * @param {Array} apiMethods
+   * @param {ResourceProxy} apiMethods
    * @param {Object} options additional objects for the module builder
    * @param {String} presetModuleName
    */
@@ -54,7 +53,7 @@ export class ModuleBuilder {
     this.apiMethods = apiMethods || {}
     this.presetModuleName = presetModuleName
 
-    this.isCollection = isCollection(apiMethods)
+    this.isCollection = apiMethods.isCollection()
 
     // is this a standalone module with no outside connections?
     this.isStandalone = checkConfigProperty(options, 'standalone', false) && options.standalone ? options.standalone : false
@@ -79,7 +78,7 @@ export class ModuleBuilder {
 
     const module = {
       namespaced: true,
-      state () { return initialState(isCollection) }
+      state () { return initialState(this.isCollection) }
     }
 
     module.state.options = this.buildOptions()
@@ -134,7 +133,7 @@ export class ModuleBuilder {
       update: updateMutation
     }
 
-    if (allowsDeletion(this.apiMethods)) {
+    if (this.apiMethods.allowsDeletion()) {
       mutations.remove = removeMutation(this.isCollection)
     }
 
@@ -158,20 +157,20 @@ export class ModuleBuilder {
       actions.list = listAction(this.api, this.moduleName, defaultQuery, module)
     }
 
-    if (allowsModification(this.apiMethods)) {
+    if (this.apiMethods.allowsModification()) {
       actions.set = setAction
       actions.save = saveAction(this.api, this.isCollection, this.moduleName, defaultQuery)
     }
 
-    if (allowsCreation(this.apiMethods)) {
+    if (this.apiMethods.allowsCreation()) {
       actions.create = createAction(this.api, this.moduleName)
     }
 
-    if (allowsDeletion(this.apiMethods)) {
+    if (this.apiMethods.allowsDeletion()) {
       actions.delete = deleteAction(this.api, this.moduleName)
     }
 
-    if (hasRelated(this.apiMethods)) {
+    if (this.apiMethods.hasRelated()) {
       actions = Object.assign(actions, this.buildRelatedActions())
     }
 
@@ -185,7 +184,7 @@ export class ModuleBuilder {
       const relatedObjectMethods = this.apiMethods.related[relatedObjectType]
       const relatedObjectTypeActionName = relatedObjectType.charAt(0).toUpperCase() + relatedObjectType.slice(1)
 
-      if (isCollection(relatedObjectMethods)) {
+      if (relatedObjectMethods.isCollection()) {
         const listActionName = `listRelated${relatedObjectTypeActionName}`
         relatedActions[listActionName] = listRelatedAction(this.api, this.moduleName, relatedObjectType)
       }
