@@ -1,5 +1,6 @@
 import { Route } from '../route/Route'
 import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
+import { hasOwn } from '../shared/utils'
 
 /**
  * ResourceProxy
@@ -51,7 +52,7 @@ export class ResourceProxy {
   }
 
   getProxyForMethod (methodName) {
-    if (!Object.prototype.hasOwnProperty.call(this.proxies, methodName)) {
+    if (!hasOwn(this.proxies, methodName)) {
       this.createProxyForMethodIfMissing(methodName)
     }
 
