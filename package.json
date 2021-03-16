@@ -54,8 +54,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "jest --bail --findRelatedTests"
+      "eslint --fix"
     ]
   },
   "husky": {
