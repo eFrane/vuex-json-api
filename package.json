@@ -12,7 +12,8 @@
     "unit": "jest --detectOpenHandles --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
-    "lint": "eslint --ext .js,.vue src test"
+    "lint": "eslint --ext .js,.vue src test",
+    "prepare": "husky install"
   },
   "dependencies": {
     "axios": "^0.*",
