@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/eFrane/vuex-json-api.svg?branch=master)](https://travis-ci.com/eFrane/vuex-json-api)
+![Build Status](https://github.com/eFrane/vuex-json-api/actions/workflows/ci.yml/badge.svg?branch=master)
 
 # Vuex Json:Api
 
