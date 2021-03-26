@@ -19,7 +19,7 @@
     "axios": "^0.*",
     "deep-object-diff": "^1.1.0",
     "json-api-normalizer": "^1.0",
-    "qs": "~6.9.0",
+    "qs": "~6.10.0",
     "vuex": "^3.1.1"
   },
   "peerDependencies": {
