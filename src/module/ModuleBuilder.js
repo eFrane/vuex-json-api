@@ -78,7 +78,7 @@ export class ModuleBuilder {
 
     const module = {
       namespaced: true,
-      state () { return initialState(this.isCollection) }
+      state: () => initialState(this.isCollection)
     }
 
     module.state.options = this.buildOptions()
