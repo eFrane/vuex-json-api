@@ -4,6 +4,13 @@
 
 > Automagic Json:Api integration for Vuex.
 
+
+**WARNING**: THIS PROJECT IS CURRENTLY NOT STABLE.
+
+If you use this and encounter any bugs or weird behaviours, don't
+hesitate to report them. Thank you.
+
+
 ## Contributing
 
 Contributions to this project are welcome from anyone and everyone.
