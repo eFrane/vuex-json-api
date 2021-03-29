@@ -2085,6 +2085,11 @@ core-js-compat@^3.8.1, core-js-compat@^3.9.0:
     browserslist "^4.16.3"
     semver "7.0.0"
 
+core-js@3:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.9.1.tgz#cec8de593db8eb2a85ffb0dbdeb312cb6e5460ae"
+  integrity sha512-gSjRvzkxQc1zjM/5paAmL4idJBFzuJoo+jDjF1tStYFMV2ERfD02HhahhCGXUyHxQRG4yFKVSdO6g62eoRMcDg==
+
 core-js@^2.4.0:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
@@ -4101,10 +4106,11 @@ jsesc@~0.5.0:
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
 json-api-normalizer@^1.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/json-api-normalizer/-/json-api-normalizer-1.0.3.tgz#96411ca73bcdd13b030807993978fd713a063158"
-  integrity sha512-OvMqmDDDNtBMgpSTMsG+YaP23MmeR/NBCTAiR+4L321QQNl7y9b0of18VKVdUfyZ3R87NEVsT4pROVFt/Y05Fg==
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/json-api-normalizer/-/json-api-normalizer-1.0.4.tgz#f597a91fc3ca4ad5ed6ed29f27e174f7c760661a"
+  integrity sha512-2ypq6W/MFdnQusuQIB19e8JOdWzADIAL2v+X4l0C08fPe3Jn1SgBEFECPaF2aRR+Z/6cAswi5ZxeiOeCredClw==
   dependencies:
+    core-js "3"
     lodash "^4.17.15"
 
 json-parse-even-better-errors@^2.3.0:
