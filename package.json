@@ -40,7 +40,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-vue": "^7.8.0",
     "fake-json-api-server": "^1.6.0",
-    "husky": "^5.2.0",
+    "husky": "^6.0.0",
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^10.0.8",
