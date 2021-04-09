@@ -19,7 +19,7 @@ export function isMissingModule (store, moduleName) {
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-  const builder = new ModuleBuilder(store, api, moduleName, new ResourceProxy(), { standalone: true })
+  const builder = new ModuleBuilder(store, api, moduleName, api[moduleName] ?? new ResourceProxy(), { standalone: true })
 
   store.registerModule(
     moduleName,
