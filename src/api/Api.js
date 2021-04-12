@@ -136,7 +136,7 @@ export class Api {
   }
 
   get (url, params = null, options = {}) {
-    return this.doRequest('get', url, params, null, options)
+    return this.doRequest('get', url, params, {}, options)
   }
 
   post (url, params = null, data = null, options = {}) {
