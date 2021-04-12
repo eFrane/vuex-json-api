@@ -26,10 +26,14 @@ export class ResourcefulApi extends Api {
   async doRequest (method, url, params, data, options) {
     return super.doRequest(method, url, params, data, options)
       .then((response) => {
-        return {
-          data: normalize(response.data),
-          meta: response.data.meta,
-          status: response.status
+        if (typeof response !== 'undefined') {
+          return {
+            data: normalize(response.data),
+            meta: response.data.meta,
+            status: response.status
+          }
+        } else {
+          return false
         }
       })
   }
