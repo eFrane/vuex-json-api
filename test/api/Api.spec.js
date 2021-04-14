@@ -2,21 +2,21 @@ import { Api } from '@/api/Api'
 
 let api = null
 api = new Api()
-api.setBaseUrl('http://localhost/')  
+api.setBaseUrl('http://localhost/')
 
 test('has no default base url', () => {
   expect(Api.baseUrl).toBeUndefined()
 
-  const unconfigured_api = new Api()
-  
-  expect(unconfigured_api.baseUrl).toBe('')
+  const unconfiguredApi = new Api()
+
+  expect(unconfiguredApi.baseUrl).toBe('')
 })
 
 test('allows changing the base url', () => {
-  const unconfigured_api = new Api()
-  unconfigured_api.setBaseUrl('/api/')
+  const unconfiguredApi = new Api()
+  unconfiguredApi.setBaseUrl('/api/')
 
-  expect(unconfigured_api.baseUrl).toBe('/api/')
+  expect(unconfiguredApi.baseUrl).toBe('/api/')
 })
 
 test.skip('sends requests to the server', () => {
