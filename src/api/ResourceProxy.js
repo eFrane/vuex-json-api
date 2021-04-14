@@ -66,8 +66,8 @@ export class ResourceProxy {
   }
 
   /**
-   * 
-   * @param {Array} parameters 
+   *
+   * @param {Array} parameters
    * @returns Function
    */
   get (parameters) {
