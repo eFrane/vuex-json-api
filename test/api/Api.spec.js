@@ -1,35 +1,25 @@
-import { getTestServer } from '../server/getTestServer'
 import { Api } from '@/api/Api'
+
+let api = null
+api = new Api()
+api.setBaseUrl('http://localhost/')  
 
 test('has no default base url', () => {
   expect(Api.baseUrl).toBeUndefined()
 
-  const api = new Api()
-  expect(api.baseUrl).toBe('')
+  const unconfigured_api = new Api()
+  
+  expect(unconfigured_api.baseUrl).toBe('')
 })
 
 test('allows changing the base url', () => {
-  const api = new Api()
-  api.setBaseUrl('/api/')
-  expect(api.baseUrl).toBe('/api/')
+  const unconfigured_api = new Api()
+  unconfigured_api.setBaseUrl('/api/')
+
+  expect(unconfigured_api.baseUrl).toBe('/api/')
 })
 
-
-
-let api = null
-let testServer = null
-
-beforeAll(() => {
-  api = new Api()
-  api.setBaseUrl('http://localhost:3000/')
-  testServer = getTestServer(3000)
-})
-
-afterAll(() => {
-  testServer.close()
-})
-
-test('sends requests to the server', () => {
+test.skip('sends requests to the server', () => {
   return api.get('tag/1').then(
     data => {
       expect(data).toBeDefined()
