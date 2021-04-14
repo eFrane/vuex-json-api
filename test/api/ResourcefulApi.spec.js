@@ -1,49 +1,47 @@
 import { getTestServer } from '../server/getTestServer'
 import { ResourcefulApi } from '@/api/ResourcefulApi'
 
-describe('ResourcefulApi', () => {
-  let api = null
-  let testServer = null
+let api = null
+let testServer = null
 
-  beforeAll(() => {
-    api = new ResourcefulApi()
-    api.setBaseUrl('http://localhost:3000/')
-    testServer = getTestServer(3000)
-  })
+beforeAll(() => {
+  api = new ResourcefulApi()
+  api.setBaseUrl('http://localhost:3000/')
+  testServer = getTestServer(3000)
+})
 
-  afterAll(() => {
-    testServer.close()
-  })
+afterAll(() => {
+  testServer.close()
+})
 
-  it('normalizes responses', () => {
-    return api.get('tag/1').then(
-      data => {
-        expect(data).toBeDefined()
-        expect(data).toStrictEqual({
-          data: {
-            tag: {
-              1: {
-                id: '1',
-                type: 'tag',
-                attributes: {
-                  title: 'Tag 1'
-                }
+test('normalizes responses', () => {
+  return api.get('tag/1').then(
+    data => {
+      expect(data).toBeDefined()
+      expect(data).toStrictEqual({
+        data: {
+          tag: {
+            1: {
+              id: '1',
+              type: 'tag',
+              attributes: {
+                title: 'Tag 1'
               }
             }
-          },
-          meta: undefined,
-          status: 200
-        })
+          }
+        },
+        meta: undefined,
+        status: 200
       })
-  })
+    })
+})
 
-  it('reads the initial module list', () => {
-    const registerModuleMock = jest.fn()
+test('reads the initial module list', () => {
+  const registerModuleMock = jest.fn()
 
-    api.registerModule = registerModuleMock
+  api.registerModule = registerModuleMock
 
-    api.setupApiModules(['foo', 'bar', 'baz'])
+  api.setupApiModules(['foo', 'bar', 'baz'])
 
-    expect(registerModuleMock.mock.calls.length).toBe(3)
-  })
+  expect(registerModuleMock.mock.calls.length).toBe(3)
 })

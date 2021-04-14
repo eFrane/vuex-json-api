@@ -1,55 +1,54 @@
 import { ResourceBuilder } from '@/module/resource/ResourceBuilder'
 import Vuex from 'vuex'
 
-describe('ResourceBuilder', () => {
-  const jsonResourceMock = {
-    data: {
-      attributes: {
-        name: 'Some Name'
-      },
-      id: 'aa1',
-      type: 'test',
-      relationships: {
-        relatedObject: {
-          data: {
-            id: 'cc1',
-            type: 'relatedObject'
-          }
-        },
-        relObjs: {
-          data: [
-            {
-              id: 'cc1',
-              type: 'relObjs'
-            },
-            {
-              id: 'cc2',
-              type: 'relObjs'
-            }
-          ]
-        }
-      }
+const jsonResourceMock = {
+  data: {
+    attributes: {
+      name: 'Some Name'
     },
-    includeds: [{
-      id: 'cc1',
-      type: 'relObjs',
-      attributes: {
-        name: 'relative lame name',
-        anotherProp: 'test'
+    id: 'aa1',
+    type: 'test',
+    relationships: {
+      relatedObject: {
+        data: {
+          id: 'cc1',
+          type: 'relatedObject'
+        }
+      },
+      relObjs: {
+        data: [
+          {
+            id: 'cc1',
+            type: 'relObjs'
+          },
+          {
+            id: 'cc2',
+            type: 'relObjs'
+          }
+        ]
       }
-    }]
-  }
+    }
+  },
+  includeds: [{
+    id: 'cc1',
+    type: 'relObjs',
+    attributes: {
+      name: 'relative lame name',
+      anotherProp: 'test'
+    }
+  }]
+}
 
-  const obj = new ResourceBuilder(Vuex).build(jsonResourceMock)
-  it('shoud add a "get" Method wich returns the value from the given attribute', () => {
-    expect(typeof obj.get).toBe('function')
+const obj = new ResourceBuilder(Vuex).build(jsonResourceMock)
 
-    expect(obj.get('name')).toBe(jsonResourceMock.data.attributes.name)
-    expect(obj.get('fail')).toEqual(new Error('attribute "fail" not found'))
-  })
+test('shoud add a "get" Method wich returns the value from the given attribute', () => {
+  expect(typeof obj.get).toBe('function')
 
-  it('shoud return the value from the given attribute', () => {
-    expect(obj.attributes.name).toBe(jsonResourceMock.data.attributes.name)
-    expect(obj.attributes.fail).toBe(undefined)
-  })
+  expect(obj.get('name')).toBe(jsonResourceMock.data.attributes.name)
+  expect(obj.get('fail')).toEqual(new Error('attribute "fail" not found'))
+})
+
+test('shoud return the value from the given attribute', () => {
+  expect(obj.attributes.name).toBe(jsonResourceMock.data.attributes.name)
+  expect(obj.attributes.fail).toBe(undefined)
 })

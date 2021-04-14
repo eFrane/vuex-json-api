@@ -1,16 +1,14 @@
 import { validateCallbackFn } from '@/helpers/validateCallbackFn'
 
-describe('validateCallbackFn', () => {
-  it('is truthy on valid callback', () => {
-    expect(validateCallbackFn(() => { })).toBeTruthy()
+test('is truthy on valid callback', () => {
+  expect(validateCallbackFn(() => { })).toBeTruthy()
 
-    const fn = () => { }
-    expect(validateCallbackFn(fn)).toBeTruthy()
-  })
+  const fn = () => { }
+  expect(validateCallbackFn(fn)).toBeTruthy()
+})
 
-  it('is falsy on invalid callback', () => {
-    expect(validateCallbackFn(true)).toBeFalsy()
-    expect(validateCallbackFn(42)).toBeFalsy()
-    expect(validateCallbackFn('str')).toBeFalsy()
-  })
+test('is falsy on invalid callback', () => {
+  expect(validateCallbackFn(true)).toBeFalsy()
+  expect(validateCallbackFn(42)).toBeFalsy()
+  expect(validateCallbackFn('str')).toBeFalsy()
 })
