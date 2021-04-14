@@ -27,6 +27,9 @@ module.exports = {
 
   rootDir: path.resolve(__dirname),
 
+  testEnvironment: 'node',
+  testTimeout: 10000,
+
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':

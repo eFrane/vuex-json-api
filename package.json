@@ -9,7 +9,7 @@
   "homepage": "https://vuex-json-api.efrane.com",
   "main": "index.js",
   "scripts": {
-    "unit": "jest --detectOpenHandles --config jest.config.js",
+    "unit": "jest --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
     "lint": "eslint --ext .js,.vue src test",
@@ -39,7 +39,6 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-vue": "^7.8.0",
-    "fake-json-api-server": "^1.6.0",
     "husky": "^6.0.0",
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
