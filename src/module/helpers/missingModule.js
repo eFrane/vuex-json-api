@@ -19,7 +19,6 @@ export function isMissingModule (store, moduleName) {
  * @param {String} moduleName
  */
 export function registerMissingModule (store, api, moduleName) {
-
   let resourceProxy = api[moduleName]
   if (!resourceProxy) {
     resourceProxy = new ResourceProxy()
