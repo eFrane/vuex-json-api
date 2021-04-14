@@ -45,11 +45,11 @@ describe('ResourceProxy', () => {
     expect(sut.proxies).toMatchSnapshot()
   })
 
-  it('returns a proxy for valid route method', () => {
+  it('returns a promise for valid route method', () => {
     sut.addRoute(new Route('foo', 'get', '/', []))
 
     const methodProxy = sut.get()
 
-    expect(methodProxy).toBeInstanceOf(Function)
+    expect(methodProxy).toBeInstanceOf(Promise)
   })
 })
