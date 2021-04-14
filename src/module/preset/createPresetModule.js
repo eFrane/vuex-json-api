@@ -2,6 +2,7 @@ import { checkConfigProperty } from '../../helpers/checkConfigProperty'
 import { ModuleBuilder } from '../ModuleBuilder'
 import { hasOwn } from '../../shared/utils'
 import { Performance } from '../../shared/Performance'
+import { ResourceProxy } from '../../api/ResourceProxy'
 
 export function createPresetModule (store, api) {
   return new Proxy(() => { }, {
@@ -49,7 +50,11 @@ function registerBaseModule (store, api, moduleName) {
   if (typeof moduleName !== 'string') {
     throw new Error('Module name must be string')
   }
+  let resourceProxy = api[moduleName]
+  if (!resourceProxy) {
+    resourceProxy = new ResourceProxy()
+  }
 
-  const moduleBuilder = new ModuleBuilder(store, api, moduleName)
+  const moduleBuilder = new ModuleBuilder(store, api, moduleName, resourceProxy)
   store.registerModule(moduleName, moduleBuilder.build())
 }
