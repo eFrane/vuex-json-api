@@ -51,12 +51,12 @@ export class ResourceProxy {
     throw new Error(`Method ${methodName} not available`)
   }
 
-  getProxyForMethod (methodName) {
+  getProxyForMethod (methodName, parameters) {
     if (!hasOwn(this.proxies, methodName)) {
       this.createProxyForMethodIfMissing(methodName)
     }
 
-    return this.proxies[methodName]()
+    return this.proxies[methodName](parameters)
   }
 
   createProxyForMethodIfMissing (methodName) {
@@ -65,28 +65,33 @@ export class ResourceProxy {
     this.proxies[methodName] = proxy
   }
 
-  get () {
-    return this.allowsItemAccess() ? this.getProxyForMethod('get') : this.methodNotAvailable('get')
+  /**
+   * 
+   * @param {Array} parameters 
+   * @returns Function
+   */
+  get (parameters) {
+    return this.allowsItemAccess() ? this.getProxyForMethod('get', parameters) : this.methodNotAvailable('get')
   }
 
-  list () {
-    return this.isCollection() ? this.getProxyForMethod('list') : this.methodNotAvailable('list')
+  list (parameters) {
+    return this.isCollection() ? this.getProxyForMethod('list', parameters) : this.methodNotAvailable('list')
   }
 
-  create () {
-    return this.allowsCreation() ? this.getProxyForMethod('create') : this.methodNotAvailable('create')
+  create (parameters) {
+    return this.allowsCreation() ? this.getProxyForMethod('create', parameters) : this.methodNotAvailable('create')
   }
 
-  replace () {
-    return this.allowsReplacement ? this.getProxyForMethod('replace') : this.methodNotAvailable('replace')
+  replace (parameters) {
+    return this.allowsReplacement ? this.getProxyForMethod('replace', parameters) : this.methodNotAvailable('replace')
   }
 
-  update () {
-    return this.allowsModification() ? this.getProxyForMethod('update') : this.methodNotAvailable('update')
+  update (parameters) {
+    return this.allowsModification() ? this.getProxyForMethod('update', parameters) : this.methodNotAvailable('update')
   }
 
-  delete () {
-    return this.allowsDeletion() ? this.getProxyForMethod('delete') : this.methodNotAvailable('delete')
+  delete (parameters) {
+    return this.allowsDeletion() ? this.getProxyForMethod('delete', parameters) : this.methodNotAvailable('delete')
   }
 
   isCollection () {
