@@ -1,37 +1,35 @@
 import { Route } from '@/route/Route'
 
-describe('Route', () => {
-  it('stores route information', () => {
-    const route = new Route('foo', 'GET', '/foo/bar', [])
+test('stores route information', () => {
+  const route = new Route('foo', 'GET', '/foo/bar', [])
 
-    expect(route).toBeInstanceOf(Route)
-    expect(route.module).toStrictEqual('foo')
-    expect(route.action).toStrictEqual('get')
-  })
+  expect(route).toBeInstanceOf(Route)
+  expect(route.module).toStrictEqual('foo')
+  expect(route.action).toStrictEqual('get')
+})
 
-  it('disallows invalid http verbs as action', () => {
-    const testInvalid = () => {
-      /* eslint-disable no-new */
-      new Route('foo', 'bar', '', [])
-    }
+test('disallows invalid http verbs as action', () => {
+  const testInvalid = () => {
+    /* eslint-disable no-new */
+    new Route('foo', 'bar', '', [])
+  }
 
-    expect(testInvalid).toThrowErrorMatchingSnapshot()
-  })
+  expect(testInvalid).toThrowErrorMatchingSnapshot()
+})
 
-  it('returns a reduced parameters object after preparation', () => {
-    const route = new Route('foo', 'GET', '/route/with/{param}', ['param'])
+test('returns a reduced parameters object after preparation', () => {
+  const route = new Route('foo', 'GET', '/route/with/{param}', ['param'])
 
-    const parameters = {
-      param: 'foo',
-      bar: 'baz'
-    }
+  const parameters = {
+    param: 'foo',
+    bar: 'baz'
+  }
 
-    expect(parameters.param).toStrictEqual('foo')
+  expect(parameters.param).toStrictEqual('foo')
 
-    expect(route.hasParameter('param')).toBeTruthy()
-    expect(route.prepare(parameters)).toMatchSnapshot()
+  expect(route.hasParameter('param')).toBeTruthy()
+  expect(route.prepare(parameters)).toMatchSnapshot()
 
-    expect(parameters.param).toBeUndefined()
-    expect(parameters.bar).toStrictEqual('baz')
-  })
+  expect(parameters.param).toBeUndefined()
+  expect(parameters.bar).toStrictEqual('baz')
 })

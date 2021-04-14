@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResourceProxy creates a resource proxy for a method if none exists 1`] = `
+exports[`creates a resource proxy for a method if none exists 1`] = `
 Object {
   "get": [Function],
 }
 `;
 
-exports[`ResourceProxy throws for unavailable methods 1`] = `"Method get not available"`;
+exports[`throws for unavailable methods 1`] = `"Method get not available"`;

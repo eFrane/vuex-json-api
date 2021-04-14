@@ -3,3 +3,7 @@
 exports[`checkConfigProperty throws an error if the property doesn't exist but is required 1`] = `"Missing configuration property: bar"`;
 
 exports[`checkConfigProperty throws an error if the property doesn't exist but is required 2`] = `"Missing configuration property: bar"`;
+
+exports[`throws an error if the property doesn't exist but is required 1`] = `"Missing configuration property: bar"`;
+
+exports[`throws an error if the property doesn't exist but is required 2`] = `"Missing configuration property: bar"`;

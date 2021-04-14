@@ -2,54 +2,52 @@ import { ResourcefulApi } from '@/api/ResourcefulApi'
 import { ResourceProxy } from '@/api/ResourceProxy'
 import { Route } from '@/route/Route'
 
-describe('ResourceProxy', () => {
-  let sut
+let sut
 
-  beforeEach(() => {
-    const api = new ResourcefulApi()
-    sut = new ResourceProxy(api)
+beforeEach(() => {
+  const api = new ResourcefulApi()
+  sut = new ResourceProxy(api)
+})
+
+afterEach(() => {
+  sut = null
+})
+
+test('has routes', () => {
+  expect(sut.routes).toBeDefined()
+  expect(sut.routes).toStrictEqual({})
+
+  const route = new Route('foo', 'get', '/', [])
+
+  sut.addRoute(route)
+
+  expect(sut.routes).toEqual({
+    get: route
   })
+})
 
-  afterEach(() => {
-    sut = null
-  })
+test('throws for unavailable methods', () => {
+  function testGet () {
+    sut.get()
+  }
 
-  it('has routes', () => {
-    expect(sut.routes).toBeDefined()
-    expect(sut.routes).toStrictEqual({})
+  expect(testGet).toThrowErrorMatchingSnapshot()
+})
 
-    const route = new Route('foo', 'get', '/', [])
+test('creates a resource proxy for a method if none exists', () => {
+  sut.addRoute(new Route('foo', 'get', '/', []))
 
-    sut.addRoute(route)
+  expect(sut.proxies).toStrictEqual({})
 
-    expect(sut.routes).toEqual({
-      get: route
-    })
-  })
+  sut.getProxyForMethod('get')
 
-  it('throws for unavailable methods', () => {
-    function testGet () {
-      sut.get()
-    }
+  expect(sut.proxies).toMatchSnapshot()
+})
 
-    expect(testGet).toThrowErrorMatchingSnapshot()
-  })
+test('returns a promise for valid route method', () => {
+  sut.addRoute(new Route('foo', 'get', '/', []))
 
-  it('creates a resource proxy for a method if none exists', () => {
-    sut.addRoute(new Route('foo', 'get', '/', []))
+  const methodProxy = sut.get()
 
-    expect(sut.proxies).toStrictEqual({})
-
-    sut.getProxyForMethod('get')
-
-    expect(sut.proxies).toMatchSnapshot()
-  })
-
-  it('returns a promise for valid route method', () => {
-    sut.addRoute(new Route('foo', 'get', '/', []))
-
-    const methodProxy = sut.get()
-
-    expect(methodProxy).toBeInstanceOf(Promise)
-  })
+  expect(methodProxy).toBeInstanceOf(Promise)
 })
