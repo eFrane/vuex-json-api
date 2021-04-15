@@ -1,3 +1,237 @@
+0.0.29 / 2021-04-15
+==================
+
+  * Merge pull request #182 from eFrane/f_pass_responses_from_actions
+  * feat(): pass responses from actions
+  * v0.0.28
+  * docs: Keep a changelog
+  * Merge pull request #179 from eFrane/b_fix_missing_apiMethods
+  * Merge branch 'master' into b_fix_missing_apiMethods
+  * chore(deps-dev): bump @babel/preset-env from 7.13.12 to 7.13.15
+  * chore(deps-dev): bump @babel/core from 7.13.14 to 7.13.15
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.4 to 24.3.5
+  * chore(deps-dev): bump eslint from 7.23.0 to 7.24.0
+  * fix: Linting
+  * feat: Allow disabled/skipped tests
+  * fix: Tests
+  * feat: Use modern jest syntax
+  * feat: Pass request parameters to api methods
+  * Apply suggestions from code review
+  * Merge pull request #176 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.15
+  * chore(deps-dev): bump @babel/preset-env from 7.13.12 to 7.13.15
+  * Merge pull request #177 from eFrane/dependabot/npm_and_yarn/babel/core-7.13.15
+  * chore(deps-dev): bump @babel/core from 7.13.14 to 7.13.15
+  * Merge pull request #175 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.3.5
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.4 to 24.3.5
+  * Merge pull request #174 from eFrane/dependabot/npm_and_yarn/eslint-7.24.0
+  * chore(deps-dev): bump eslint from 7.23.0 to 7.24.0
+  * fix(): make Linter happy
+  * fix(): make Linter happy
+  * fix(): pass resourceProxy from presetModule to ModuleBuilder
+
+v0.0.28 / 2021-04-15
+====================
+
+  * v0.0.28
+  * docs: Keep a changelog
+  * fix: Linting
+  * feat: Allow disabled/skipped tests
+  * fix: Escape the linting error by rewriting the conditional
+  * fix: Tests
+  * feat: Use modern jest syntax
+  * feat: Pass request parameters to api methods
+  * Merge pull request #173 from eFrane/fix_build_missing_modules
+  * Update src/module/helpers/missingModule.js
+  * pass resourceFull Object instead of {}
+  * Merge pull request #172 from eFrane/dependabot/npm_and_yarn/babel/core-7.13.14
+  * Merge pull request #171 from eFrane/dependabot/npm_and_yarn/husky-6.0.0
+  * Merge pull request #170 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.3.4
+  * chore(deps-dev): bump @babel/core from 7.13.13 to 7.13.14
+  * chore(deps-dev): bump husky from 5.2.0 to 6.0.0
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.2 to 24.3.4
+  * Merge pull request #167 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.12
+  * chore(deps-dev): bump @babel/preset-env from 7.13.10 to 7.13.12
+  * Merge pull request #169 from eFrane/dependabot/npm_and_yarn/qs-6.10.1
+  * Merge pull request #168 from eFrane/dependabot/npm_and_yarn/babel/core-7.13.13
+  * Merge pull request #166 from eFrane/dependabot/npm_and_yarn/eslint-plugin-vue-7.8.0
+  * Merge pull request #165 from eFrane/dependabot/npm_and_yarn/json-api-normalizer-1.0.4
+  * Merge pull request #164 from eFrane/dependabot/npm_and_yarn/eslint-7.23.0
+  * docs: Add a note about the current unstableness
+  * chore(deps): bump qs from 6.10.0 to 6.10.1
+  * chore(deps-dev): bump @babel/core from 7.13.10 to 7.13.13
+  * chore(deps-dev): bump eslint-plugin-vue from 7.7.0 to 7.8.0
+  * chore(deps): bump json-api-normalizer from 1.0.3 to 1.0.4
+  * chore(deps-dev): bump eslint from 7.22.0 to 7.23.0
+  * Merge pull request #162 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.3.2
+  * Merge pull request #161 from eFrane/dependabot/npm_and_yarn/husky-5.2.0
+  * Merge pull request #160 from eFrane/dependabot/npm_and_yarn/qs-6.10.0
+  * Merge pull request #163 from eFrane/b_fix_this_context-1
+  * fix(): this-context.
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.1 to 24.3.2
+  * chore(deps-dev): bump husky from 5.1.3 to 5.2.0
+  * chore(deps): bump qs from 6.9.6 to 6.10.0
+  * build: Remove lock file for demo
+  * Merge pull request #158 from eFrane/dependabot/npm_and_yarn/eslint-7.22.0
+  * Merge pull request #157 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.3.1
+  * Merge pull request #156 from eFrane/dependabot/npm_and_yarn/babel/core-7.13.10
+  * Merge pull request #155 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.10
+  * Merge pull request #159 from eFrane/dependabot/npm_and_yarn/json-api-normalizer-1.0.3
+  * chore(deps): bump json-api-normalizer from 1.0.1 to 1.0.3
+  * chore(deps-dev): bump eslint from 7.21.0 to 7.22.0
+  * chore(deps-dev): bump eslint-plugin-jest from 24.1.8 to 24.3.1
+  * chore(deps-dev): bump @babel/core from 7.13.8 to 7.13.10
+  * chore(deps-dev): bump @babel/preset-env from 7.13.9 to 7.13.10
+  * docs: Switch badge to GH Workflow
+  * ci: Remove jest step from committing
+  * ci: Re-init husky
+  * Merge pull request #154 from eFrane/dependabot/add-v2-config-file
+  * ci: Change versioning strategy
+  * Create Dependabot config file
+  * fix: Return promise instead of proxy
+  * refactor: Use hasOwn
+  * feat: Move resource type reasoning to the proxy
+  * fix: ResourceProxy has methods in routes prop
+  * Merge pull request #148 from eFrane/dependabot/npm_and_yarn/docs/elliptic-6.5.4
+  * Merge pull request #147 from eFrane/dependabot/npm_and_yarn/eslint-plugin-vue-7.7.0
+  * Merge pull request #146 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.1.8
+  * Merge pull request #145 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.9
+  * chore(deps): bump elliptic from 6.5.3 to 6.5.4 in /docs
+  * Merge pull request #144 from eFrane/dependabot/npm_and_yarn/husky-5.1.3
+  * chore(deps-dev): bump eslint-plugin-vue from 7.6.0 to 7.7.0
+  * chore(deps-dev): bump eslint-plugin-jest from 24.1.5 to 24.1.8
+  * chore(deps-dev): bump @babel/preset-env from 7.13.8 to 7.13.9
+  * chore(deps-dev): bump husky from 5.1.2 to 5.1.3
+  * chore: yarn upgrade
+  * Merge pull request #134 from eFrane/dependabot/npm_and_yarn/lint-staged-10.5.4
+  * Merge pull request #137 from eFrane/dependabot/npm_and_yarn/husky-5.1.2
+  * Merge pull request #138 from eFrane/dependabot/npm_and_yarn/vuex-3.6.2
+  * Merge pull request #139 from eFrane/dependabot/npm_and_yarn/eslint-7.21.0
+  * Merge pull request #136 from eFrane/dependabot/npm_and_yarn/babel-jest-26.6.3
+  * Bump eslint from 7.20.0 to 7.21.0
+  * Bump babel-jest from 26.3.0 to 26.6.3
+  * Merge pull request #140 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.8
+  * Merge pull request #141 from eFrane/dependabot/npm_and_yarn/json-api-normalizer-1.0.1
+  * Merge pull request #142 from eFrane/dependabot/npm_and_yarn/eslint-plugin-promise-4.3.1
+  * Merge pull request #143 from eFrane/dependabot/npm_and_yarn/jest-26.6.3
+  * Bump jest from 26.4.2 to 26.6.3
+  * Bump eslint-plugin-promise from 4.2.1 to 4.3.1
+  * Bump json-api-normalizer from 1.0.0 to 1.0.1
+  * Bump @babel/preset-env from 7.13.5 to 7.13.8
+  * Bump vuex from 3.5.1 to 3.6.2
+  * Bump husky from 5.1.1 to 5.1.2
+  * Bump lint-staged from 10.3.0 to 10.5.4
+  * ci: Remove travis configuration
+  * Merge pull request #127 from eFrane/dependabot/npm_and_yarn/eslint-7.20.0
+  * Bump eslint from 7.18.0 to 7.20.0
+  * Merge pull request #132 from eFrane/dependabot/npm_and_yarn/axios-0.21.1
+  * Merge pull request #130 from eFrane/dependabot/npm_and_yarn/husky-5.1.1
+  * Merge pull request #131 from eFrane/dependabot/npm_and_yarn/ini-1.3.8
+  * Bump husky from 4.3.8 to 5.1.1
+  * Bump axios from 0.20.0 to 0.21.1
+  * Bump ini from 1.3.5 to 1.3.8
+  * Merge pull request #133 from eFrane/dependabot/npm_and_yarn/node-notifier-8.0.1
+  * ci: Rename job
+  * Bump node-notifier from 8.0.0 to 8.0.1
+  * chore: Update snapshots
+  * style: Fix lint errors
+  * chore: Remove eslint-plugin-standard
+  * ci: unignore yarn.lock
+  * feat: Add CI workflow
+  * ci: Remove pre-push hook for test run
+  * Merge pull request #129 from eFrane/pass_response_through_delete_action
+  * pass response through delete actions then
+  * fix: merge conflicts in docs
+  * Merge branch 'master' into m_master_pressdocs
+  * Merge pull request #124 from eFrane/dependabot/npm_and_yarn/eslint-7.18.0
+  * Bump eslint from 7.17.0 to 7.18.0
+  * Merge pull request #123 from mathisdemos/patch-1
+  * actually check if object is empty
+  * only empty resource responses should be set directly
+  * Merge pull request #122 from eFrane/dependabot/npm_and_yarn/eslint-7.17.0
+  * 200 with no content is a valid response
+  * Bump eslint from 7.16.0 to 7.17.0
+  * Move a few more dependencies to docs
+  * Add GH Pages action
+  * Separate VuePress docs from main package.json
+  * Merge pull request #121 from eFrane/dependabot/npm_and_yarn/eslint-7.16.0
+  * Bump eslint from 7.15.0 to 7.16.0
+  * Merge pull request #120 from eFrane/dependabot/npm_and_yarn/eslint-7.15.0
+  * Bump eslint from 7.14.0 to 7.15.0
+  * Merge pull request #119 from eFrane/dependabot/npm_and_yarn/eslint-config-standard-16.0.2
+  * Bump eslint-config-standard from 15.0.0 to 16.0.2
+  * Merge pull request #118 from eFrane/dependabot/npm_and_yarn/eslint-plugin-standard-5.0.0
+  * Merge pull request #117 from eFrane/dependabot/npm_and_yarn/eslint-7.14.0
+  * Bump eslint-plugin-standard from 4.1.0 to 5.0.0
+  * Bump eslint from 7.11.0 to 7.14.0
+  * Merge pull request #113 from eFrane/dependabot/npm_and_yarn/eslint-config-standard-15.0.0
+  * Merge pull request #112 from eFrane/dependabot/npm_and_yarn/eslint-plugin-vue-7.1.0
+  * Bump eslint-config-standard from 14.1.1 to 15.0.0
+  * Bump eslint-plugin-vue from 6.2.2 to 7.1.0
+  * Merge pull request #111 from eFrane/dependabot/npm_and_yarn/eslint-7.11.0
+  * Bump eslint from 7.10.0 to 7.11.0
+  * Merge pull request #109 from eFrane/dependabot/npm_and_yarn/eslint-7.10.0
+  * Bump eslint from 7.9.0 to 7.10.0
+  * Merge pull request #108 from eFrane/dependabot/npm_and_yarn/eslint-7.9.0
+  * Merge pull request #106 from eFrane/f_fix_var_missmatch
+  * delete accidentally committed file
+  * Bump eslint from 7.8.1 to 7.9.0
+  * Bump pressdocs
+  * Move reference generation to pressdocs
+  * Try moving stuff to pressdocs
+  * fix name missmatch of variable
+  * Merge branch 'master' into f_tryout_fix_for_dplan
+  * Merge pull request #104 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.0.0
+  * Merge pull request #103 from eFrane/dependabot/npm_and_yarn/eslint-7.8.1
+  * Bump eslint-plugin-jest from 23.20.0 to 24.0.0
+  * Bump eslint from 7.7.0 to 7.8.1
+  * Add a bunch of docblock related stuff
+  * Add jsdoc based reference documentation
+  * Update author name
+  * Merge pull request #102 from eFrane/dependabot/npm_and_yarn/eslint-7.7.0
+  * Bump eslint from 6.8.0 to 7.7.0
+  * Bump preset-env to 7.9
+  * Merge pull request #101 from eFrane/dependabot/npm_and_yarn/json-api-normalizer-1.0.0
+  * Merge pull request #99 from eFrane/f_add_travis_status
+  * Moved to travis-ci.com
+  * Add travis status badge to readme
+  * Bump json-api-normalizer from 0.4.16 to 1.0.0
+  * Replace vue-hasOwn with our hasOwn
+  * Merge pull request #97 from eFrane/dependabot/npm_and_yarn/babel-jest-26.0.1
+  * Merge pull request #98 from eFrane/dependabot/npm_and_yarn/jest-26.0.1
+  * Bump jest from 25.5.4 to 26.0.1
+  * Bump babel-jest from 25.5.1 to 26.0.1
+  * Merge pull request #96 from eFrane/dependabot/npm_and_yarn/eslint-config-standard-14.1.1
+  * Merge pull request #95 from eFrane/f_performance_api
+  * Bump eslint-config-standard from 14.1.0 to 14.1.1
+  * Merge branch 'master' into f_performance_api
+  * Merge pull request #94 from eFrane/f_rewrite_router
+  * Use Performance Api instead of console.time
+  * [doc] Update hasOwnProperty call to match standard style
+  * convenience: extract hasOwnProperty to shorten call
+  * refs #93: Get rid of saveAction test
+  * Resolve ternary operator
+  * Work on docs navigation
+  * Merge branch 'master' into f_rewrite_router
+  * WIP: Make test work again
+  * Clarify router usage
+  * Fix test: Method name changed
+  * lint fixes
+  * Merge branch 'master' into f_rewrite_router
+  * Re-structuring documentation
+  * Defer creation of resource proxy methods
+  * Use map to register modules
+  * Extend documentation
+  * Use isAbsoluteUri
+  * New unit test: JsonApiRouter
+  * New unit test: StaticRouter
+  * fix route action validation
+  * New unit test: Router
+  * New unit test: StaticRoute
+  * New unit test: JsonApiRoute
+  * Preserve trailing whitespace for markdown
+  * New unit test: Route
+  * Move input sanitation into root class
+  * Extract specific route objects
 Changelog
 =========
 
