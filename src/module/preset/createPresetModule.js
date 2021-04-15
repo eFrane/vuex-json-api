@@ -50,6 +50,7 @@ function registerBaseModule (store, api, moduleName) {
   if (typeof moduleName !== 'string') {
     throw new Error('Module name must be string')
   }
+
   let resourceProxy = api[moduleName]
   if (!resourceProxy) {
     resourceProxy = new ResourceProxy()
