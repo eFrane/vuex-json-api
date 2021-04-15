@@ -18,15 +18,17 @@ export function listRelatedAction (api, moduleName, relatedModuleName) {
       vuexFns.commit('startLoading')
       vuexFns.commit(`${relatedModuleName}/startLoading`, null, { root: true })
 
-      return api[moduleName].related[relatedModuleName].list(query).then(({ data, meta }) => {
-        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list')
+      return api[moduleName].related[relatedModuleName].list(query).then(response => {
+        processResponseData(thisArg, vuexFns, api, moduleName, response.data, 'list')
 
-        if (hasOwn(meta, 'pagination')) {
-          vuexFns.commit(`${relatedModuleName}setPagination`, meta.pagination)
+        if (hasOwn(response.meta, 'pagination')) {
+          vuexFns.commit(`${relatedModuleName}setPagination`, response.meta.pagination)
         }
 
         vuexFns.commit(`${relatedModuleName}/endLoading`, null, { root: true })
         vuexFns.commit('endLoading')
+
+        return response
       })
     }
   })

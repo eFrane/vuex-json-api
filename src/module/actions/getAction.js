@@ -14,10 +14,12 @@ export function getAction (api, moduleName, defaultQuery) {
 
       vuexFns.commit('startLoading')
 
-      return api[moduleName].get(query).then(({ data }) => {
-        processResponseData(thisArg, vuexFns, api, moduleName, data, 'get')
+      return api[moduleName].get(query).then(response => {
+        processResponseData(thisArg, vuexFns, api, moduleName, response.data, 'get')
 
         vuexFns.commit('endLoading')
+
+        return response
       })
     }
   })
