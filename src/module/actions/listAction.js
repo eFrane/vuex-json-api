@@ -17,15 +17,17 @@ export function listAction (api, moduleName, defaultQuery, module) {
 
       vuexFns.commit('startLoading')
 
-      return api[moduleName].list(query).then(({ data, meta }) => {
+      return api[moduleName].list(query).then(response => {
         vuexFns.commit('resetItems')
-        processResponseData(thisArg, vuexFns, api, moduleName, data, 'list', module)
+        processResponseData(thisArg, vuexFns, api, moduleName, response.data, 'list', module)
 
-        if (meta && hasOwn(meta, 'pagination')) {
-          vuexFns.commit('setPagination', meta.pagination)
+        if (response.meta && hasOwn(response.meta, 'pagination')) {
+          vuexFns.commit('setPagination', response.meta.pagination)
         }
 
         vuexFns.commit('endLoading')
+
+        return response
       })
     }
   })

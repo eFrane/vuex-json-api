@@ -66,7 +66,9 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
               type: currentItemState.type
             })
         }
-      ).then(({ data, status }) => {
+      ).then(response => {
+        const { data, status } = response
+
         if (status === 204) {
           vuexFns.commit('set', getExpectedResponse(currentItemState))
         }
@@ -83,6 +85,8 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
         processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
 
         vuexFns.commit('endLoading', null)
+
+        return response
       })
     }
   })
