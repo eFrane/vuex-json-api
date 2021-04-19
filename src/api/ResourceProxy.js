@@ -51,12 +51,12 @@ export class ResourceProxy {
     throw new Error(`Method ${methodName} not available`)
   }
 
-  getProxyForMethod (methodName, parameters) {
+  getProxyForMethod (methodName, parameters, data) {
     if (!hasOwn(this.proxies, methodName)) {
       this.createProxyForMethodIfMissing(methodName)
     }
 
-    return this.proxies[methodName](parameters)
+    return this.proxies[methodName](parameters, data)
   }
 
   createProxyForMethodIfMissing (methodName) {
@@ -66,32 +66,63 @@ export class ResourceProxy {
   }
 
   /**
-   *
    * @param {Array} parameters
+   * @param {Object} data
+   *
    * @returns Function
    */
-  get (parameters) {
-    return this.allowsItemAccess() ? this.getProxyForMethod('get', parameters) : this.methodNotAvailable('get')
+  get (parameters, data) {
+    return this.allowsItemAccess() ? this.getProxyForMethod('get', parameters, data) : this.methodNotAvailable('get')
   }
 
-  list (parameters) {
-    return this.isCollection() ? this.getProxyForMethod('list', parameters) : this.methodNotAvailable('list')
+  /**
+   * @param {Array} parameters
+   * @param {Object} data
+   *
+   * @returns Function
+   */
+  list (parameters, data) {
+    return this.isCollection() ? this.getProxyForMethod('list', parameters, data) : this.methodNotAvailable('list')
   }
 
-  create (parameters) {
-    return this.allowsCreation() ? this.getProxyForMethod('create', parameters) : this.methodNotAvailable('create')
+  /**
+   * @param {Array} parameters
+   * @param {Object} data
+   *
+   * @returns Function
+   */
+  create (parameters, data) {
+    return this.allowsCreation() ? this.getProxyForMethod('create', parameters, data) : this.methodNotAvailable('create')
   }
 
-  replace (parameters) {
-    return this.allowsReplacement ? this.getProxyForMethod('replace', parameters) : this.methodNotAvailable('replace')
+  /**
+   * @param {Array} parameters
+   * @param {Object} data
+   *
+   * @returns Function
+   */
+  replace (parameters, data) {
+    return this.allowsReplacement ? this.getProxyForMethod('replace', parameters, data) : this.methodNotAvailable('replace')
   }
 
-  update (parameters) {
-    return this.allowsModification() ? this.getProxyForMethod('update', parameters) : this.methodNotAvailable('update')
+  /**
+   * @param {Array} parameters
+   * @param {Object} data
+   *
+   * @returns Function
+   */
+  update (parameters, data) {
+    return this.allowsModification() ? this.getProxyForMethod('update', parameters, data) : this.methodNotAvailable('update')
   }
 
-  delete (parameters) {
-    return this.allowsDeletion() ? this.getProxyForMethod('delete', parameters) : this.methodNotAvailable('delete')
+  /**
+   * @param {Array} parameters
+   * @param {Object} data
+   *
+   * @returns Function
+   */
+  delete (parameters, data) {
+    return this.allowsDeletion() ? this.getProxyForMethod('delete', parameters, data) : this.methodNotAvailable('delete')
   }
 
   isCollection () {
