@@ -55,10 +55,5 @@
     "*.js": [
       "eslint --fix"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run lint-staged"
-    }
   }
 }
