@@ -1,11 +1,4 @@
-Related issues: #xxx, #yyy, ...
-
-Type of change:
-
-[] Code
-[] Just documentation
-
-If code was changed, did you...
-
-[] ...write/update unit tests?
-[] ...write/update documentation?
+<!-- 
+    Please add a short description of what the PR changes.
+    If possible, also add/update the corresponding unit tests.
+-->
