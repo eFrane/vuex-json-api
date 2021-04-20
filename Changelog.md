@@ -1,3 +1,45 @@
+
+0.0.30 / 2021-04-20
+==================
+
+  * ci: Fix husky
+  * docs: Simplify the PR template
+  * Merge pull request #185 from eFrane/pass_data_for_requests
+  * chore(deps): bump ssri from 6.0.1 to 6.0.2 in /docs
+  * Merge pull request #183 from eFrane/dependabot/npm_and_yarn/eslint-plugin-vue-7.9.0
+
+v0.0.29 / 2021-04-15
+====================
+
+  * v0.0.29
+  * docs: Keep a changelog
+  * Merge pull request #182 from eFrane/f_pass_responses_from_actions
+  * feat(): pass responses from actions
+  * v0.0.28
+  * docs: Keep a changelog
+  * Merge pull request #179 from eFrane/b_fix_missing_apiMethods
+  * Merge branch 'master' into b_fix_missing_apiMethods
+  * chore(deps-dev): bump @babel/preset-env from 7.13.12 to 7.13.15
+  * chore(deps-dev): bump @babel/core from 7.13.14 to 7.13.15
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.4 to 24.3.5
+  * chore(deps-dev): bump eslint from 7.23.0 to 7.24.0
+  * fix: Linting
+  * feat: Allow disabled/skipped tests
+  * fix: Tests
+  * feat: Use modern jest syntax
+  * feat: Pass request parameters to api methods
+  * Apply suggestions from code review
+  * Merge pull request #176 from eFrane/dependabot/npm_and_yarn/babel/preset-env-7.13.15
+  * chore(deps-dev): bump @babel/preset-env from 7.13.12 to 7.13.15
+  * Merge pull request #177 from eFrane/dependabot/npm_and_yarn/babel/core-7.13.15
+  * chore(deps-dev): bump @babel/core from 7.13.14 to 7.13.15
+  * Merge pull request #175 from eFrane/dependabot/npm_and_yarn/eslint-plugin-jest-24.3.5
+  * chore(deps-dev): bump eslint-plugin-jest from 24.3.4 to 24.3.5
+  * Merge pull request #174 from eFrane/dependabot/npm_and_yarn/eslint-7.24.0
+  * chore(deps-dev): bump eslint from 7.23.0 to 7.24.0
+  * fix(): make Linter happy
+  * fix(): make Linter happy
+  * fix(): pass resourceProxy from presetModule to ModuleBuilder
 0.0.29 / 2021-04-15
 ==================
 
