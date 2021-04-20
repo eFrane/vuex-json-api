@@ -274,8 +274,6 @@ v0.0.28 / 2021-04-15
   * New unit test: Route
   * Move input sanitation into root class
   * Extract specific route objects
-Changelog
-=========
 
 0.0.28 / 2021-04-15
 ==================
