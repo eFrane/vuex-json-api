@@ -79,7 +79,13 @@ export class ResourcefulApi extends Api {
   setupApiModules (apiModulesToRegister = []) {
     Performance.mark('api_setup_modules_start')
 
-    apiModulesToRegister.forEach(moduleName => this.registerModule(moduleName, this[moduleName]))
+    apiModulesToRegister.forEach(moduleName => {
+      let resourceProxy = this[moduleName]
+      if (!resourceProxy) {
+        resourceProxy = new ResourceProxy()
+      }
+      this.registerModule(moduleName, resourceProxy)
+    })
 
     Performance.mark('api_setup_modules_end')
     Performance.measure(

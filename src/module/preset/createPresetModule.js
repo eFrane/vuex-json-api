@@ -17,11 +17,14 @@ export function createPresetModule (store, api) {
         registerBaseModule(store, api, baseModule)
       }
 
-      const methods = api[baseModule]
+      let resourceProxy = api[baseModule]
+      if (!resourceProxy) {
+        resourceProxy = new ResourceProxy()
+      }
 
       Performance.mark('module_register_preset_start')
 
-      const builder = new ModuleBuilder(store, api, baseModule, methods, {
+      const builder = new ModuleBuilder(store, api, baseModule, resourceProxy, {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
         }
