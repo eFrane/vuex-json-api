@@ -1,4 +1,26 @@
 
+v0.0.31 / 2021-04-22
+==================
+
+  * pass resourceFull Object instead of undefined
+
+v0.0.30 / 2021-04-20
+====================
+
+  * v0.0.30
+  * docs: Remove bogus changelog entry
+  * docs: Update changelog
+  * ci: Fix husky
+  * docs: Simplify the PR template
+  * v0.0.29
+  * docs: Keep a changelog
+  * Merge pull request #184 from eFrane/dependabot/npm_and_yarn/docs/ssri-6.0.2
+  * Merge pull request #185 from eFrane/pass_data_for_requests
+  * fix(): pass data from actions
+  * chore(deps): bump ssri from 6.0.1 to 6.0.2 in /docs
+  * Merge pull request #183 from eFrane/dependabot/npm_and_yarn/eslint-plugin-vue-7.9.0
+  * chore(deps-dev): bump eslint-plugin-vue from 7.8.0 to 7.9.0
+
 0.0.30 / 2021-04-20
 ==================
 
