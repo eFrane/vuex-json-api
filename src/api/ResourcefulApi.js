@@ -24,6 +24,10 @@ export class ResourcefulApi extends Api {
    * @param {Object} options
    */
   async doRequest (method, url, params, data, options) {
+    if (data) {
+      data = this.preprocessData(data)
+    }
+
     return super.doRequest(method, url, params, data, options)
       .then((response) => {
         return {
@@ -32,6 +36,29 @@ export class ResourcefulApi extends Api {
           status: response.status
         }
       })
+  }
+
+  preprocessData (data) {
+    data = JSON.parse(JSON.stringify(data))
+
+    if (data.data.relationships) {
+      const relationships = {}
+
+      for (const [name, relationship] in Object.entries(data.data.relationships)) {
+        if (Array.isArray(relationship)) {
+          // TODO: implement multi data relationships
+        } else {
+          relationships[name] = {
+            data: relationship.data,
+            type: relationship.type.charAt(0).toUpperCase() + relationship.type.slice(1)
+          }
+        }
+      }
+
+      data.data.relationships = relationships
+    }
+
+    return data
   }
 
   /**
