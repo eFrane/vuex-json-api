@@ -41,6 +41,8 @@ export class ResourcefulApi extends Api {
   preprocessData (data) {
     data = JSON.parse(JSON.stringify(data))
 
+    data.data.type = data.data.type.charAt(0).toUpperCase() + data.data.type.slice(1)
+
     if (data.data.relationships) {
       const relationships = {}
 
