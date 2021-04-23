@@ -24,6 +24,10 @@ export class ResourcefulApi extends Api {
    * @param {Object} options
    */
   async doRequest (method, url, params, data, options) {
+    if (data) {
+      data = this.preprocessData(data)
+    }
+
     return super.doRequest(method, url, params, data, options)
       .then((response) => {
         return {
@@ -32,6 +36,55 @@ export class ResourcefulApi extends Api {
           status: response.status
         }
       })
+  }
+
+  /**
+   * convert RessourceTypes to uppercase
+   * to follow the json:api spects even if the incoming data is not correct
+   *
+   * this is just a safety net
+   *
+   * @param data
+   *
+   * @return {*}
+   */
+  preprocessData (data) {
+    data = JSON.parse(JSON.stringify(data))
+    data.data.type = data.data.type.charAt(0).toUpperCase() + data.data.type.slice(1)
+
+    if (data.data.relationships) {
+      const relationships = {}
+      for (const [name, relationship] of Object.entries(data.data.relationships)) {
+        if (Array.isArray(relationship.data)) {
+          relationships[name] = {
+            data: relationship.data.map(itemData => {
+              const startChar = itemData.type.charAt(0)
+              if (startChar === startChar.toLocaleLowerCase()) {
+                console.warn(`The Ressource withe Type '${itemData.type}' is send in lower case. Please send as upper case`)
+              }
+              return {
+                id: itemData.id,
+                type: startChar.toUpperCase() + itemData.type.slice(1)
+              }
+            })
+          }
+        } else if (relationship.data !== null) {
+          const startChar = relationship.data.type.charAt(0)
+          if (startChar === startChar.toLocaleLowerCase()) {
+            console.warn(`The Ressource withe Type '${relationship.data.type}' is send in lower case. Please send as upper case`)
+          }
+          relationships[name] = {
+            data: {
+              id: relationship.data.id,
+              type: startChar.charAt(0).toUpperCase() + relationship.data.type.slice(1)
+            }
+          }
+        }
+      }
+      data.data.relationships = relationships
+    }
+
+    return data
   }
 
   /**
