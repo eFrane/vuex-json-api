@@ -44,13 +44,16 @@ export class ResourcefulApi extends Api {
     if (data.data.relationships) {
       const relationships = {}
 
-      for (const [name, relationship] in Object.entries(data.data.relationships)) {
-        if (Array.isArray(relationship)) {
+      for (const [name, relationship] of Object.entries(data.data.relationships)) {
+        if (Array.isArray(relationship.data)) {
           // TODO: implement multi data relationships
+          console.log('relationship', relationship)
         } else {
           relationships[name] = {
-            data: relationship.data,
-            type: relationship.type.charAt(0).toUpperCase() + relationship.type.slice(1)
+            data: {
+              ...relationship.data,
+              type: relationship.data.type.charAt(0).toUpperCase() + relationship.data.type.slice(1)
+            }
           }
         }
       }
@@ -58,6 +61,7 @@ export class ResourcefulApi extends Api {
       data.data.relationships = relationships
     }
 
+    console.log(data)
     return data
   }
 
