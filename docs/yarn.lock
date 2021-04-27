@@ -896,10 +896,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@pressdocs/lang-js@^0.1.1":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@pressdocs/lang-js/-/lang-js-0.1.2.tgz#be242890074540f1d60406255b2163a341880031"
-  integrity sha512-nRAp8m+4L5F6sZCVfjXJvLDZvU5r6yoJUjhFTSoTq69JvFJzvbxSz95Zrm7oNOK40ompG2XBL7RK8m6a57g2uQ==
+"@pressdocs/lang-js@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@pressdocs/lang-js/-/lang-js-0.1.3.tgz#0af7a5c3abe1514a4abd4e562e522a9f3438740f"
+  integrity sha512-qFKdysizPbiR2EiBrk3vHQKqxE4nTT8/cuNVQumTd9idIXJkN1fNee9Vcuu3Hz+1TsOi2TQKFn4kvoDEZv25Og==
   dependencies:
     "@pressdocs/lang" "^0.1.2"
     jsdoc-to-markdown "^6.0.1"
