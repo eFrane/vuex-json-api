@@ -1,25 +1,14 @@
 name: Automerge
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - edited
-      - labeled
-      - unlabeled
-      - ready_for_review
+  pull_request:
 
 jobs:
-  automerge:
+  auto-merge:
     runs-on: ubuntu-latest
     steps:
-      - uses: reitermarkus/automerge@v2
+      - uses: actions/checkout@v2
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
-          merge-method: rebase
-          do-not-merge-labels: never-merge
-#          required-labels: automerge
-          pull-request: ${{ github.event.inputs.pull-request }}
-          dry-run: true
+          target: minor
+          github-token: ${{ secrets.mytoken }}
