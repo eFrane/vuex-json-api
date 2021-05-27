@@ -65,11 +65,7 @@ export function isAbsoluteUri (uri) {
     return true
   }
 
-  if (uri.match(/\/\/.+/)) {
-    return true
-  }
-
-  return false
+  return !!uri.match(/\/\/.+/)
 }
 
 /**
