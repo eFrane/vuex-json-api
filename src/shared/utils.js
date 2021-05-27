@@ -1,4 +1,3 @@
-
 /**
  * Convenience wrapper to shorten the hasOwnProperty call
  *
@@ -51,4 +50,24 @@ export function deepMerge (target, source) {
  */
 export function deref (obj) {
   return JSON.parse(JSON.stringify(obj))
+}
+
+/**
+ *
+ * @param {String} uri
+ */
+export function isAbsoluteUri (uri) {
+  if (uri.indexOf('http://') === 0) {
+    return true
+  }
+
+  if (uri.indexOf('https://') === 0) {
+    return true
+  }
+
+  if (uri.match(/\/\/.+/)) {
+    return true
+  }
+
+  return false
 }
