@@ -1,4 +1,4 @@
-import { deref, hasOwn, isAbsoluteUri, setCallbackFns, validateCallbackFn } from '@/shared/utils'
+import { deref, hasOwn, isAbsoluteUri, validateCallbackFn, validateCallbackFns } from '@/shared/utils'
 
 test('dereferences objects', () => {
   const testObj = { foo: 'bar' }
@@ -61,8 +61,8 @@ test('returns valid arrays', () => {
     (bar) => { return bar }
   ]
 
-  expect(setCallbackFns(cbArr1)).toStrictEqual(cbArr1)
-  expect(setCallbackFns(cbArr2)).toStrictEqual(cbArr2)
+  expect(validateCallbackFns(cbArr1)).toStrictEqual(cbArr1)
+  expect(validateCallbackFns(cbArr2)).toStrictEqual(cbArr2)
 })
 
 test('throws on invalid arrays', () => {
@@ -73,7 +73,7 @@ test('throws on invalid arrays', () => {
   ]
 
   function testInvalid () {
-    setCallbackFns(cbArr3)
+    validateCallbackFns(cbArr3)
   }
 
   expect(testInvalid).toThrowErrorMatchingSnapshot()

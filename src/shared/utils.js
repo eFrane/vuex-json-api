@@ -103,7 +103,7 @@ export function validateCallbackFn (fn) {
  *
  * @param {Function[]} callbacks
  */
-export function setCallbackFns (callbacks) {
+export function validateCallbackFns (callbacks) {
   if (typeof callbacks === 'undefined' ||
     callbacks.constructor !== Array ||
     callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
