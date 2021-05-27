@@ -3,7 +3,7 @@ import normalize from 'json-api-normalizer'
 import { Api } from './Api'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { ResourceProxy } from './ResourceProxy'
-import { hasOwn } from '../shared/utils'
+import { deref, hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
 /**
@@ -49,7 +49,7 @@ export class ResourcefulApi extends Api {
    * @return {*}
    */
   preprocessData (data) {
-    data = JSON.parse(JSON.stringify(data))
+    data = deref(data)
     data.data.type = data.data.type.charAt(0).toUpperCase() + data.data.type.slice(1)
 
     if (data.data.relationships) {

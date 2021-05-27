@@ -4,7 +4,7 @@ import { hasLoadedRelationship } from './hasLoadedRelationship'
 import { listRelationship } from './listRelationship'
 import { loadRelationship } from './loadRelationship'
 import { getRelationship } from './getRelationship'
-import { hasOwn } from '../../shared/utils'
+import { deref, hasOwn } from '../../shared/utils'
 
 /**
  * @class ResourceBuilder
@@ -24,7 +24,7 @@ export class ResourceBuilder {
   * @param {Object} jsonResourceObject
   */
   build (jsonResourceObject) {
-    const obj = JSON.parse(JSON.stringify(jsonResourceObject.data)) // why tho?
+    const obj = deref(jsonResourceObject.data) // why tho?
 
     obj.hasRelationship = hasRelationship(obj)
     obj.hasLoadableRelationship = hasLoadableRelationship(obj)
@@ -87,7 +87,7 @@ export class ResourceBuilder {
   * @param {Object} functionalResourceObject
   */
   static strip (functionalResourceObject) {
-    return JSON.parse(JSON.stringify(functionalResourceObject))
+    return deref(functionalResourceObject)
   }
 }
 

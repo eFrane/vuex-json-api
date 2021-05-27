@@ -1,7 +1,7 @@
-import { deepMerge, hasOwn } from '../../../shared/utils'
+import { deepMerge, deref, hasOwn } from '../../../shared/utils'
 
 export function saveOptions ({ currentItemState, changedItemState, options }) {
-  const returnedItemState = JSON.parse(JSON.stringify(changedItemState))
+  const returnedItemState = deref(changedItemState)
   if (typeof options !== 'undefined' && hasOwn(returnedItemState, 'attributes')) {
     Object.keys(options).forEach(option => {
       switch (option) {

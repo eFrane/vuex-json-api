@@ -1,7 +1,9 @@
+/**
+ * Make sure a passed parameter is actually a function
+ *
+ * @param fn
+ * @returns {boolean}
+ */
 export function validateCallbackFn (fn) {
-  if (fn.constructor !== Function) {
-    return false
-  }
-
-  return true
+  return fn.constructor === Function
 }
