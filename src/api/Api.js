@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { stringify } from 'qs'
-import { setCallbackFns } from '../helpers/setCallbackFns'
-import { isAbsoluteUri, validateCallbackFn } from '../shared/utils'
+import { isAbsoluteUri, setCallbackFns, validateCallbackFn } from '../shared/utils'
 
 /**
  * Wrapper around json:api requests, sets content type and other defaults.
