@@ -4,6 +4,7 @@ export function hasRelationship (obj) {
   return name => {
     return hasOwn(obj, 'relationships') &&
     hasOwn(obj.relationships, name) &&
-    obj.relationships[name].data.length !== 0
+      obj.relationships[name].data !== null &&
+      obj.relationships[name].data.length !== 0
   }
 }
