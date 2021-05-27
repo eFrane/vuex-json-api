@@ -1,4 +1,4 @@
-import { checkConfigProperty } from '@/helpers/checkConfigProperty'
+import { checkConfigProperty } from '@/shared/utils'
 
 const myObj = {
   testProp: 42

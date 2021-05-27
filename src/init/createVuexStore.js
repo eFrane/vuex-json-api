@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
-import { checkConfigProperty } from '../helpers/checkConfigProperty'
-import { hasOwn } from '../shared/utils'
+import { checkConfigProperty, hasOwn } from '../shared/utils'
 
 Vue.use(Vuex)
 

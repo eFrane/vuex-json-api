@@ -1,6 +1,5 @@
 import { initialState } from './State'
 import { createAction } from './actions/createAction'
-import { checkConfigProperty } from '../helpers/checkConfigProperty'
 import { deleteAction } from './actions/deleteAction'
 import { getAction } from './actions/getAction'
 import { getProperty } from './getters/getProperty'
@@ -20,7 +19,7 @@ import { startLoadingMutation, endLoadingMutation } from './mutations/loading'
 import { updateMutation } from './mutations/updateMutation'
 import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
-import { hasOwn, isAbsoluteUri } from '../shared/utils'
+import { checkConfigProperty, hasOwn, isAbsoluteUri } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
 /**

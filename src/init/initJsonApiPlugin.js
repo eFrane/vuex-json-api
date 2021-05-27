@@ -1,5 +1,5 @@
 import { ResourcefulApi } from '../api/ResourcefulApi'
-import { checkConfigProperty } from '../helpers/checkConfigProperty'
+import { checkConfigProperty } from '../shared/utils'
 import { createPresetModule } from '../module/preset/createPresetModule'
 
 /**

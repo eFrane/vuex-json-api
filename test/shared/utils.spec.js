@@ -28,6 +28,7 @@ test('tells relative and absolute uris apart', () => {
    */
   const testData = [
     ['/my/path', false],
+    ['my/other/path', false],
     ['//abso.lute/ly', true],
     ['https://abso.lute/ly', true]
   ]
