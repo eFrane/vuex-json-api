@@ -1,8 +1,8 @@
-import { validateCallbackFn } from './validateCallbackFn'
+import { validateCallbackFn } from '../shared/utils'
 
 /**
  *
- * @param {Array} callbacks
+ * @param {Function[]} callbacks
  */
 export function setCallbackFns (callbacks) {
   if (typeof callbacks === 'undefined' ||

@@ -1,4 +1,4 @@
-import { deref, hasOwn, isAbsoluteUri } from '@/shared/utils'
+import { deref, hasOwn, isAbsoluteUri, validateCallbackFn } from '@/shared/utils'
 
 test('dereferences objects', () => {
   const testObj = { foo: 'bar' }
@@ -36,4 +36,17 @@ test('tells relative and absolute uris apart', () => {
   for (const [uri, isAbsolute] of testData) {
     expect(isAbsoluteUri(uri)).toStrictEqual(isAbsolute)
   }
+})
+
+test('is truthy on valid callback', () => {
+  expect(validateCallbackFn(() => { })).toBeTruthy()
+
+  const fn = () => { }
+  expect(validateCallbackFn(fn)).toBeTruthy()
+})
+
+test('is falsy on invalid callback', () => {
+  expect(validateCallbackFn(true)).toBeFalsy()
+  expect(validateCallbackFn(42)).toBeFalsy()
+  expect(validateCallbackFn('str')).toBeFalsy()
 })

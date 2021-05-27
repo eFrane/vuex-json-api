@@ -91,3 +91,13 @@ export function checkConfigProperty (config, property, isRequiredProp = true) {
 
   throw new Error('Missing configuration property: ' + property)
 }
+
+/**
+ * Make sure a passed parameter is actually a function
+ *
+ * @param fn
+ * @returns {boolean}
+ */
+export function validateCallbackFn (fn) {
+  return fn.constructor === Function
+}
