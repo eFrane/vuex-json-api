@@ -1,5 +1,6 @@
 import { item } from './state/item'
 import { collection } from './state/collection'
+import { deref } from '../shared/utils'
 
 /**
  * Return a new Object representing the initial state of a module
@@ -13,9 +14,9 @@ import { collection } from './state/collection'
 function initialState (isCollection) {
   return (() => {
     if (isCollection) {
-      return JSON.parse(JSON.stringify(collection))
+      return deref(collection)
     } else {
-      return JSON.parse(JSON.stringify(item))
+      return deref(item)
     }
   })()
 }

@@ -42,3 +42,13 @@ export function deepMerge (target, source) {
 
   return target
 }
+
+/**
+ * De-reference objects
+ *
+ * @param {object} obj
+ * @return {object} a dereferenced copy of the passed object
+ */
+export function deref (obj) {
+  return JSON.parse(JSON.stringify(obj))
+}

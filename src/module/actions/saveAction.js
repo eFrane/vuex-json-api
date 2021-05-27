@@ -2,7 +2,7 @@ import { diff } from 'deep-object-diff'
 import { processResponseData } from '../helpers/processResponseData'
 import { getExpectedResponse } from '../helpers/getExpectedResponse'
 import { saveOptions as applySaveOptions } from './options/saveOptions'
-import { hasOwn } from '../../shared/utils'
+import { deref, hasOwn } from '../../shared/utils'
 
 /**
  * Update an existing resource
@@ -28,18 +28,18 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
       if (hasOwn(defaultQuery, 'group')) {
         if (isCollection) {
           currentItemState = thisArg.state[moduleName][defaultQuery.group].items[id]
-          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName][defaultQuery.group].initial[id]))
+          initialItemState = deref(thisArg.state[moduleName][defaultQuery.group].initial[id])
         } else {
           currentItemState = thisArg.state[moduleName][defaultQuery.group].item
-          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName][defaultQuery.group].initial))
+          initialItemState = deref(thisArg.state[moduleName][defaultQuery.group].initial)
         }
       } else {
         if (isCollection) {
           currentItemState = thisArg.state[moduleName].items[id]
-          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName].initial[id]))
+          initialItemState = deref(thisArg.state[moduleName].initial[id])
         } else {
           currentItemState = thisArg.state[moduleName].item
-          initialItemState = JSON.parse(JSON.stringify(thisArg.state[moduleName].initial))
+          initialItemState = deref(thisArg.state[moduleName].initial)
         }
       }
 
