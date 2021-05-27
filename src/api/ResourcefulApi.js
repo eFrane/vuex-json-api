@@ -54,14 +54,20 @@ export class ResourcefulApi extends Api {
 
     if (data.data.relationships) {
       const relationships = {}
+      const casingWarning = (type) => {
+        console.warn(`The Resource with type '${type}' is sent in lower camel case. Please send as upper camel case.`)
+      }
+
       for (const [name, relationship] of Object.entries(data.data.relationships)) {
         if (Array.isArray(relationship.data)) {
           relationships[name] = {
             data: relationship.data.map(itemData => {
               const startChar = itemData.type.charAt(0)
+
               if (startChar === startChar.toLocaleLowerCase()) {
-                console.warn(`The Ressource withe Type '${itemData.type}' is send in lower case. Please send as upper case`)
+                casingWarning(itemData.type)
               }
+
               return {
                 id: itemData.id,
                 type: startChar.toUpperCase() + itemData.type.slice(1)
@@ -70,9 +76,11 @@ export class ResourcefulApi extends Api {
           }
         } else if (relationship.data !== null) {
           const startChar = relationship.data.type.charAt(0)
+
           if (startChar === startChar.toLocaleLowerCase()) {
-            console.warn(`The Ressource withe Type '${relationship.data.type}' is send in lower case. Please send as upper case`)
+            casingWarning(relationship.data.type)
           }
+
           relationships[name] = {
             data: {
               id: relationship.data.id,
