@@ -88,7 +88,7 @@ test('should not add relationship methods for non-existing relationships', () =>
         },
         moreRel: {
           data: [
-            {id: 'first', type: 'more-rel'}, {id: 'second', type: 'more-rel'}
+            { id: 'first', type: 'more-rel' }, { id: 'second', type: 'more-rel' }
           ]
         },
         noSingleRel: {
