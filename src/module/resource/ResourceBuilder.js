@@ -32,7 +32,7 @@ export class ResourceBuilder {
 
     obj.get = (attributeName) => hasOwn(obj.attributes, attributeName) ? obj.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
 
-    if (obj.hasRelationship) {
+    if (hasOwn(obj, 'relationships')) {
       this.buildRelationshipMethods(obj)
     }
 
@@ -49,7 +49,7 @@ export class ResourceBuilder {
     const relationships = obj.relationships
 
     for (const currentRelationshipName in relationships) {
-      if (hasOwn(relationships, currentRelationshipName)) {
+      if (obj.hasRelationship(currentRelationshipName)) {
         const relatedObject = relationships[currentRelationshipName]
 
         const relationshipConfig = {
@@ -65,17 +65,17 @@ export class ResourceBuilder {
 
         relationships[currentRelationshipName] = relatedObject
       }
-    }
 
-    // shorthand variant
-    obj.loadRel = (relationshipName) => {
-      return loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
-    }
-    obj.rel = (relationshipName) => {
-      if (getRelationshipConfig(relationships[relationshipName]).isToMany) {
-        return listRelationship(this.store, relationships[relationshipName])()
-      } else {
-        return getRelationship(this.store, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+      // shorthand variant
+      obj.loadRel = (relationshipName) => {
+        return loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+      }
+      obj.rel = (relationshipName) => {
+        if (getRelationshipConfig(relationships[relationshipName]).isToMany) {
+          return listRelationship(this.store, relationships[relationshipName])()
+        } else {
+          return getRelationship(this.store, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+        }
       }
     }
   }
@@ -99,6 +99,6 @@ export class ResourceBuilder {
  */
 function getRelationshipConfig (relatedObject) {
   return {
-    isToMany: relatedObject.data.constructor === Array
+    isToMany: relatedObject.data && relatedObject.data.constructor === Array
   }
 }
