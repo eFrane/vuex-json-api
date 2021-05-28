@@ -100,29 +100,35 @@ test('adding headers', () => {
     api.addHeader(42, 34)
   }).toThrow(ApiError)
 
-  expect(Object.keys(api.headers).length).toBe(3)
+  expect(Object.keys(api.headers).length).toBe(2)
 
   api.addHeader('foo', 'bar')
 
-  expect(Object.keys(api.headers).length).toBe(4)
+  expect(Object.keys(api.headers).length).toBe(3)
   expect(api.headers.foo).toBe('bar')
 
   expect(() => {
     api.addHeader('foo', 'baz')
   }).toThrow(ApiError)
 
-  expect(Object.keys(api.headers).length).toBe(4)
+  expect(Object.keys(api.headers).length).toBe(3)
 
   api.addHeader('foo', 'baz', true)
 
   expect(api.headers.foo).toBe('baz')
-  expect(Object.keys(api.headers).length).toBe(4)
+  expect(Object.keys(api.headers).length).toBe(3)
 
   api.addHeaders({
     extra1: 'a',
     extra2: 'b'
   })
 
-  expect(Object.keys(api.headers).length).toBe(6)
+  expect(Object.keys(api.headers).length).toBe(5)
   expect(api.headers.extra2).toBe('b')
+})
+
+test('default headers are read-only', () => {
+  expect(() => {
+    api.addHeader('Accept', 'text/plain')
+  }).toThrow(ApiError)
 })

@@ -4,6 +4,17 @@ import { stringify } from 'qs'
 import { isAbsoluteUri, validateCallbackFn } from '../shared/utils'
 
 /**
+ * Some headers cannot be reconfigured to stop users from
+ * accidental errors.
+ *
+ * @type {string[]}
+ */
+const READ_ONLY_HEADERS = [
+  'Accept',
+  'Content-type'
+]
+
+/**
  * Wrapper around json:api requests, sets content type and other defaults.
  *
  * @class Api
@@ -22,9 +33,8 @@ export class Api {
     }
 
     this.headers = {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/vnd.api+json',
-      Accept: 'application/vnd.api+json'
+      Accept: 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json'
     }
   }
 
@@ -114,6 +124,10 @@ export class Api {
   addHeader (name, value, overwrite = false) {
     if (typeof name !== 'string') {
       throw new ApiError('Expected name to be string, got ' + typeof name)
+    }
+
+    if (READ_ONLY_HEADERS.includes(name)) {
+      throw new ApiError('Cannot change default headers')
     }
 
     if (typeof value !== 'string') {
