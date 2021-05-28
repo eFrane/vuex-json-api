@@ -1,5 +1,4 @@
 import { ApiError } from '../errors/ApiError'
-import axios from 'axios'
 import { stringify } from 'qs'
 import { isAbsoluteUri, validateCallbackFn } from '../shared/utils'
 
@@ -176,11 +175,11 @@ export class Api {
 
   /**
    *
-   * @param method
-   * @param url
-   * @param params
-   * @param data
-   * @returns {Promise<AxiosResponse<any>>}
+   * @param {string} method
+   * @param {string} url
+   * @param {Object} params
+   * @param {Object} data
+   * @returns {Promise<Response>}
    * @protected
    */
   async _doRequest (method, url, params, data) {
@@ -197,25 +196,33 @@ export class Api {
       crossDomain = true
     }
 
-    return axios.create(config)
-      .request({ method, url, params, data, crossDomain })
-      .then(
-        async response => {
-          for (let i = 0; i < this.preprocessingCallbacks.length; i++) {
-            await this.preprocessingCallbacks[i](response)
-          }
+    const requestConfig = {
+      body: null,
+      headers: this.headers,
+      method: method.toUpperCase(),
+      mode: crossDomain ? 'cors' : 'same-origin',
+      referrerPolicy: 'strict-origin-when-cross-origin'
+    }
 
-          return response
-        }
-      ).catch(
-        async errorResponse => {
-          for (let i = 0; i < this.errorCallbacks.length; i++) {
-            await this.errorCallbacks[i](errorResponse)
-          }
+    if (data) {
+      requestConfig.body = JSON.stringify(data)
+    }
 
-          return errorResponse
-        }
-      )
+    return fetch(url, requestConfig).then(async response => {
+      let callbacks = []
+      if (response.ok) {
+        callbacks = this.preprocessingCallbacks
+      } else {
+        // run preprocessing callbacks
+        callbacks = this.errorCallbacks
+      }
+
+      for (const callback of callbacks) {
+        await callback(response)
+      }
+
+      return response
+    })
   }
 
   get (url, params = null) {

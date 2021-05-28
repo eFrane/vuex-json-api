@@ -1,7 +1,18 @@
 import { Api } from '@/api/Api'
-// import { ApiError } from '@/errors/ApiError'
+import fetchMock from 'fetch-mock'
 
 // This spec only tests the request related methods of Api
+
+test('request returns response', async () => {
+  fetchMock.config.sendAsJson = false
+  fetchMock.get('https://test/', { body: '{}' })
+
+  const api = new Api()
+  api.setBaseUrl('https://test')
+  const response = await api._doRequest('get', '/')
+
+  expect(await response.json()).toEqual({})
+})
 
 test('verb methods pass to doRequest', () => {
   const nonRequestingApi = new Api()

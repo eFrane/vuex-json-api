@@ -29,9 +29,11 @@ export class ResourcefulApi extends Api {
 
     return super.doRequest(method, url, params, data)
       .then((response) => {
+        const json = response.json()
+
         return {
-          data: normalize(response.data),
-          meta: response.data.meta,
+          data: normalize(json.data),
+          meta: json.data.meta,
           status: response.status
         }
       })

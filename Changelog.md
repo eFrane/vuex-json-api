@@ -1,5 +1,6 @@
 # next version
 
+- **BREAKING** Responses are `WindowOrWorkerGlobal.Response` (Fetch) instead of Axios Responses now
 - **BREAKING** None of the `Api.(get|post|delete|...)` methods support passing options to `doRequest` or
   the underlying request handling anymore.
 - **BREAKING** `Api.doRequest` is `protected` and **MUST NOT** be called directly
