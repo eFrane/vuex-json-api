@@ -597,3 +597,5 @@ v0.0.26 / 2020-03-10
   * Merge pull request #68 from eFrane/alpha_releases
   * refs #65: draft shorthand-methods to get relationships
   * refs #65: draft shorthand-methods to get attributes
+
+_Changelog starts at 0.0.26_
