@@ -1,8 +1,9 @@
 import { Api } from '@/api/Api'
 import { ApiError } from '@/errors/ApiError'
 
-let api = null
-api = new Api()
+// This spec tests all the non-request methods of Api
+
+const api = new Api()
 api.setBaseUrl('http://localhost/')
 
 test('has no default base url', () => {
