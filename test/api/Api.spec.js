@@ -94,26 +94,26 @@ test('setting callbacks', () => {
 })
 
 test('adding headers', () => {
-  expect(api.addHeader).toThrow(ApiError)
+  expect(api.setHeader).toThrow(ApiError)
 
   expect(() => {
-    api.addHeader(42, 34)
+    api.setHeader(42, 34)
   }).toThrow(ApiError)
 
   expect(Object.keys(api.headers).length).toBe(2)
 
-  api.addHeader('foo', 'bar')
+  api.setHeader('foo', 'bar')
 
   expect(Object.keys(api.headers).length).toBe(3)
   expect(api.headers.foo).toBe('bar')
 
   expect(() => {
-    api.addHeader('foo', 'baz')
+    api.setHeader('foo', 'baz')
   }).toThrow(ApiError)
 
   expect(Object.keys(api.headers).length).toBe(3)
 
-  api.addHeader('foo', 'baz', true)
+  api.setHeader('foo', 'baz', true)
 
   expect(api.headers.foo).toBe('baz')
   expect(Object.keys(api.headers).length).toBe(3)
@@ -129,6 +129,6 @@ test('adding headers', () => {
 
 test('default headers are read-only', () => {
   expect(() => {
-    api.addHeader('Accept', 'text/plain')
+    api.setHeader('Accept', 'text/plain')
   }).toThrow(ApiError)
 })

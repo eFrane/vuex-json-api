@@ -121,7 +121,7 @@ export class Api {
    * @param {string} value
    * @param {boolean} overwrite
    */
-  addHeader (name, value, overwrite = false) {
+  setHeader (name, value, overwrite = false) {
     if (typeof name !== 'string') {
       throw new ApiError('Expected name to be string, got ' + typeof name)
     }
@@ -164,7 +164,7 @@ export class Api {
     }
 
     for (const [name, value] of Object.entries(headers)) {
-      this.addHeader(name, value)
+      this.setHeader(name, value)
     }
   }
 
