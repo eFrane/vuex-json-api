@@ -107,6 +107,36 @@ export class Api {
 
   /**
    *
+   * @param {string} name
+   * @param {string} value
+   * @param {boolean} overwrite
+   */
+  addHeader (name, value, overwrite = false) {
+    if (typeof name !== 'string') {
+      throw new ApiError('Expected name to be string, got ' + typeof name)
+    }
+
+    if (typeof value !== 'string') {
+      throw new ApiError('Expected value to be string, got ' + typeof value)
+    }
+
+    if (Object.keys(this.headers).includes(name) && !overwrite) {
+      throw new ApiError('Header is already set, not overwriting.')
+    }
+
+    this.headers[name] = value
+  }
+
+  /**
+   * Add multiple request headers at once by passing an object:
+   *
+   * ```js
+   * api.addHeaders({
+   *   'X-My-Header': 'my-header-value',
+   *   'E-Tag': '12923-434-123'
+   * })
+   * ```
+   *
    * @param {Object} headers
    */
   addHeaders (headers) {
@@ -119,7 +149,9 @@ export class Api {
       headers = {}
     }
 
-    this.headers = Object.assign(this.headers, headers)
+    for (const [name, value] of Object.entries(headers)) {
+      this.addHeader(name, value)
+    }
   }
 
   setBaseUrl (baseUrl) {

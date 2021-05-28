@@ -92,3 +92,37 @@ test('setting callbacks', () => {
 
   api.resetErrorCallbacks()
 })
+
+test('adding headers', () => {
+  expect(api.addHeader).toThrow(ApiError)
+
+  expect(() => {
+    api.addHeader(42, 34)
+  }).toThrow(ApiError)
+
+  expect(Object.keys(api.headers).length).toBe(3)
+
+  api.addHeader('foo', 'bar')
+
+  expect(Object.keys(api.headers).length).toBe(4)
+  expect(api.headers.foo).toBe('bar')
+
+  expect(() => {
+    api.addHeader('foo', 'baz')
+  }).toThrow(ApiError)
+
+  expect(Object.keys(api.headers).length).toBe(4)
+
+  api.addHeader('foo', 'baz', true)
+
+  expect(api.headers.foo).toBe('baz')
+  expect(Object.keys(api.headers).length).toBe(4)
+
+  api.addHeaders({
+    extra1: 'a',
+    extra2: 'b'
+  })
+
+  expect(Object.keys(api.headers).length).toBe(6)
+  expect(api.headers.extra2).toBe('b')
+})
