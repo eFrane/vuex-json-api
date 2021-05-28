@@ -1,5 +1,5 @@
-v0.0.32 / 2021-05-28
-===================
+# v0.0.33
+_2021-05-28_
 
 - hasRelationship should work for all types of relationships (@mathisdemos)
 - resource building should work for null relationships (@mathisdemos)
