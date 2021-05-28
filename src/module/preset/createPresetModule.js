@@ -1,6 +1,5 @@
-import { checkConfigProperty } from '../../helpers/checkConfigProperty'
 import { ModuleBuilder } from '../ModuleBuilder'
-import { hasOwn } from '../../shared/utils'
+import { checkConfigProperty, hasOwn } from '../../shared/utils'
 import { Performance } from '../../shared/Performance'
 import { ResourceProxy } from '../../api/ResourceProxy'
 

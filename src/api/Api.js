@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { stringify } from 'qs'
-import { validateCallbackFn } from '../helpers/validateCallbackFn'
-import { setCallbackFns } from '../helpers/setCallbackFns'
-import { isAbsoluteUri } from '../helpers/isAbsoluteUri'
+import { isAbsoluteUri, validateCallbackFns, validateCallbackFn } from '../shared/utils'
 
 /**
  * Wrapper around json:api requests, sets content type and other defaults.
@@ -34,7 +32,7 @@ export class Api {
    * @param {Array} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    this.preprocessingCallbacks = setCallbackFns(callbacks)
+    this.preprocessingCallbacks = validateCallbackFns(callbacks)
   }
 
   /**
@@ -42,7 +40,7 @@ export class Api {
    * @param {Array} callbacks
    */
   setErrorCallbacks (callbacks) {
-    this.errorCallbacks = setCallbackFns(callbacks)
+    this.errorCallbacks = validateCallbackFns(callbacks)
   }
 
   /**

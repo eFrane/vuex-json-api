@@ -1,4 +1,3 @@
-
 /**
  * Convenience wrapper to shorten the hasOwnProperty call
  *
@@ -51,4 +50,65 @@ export function deepMerge (target, source) {
  */
 export function deref (obj) {
   return JSON.parse(JSON.stringify(obj))
+}
+
+/**
+ *
+ * @param {String} uri
+ */
+export function isAbsoluteUri (uri) {
+  if (uri.indexOf('http://') === 0) {
+    return true
+  }
+
+  if (uri.indexOf('https://') === 0) {
+    return true
+  }
+
+  return !!uri.match(/\/\/.+/)
+}
+
+/**
+ *
+ * @param {object} config
+ * @param {String} property
+ * @param {Boolean} isRequiredProp
+ */
+export function checkConfigProperty (config, property, isRequiredProp = true) {
+  if (config !== null && hasOwn(config, property)) {
+    return true
+  }
+
+  if ((config === null ||
+    hasOwn(config, property) === false) &&
+    !isRequiredProp) {
+    return false
+  }
+
+  throw new Error('Missing configuration property: ' + property)
+}
+
+/**
+ * Make sure a passed parameter is actually a function
+ *
+ * @param fn
+ * @returns {boolean}
+ */
+export function validateCallbackFn (fn) {
+  return fn.constructor === Function
+}
+
+/**
+ * Make sure all elements of a passed array are callable functions
+ *
+ * @param {Function[]} callbacks
+ */
+export function validateCallbackFns (callbacks) {
+  if (typeof callbacks === 'undefined' ||
+    callbacks.constructor !== Array ||
+    callbacks.reduce((carry, cb) => validateCallbackFn(cb) && carry, true) === false) {
+    throw new Error('You must pass an array of valid callback functions to this method')
+  }
+
+  return callbacks
 }
