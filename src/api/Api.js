@@ -15,7 +15,7 @@ const READ_ONLY_HEADERS = [
 ]
 
 /**
- * Wrapper around json:api requests, sets content type and other defaults.
+ * Wrapper around json:api 1.0 requests, sets content type and other defaults.
  *
  * @class Api
  */
