@@ -1,3 +1,9 @@
+v0.0.32 / 2021-05-28
+===================
+
+- hasRelationship should work for all types of relationships (@mathisdemos)
+- resource building should work for null relationships (@mathisdemos)
+- move helpers to utils (@eFrane)
 
 v0.0.31 / 2021-04-22
 ==================
