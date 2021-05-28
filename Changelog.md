@@ -1,10 +1,11 @@
 # next version
 
-- **BREAKING** `Api.addHeader` was _renamed_ to `Api.setHeader` (@eFrane)
+- **BREAKING** `Api.doRequest` is `protected` and **MUST NOT** be called directly
+- **BREAKING** `Api.addHeader` was _renamed_ to `Api.setHeader`
 - **BREAKING** Default headers cannot be changed anymore, this essentially means that the request
   handling in this library is exclusively bound
-  to send and accept json:api 1.0 requests (@eFrane)
-- fix api request callback handling (@eFrane)
+  to send and accept json:api 1.0 requests
+- fix api request callback handling
 
 # v0.0.33
 _2021-05-28_

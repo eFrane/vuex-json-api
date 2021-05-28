@@ -174,7 +174,17 @@ export class Api {
 
   /* #region request methods */
 
-  async doRequest (method, url, params, data, options) {
+  /**
+   *
+   * @param method
+   * @param url
+   * @param params
+   * @param data
+   * @param options
+   * @returns {Promise<AxiosResponse<any>>}
+   * @protected
+   */
+  async _doRequest (method, url, params, data, options) {
     const config = Object.assign(options, this.defaultOptions)
     config.headers = this.headers
 
