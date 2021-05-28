@@ -1,4 +1,5 @@
 import { Api } from '@/api/Api'
+import { ApiError } from '@/errors/ApiError'
 
 let api = null
 api = new Api()
@@ -28,19 +29,19 @@ test('setting callbacks', () => {
 
   expect(() => {
     api.addPreprocessingCallback(validCb)
-  }).not.toThrow()
+  }).not.toThrow(ApiError)
 
   expect(() => {
     api.addPreprocessingCallback(invalidCb)
-  }).toThrow()
+  }).toThrow(ApiError)
 
   expect(() => {
     api.addErrorCallback(validCb)
-  }).not.toThrow()
+  }).not.toThrow(ApiError)
 
   expect(() => {
     api.addErrorCallback(invalidCb)
-  }).toThrow()
+  }).toThrow(ApiError)
 
   expect(api.preprocessingCallbacks.length).toBe(1)
   expect(api.errorCallbacks.length).toBe(1)

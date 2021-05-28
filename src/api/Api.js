@@ -1,3 +1,4 @@
+import { ApiError } from '../errors/ApiError'
 import axios from 'axios'
 import { stringify } from 'qs'
 import { isAbsoluteUri, validateCallbackFns, validateCallbackFn } from '../shared/utils'
@@ -49,7 +50,7 @@ export class Api {
    */
   addPreprocessingCallback (callback) {
     if (!validateCallbackFn(callback)) {
-      throw new Error('You must pass a valid callback to this method')
+      throw new ApiError('You must pass a valid callback to this method')
     }
 
     this.preprocessingCallbacks.push(callback)
@@ -61,7 +62,7 @@ export class Api {
    */
   addErrorCallback (callback) {
     if (!validateCallbackFn(callback)) {
-      throw new Error('You must pass a valid callback to this method')
+      throw new ApiError('You must pass a valid callback to this method')
     }
 
     this.errorCallbacks.push(callback)
@@ -97,6 +98,12 @@ export class Api {
 
     this.headers = Object.assign(this.headers, headers)
   }
+
+  setBaseUrl (baseUrl) {
+    this.baseUrl = baseUrl
+  }
+
+  /* #region request methods */
 
   async doRequest (method, url, params, data, options) {
     const config = Object.assign(options, this.defaultOptions)
@@ -153,7 +160,5 @@ export class Api {
     return this.doRequest('delete', url, params, data, options)
   }
 
-  setBaseUrl (baseUrl) {
-    this.baseUrl = baseUrl
-  }
+  /* #endregion */
 }
