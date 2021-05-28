@@ -48,7 +48,7 @@ export class Api {
    * @param {Function} callback
    */
   addPreprocessingCallback (callback) {
-    if (validateCallbackFn(callback)) {
+    if (!validateCallbackFn(callback)) {
       throw new Error('You must pass a valid callback to this method')
     }
 
@@ -60,7 +60,7 @@ export class Api {
    * @param {Function} callback
    */
   addErrorCallback (callback) {
-    if (validateCallbackFn(callback)) {
+    if (!validateCallbackFn(callback)) {
       throw new Error('You must pass a valid callback to this method')
     }
 
