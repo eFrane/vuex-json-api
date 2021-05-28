@@ -180,12 +180,11 @@ export class Api {
    * @param url
    * @param params
    * @param data
-   * @param options
    * @returns {Promise<AxiosResponse<any>>}
    * @protected
    */
-  async _doRequest (method, url, params, data, options) {
-    const config = Object.assign(options, this.defaultOptions)
+  async _doRequest (method, url, params, data) {
+    const config = Object.assign({}, this.defaultOptions)
     config.headers = this.headers
 
     if (!isAbsoluteUri(url)) {
@@ -219,24 +218,24 @@ export class Api {
       )
   }
 
-  get (url, params = null, options = {}) {
-    return this.doRequest('get', url, params, null, options)
+  get (url, params = null) {
+    return this.doRequest('get', url, params, null)
   }
 
-  post (url, params = null, data = null, options = {}) {
-    return this.doRequest('post', url, params, data, options)
+  post (url, params = null, data = null) {
+    return this.doRequest('post', url, params, data)
   }
 
-  put (url, params = null, data = null, options = {}) {
-    return this.doRequest('put', url, params, data, options)
+  put (url, params = null, data = null) {
+    return this.doRequest('put', url, params, data)
   }
 
-  patch (url, params = null, data = null, options = {}) {
-    return this.doRequest('patch', url, params, data, options)
+  patch (url, params = null, data = null) {
+    return this.doRequest('patch', url, params, data)
   }
 
-  delete (url, params = null, data = null, options = {}) {
-    return this.doRequest('delete', url, params, data, options)
+  delete (url, params = null, data = null) {
+    return this.doRequest('delete', url, params, data)
   }
 
   /* #endregion */

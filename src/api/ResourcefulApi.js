@@ -21,14 +21,13 @@ export class ResourcefulApi extends Api {
    * @param {String} url
    * @param {Object} params
    * @param {Object} data
-   * @param {Object} options
    */
-  async _doRequest (method, url, params, data, options) {
+  async _doRequest (method, url, params, data) {
     if (data) {
       data = this.preprocessData(data)
     }
 
-    return super.doRequest(method, url, params, data, options)
+    return super.doRequest(method, url, params, data)
       .then((response) => {
         return {
           data: normalize(response.data),

@@ -1,5 +1,7 @@
 # next version
 
+- **BREAKING** None of the `Api.(get|post|delete|...)` methods support passing options to `doRequest` or
+  the underlying request handling anymore.
 - **BREAKING** `Api.doRequest` is `protected` and **MUST NOT** be called directly
 - **BREAKING** `Api.addHeader` was _renamed_ to `Api.setHeader`
 - **BREAKING** Default headers cannot be changed anymore, this essentially means that the request
