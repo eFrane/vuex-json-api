@@ -51,4 +51,44 @@ test('setting callbacks', () => {
 
   expect(api.preprocessingCallbacks.length).toBe(0)
   expect(api.errorCallbacks.length).toBe(0)
+
+  expect(() => {
+    api.setPreprocessingCallbacks([validCb, invalidCb])
+  }).toThrow(ApiError)
+
+  expect(api.preprocessingCallbacks.length).toBe(1)
+
+  expect(() => {
+    api.setPreprocessingCallbacks([invalidCb, validCb])
+  }).toThrow(ApiError)
+
+  expect(api.preprocessingCallbacks.length).toBe(2)
+
+  expect(() => {
+    api.setPreprocessingCallbacks([validCb])
+  }).not.toThrow(ApiError)
+
+  expect(api.preprocessingCallbacks.length).toBe(3)
+
+  api.resetPreprocessing()
+
+  expect(() => {
+    api.setErrorCallbacks([validCb, invalidCb])
+  }).toThrow(ApiError)
+
+  expect(api.errorCallbacks.length).toBe(1)
+
+  expect(() => {
+    api.setErrorCallbacks([invalidCb, validCb])
+  }).toThrow(ApiError)
+
+  expect(api.errorCallbacks.length).toBe(2)
+
+  expect(() => {
+    api.setErrorCallbacks([validCb])
+  }).not.toThrow(ApiError)
+
+  expect(api.errorCallbacks.length).toBe(3)
+
+  api.resetErrorCallbacks()
 })

@@ -1,6 +1,6 @@
 # next version
 
-
+- fix api request callback handling (@eFrane)
 
 # v0.0.33
 _2021-05-28_

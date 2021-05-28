@@ -1,7 +1,7 @@
 import { ApiError } from '../errors/ApiError'
 import axios from 'axios'
 import { stringify } from 'qs'
-import { isAbsoluteUri, validateCallbackFns, validateCallbackFn } from '../shared/utils'
+import { isAbsoluteUri, validateCallbackFn } from '../shared/utils'
 
 /**
  * Wrapper around json:api requests, sets content type and other defaults.
@@ -30,18 +30,41 @@ export class Api {
 
   /**
    *
-   * @param {Array} callbacks
+   * @param {Function[]} callbacks
    */
   setPreprocessingCallbacks (callbacks) {
-    this.preprocessingCallbacks = validateCallbackFns(callbacks)
+    this._setCallbacks('preprocessingCallbacks', callbacks)
   }
 
   /**
    *
-   * @param {Array} callbacks
+   * @param {string} property
+   * @param {Function[]} callbacks
+   * @private
+   */
+  _setCallbacks (property, callbacks) {
+    const errored = []
+
+    for (const i in callbacks) {
+      if (!validateCallbackFn(callbacks[i])) {
+        errored.push(i)
+        continue
+      }
+
+      this[property].push(callbacks[i])
+    }
+
+    if (errored.length) {
+      throw new ApiError('Invalid callbacks: ' + callbacks.join(', '))
+    }
+  }
+
+  /**
+   *
+   * @param {Function[]} callbacks
    */
   setErrorCallbacks (callbacks) {
-    this.errorCallbacks = validateCallbackFns(callbacks)
+    this._setCallbacks('errorCallbacks', callbacks)
   }
 
   /**
