@@ -9,8 +9,8 @@ test('request sends correct headers', async () => {
 
   const api = new Api()
   api.setBaseUrl('https://test')
-  const response = await api._doRequest('get', '/')
-  const receivedRequestOptions = fetchMock.lastOptions()
+  let response = await api._doRequest('get', '/')
+  let receivedRequestOptions = fetchMock.lastOptions()
 
   expect(receivedRequestOptions.headers).toStrictEqual({
     Accept: 'application/vnd.api+json',
@@ -18,6 +18,14 @@ test('request sends correct headers', async () => {
   })
 
   expect(await response.json()).toEqual({})
+
+  api.setHeader('X-Custom-Header', 'custom-value')
+
+  response = api._doRequest('get', '/')
+  receivedRequestOptions = fetchMock.lastOptions()
+
+  expect(receivedRequestOptions.headers).toHaveProperty('X-Custom-Header')
+  expect(receivedRequestOptions.headers['X-Custom-Header']).toEqual('custom-value')
 })
 
 test('verb methods pass to doRequest', () => {
