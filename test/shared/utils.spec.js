@@ -20,6 +20,11 @@ test('has own checks for own properties', () => {
   expect(hasOwn(bar, 'baz')).toBeTruthy()
 })
 
+test('has own correctly falsifies on null and undefined', () => {
+  expect(hasOwn(null, 'foo')).toBeFalsy()
+  expect(hasOwn(undefined, 'foo')).toBeFalsy()
+})
+
 test('tells relative and absolute uris apart', () => {
   /**
    * List of `uri, is_absolute` pairs for testing.

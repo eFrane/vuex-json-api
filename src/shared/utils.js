@@ -5,6 +5,10 @@
  * @param {String} property
  */
 export function hasOwn (object, property) {
+  if (object === null || typeof object === 'undefined') {
+    return false
+  }
+
   return Object.prototype.hasOwnProperty.call(object, property)
 }
 
