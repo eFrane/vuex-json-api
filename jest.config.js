@@ -8,8 +8,8 @@ module.exports = {
   coverageDirectory: 'coverage',
 
   collectCoverageFrom: [
-    "**/*.js",
-    "!**/node_modules/**"
+    "src/**/*.js",
+    "!**/node_modules/**",
   ],
 
   notify: true,
