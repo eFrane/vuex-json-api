@@ -3,13 +3,19 @@ import fetchMock from 'fetch-mock'
 
 // This spec only tests the request related methods of Api
 
-test('request returns response', async () => {
+test('request sends correct headers', async () => {
   fetchMock.config.sendAsJson = false
   fetchMock.get('https://test/', { body: '{}' })
 
   const api = new Api()
   api.setBaseUrl('https://test')
   const response = await api._doRequest('get', '/')
+  const receivedRequestOptions = fetchMock.lastOptions()
+
+  expect(receivedRequestOptions.headers).toStrictEqual({
+    Accept: 'application/vnd.api+json',
+    'Content-Type': 'application/vnd.api+json'
+  })
 
   expect(await response.json()).toEqual({})
 })

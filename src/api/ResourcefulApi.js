@@ -27,9 +27,9 @@ export class ResourcefulApi extends Api {
       data = this.preprocessData(data)
     }
 
-    return super.doRequest(method, url, params, data)
-      .then((response) => {
-        const json = response.json()
+    return super._doRequest(method, url, params, data)
+      .then(async (response) => {
+        const json = await response.json()
 
         return {
           data: normalize(json.data),
