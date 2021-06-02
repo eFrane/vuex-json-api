@@ -133,3 +133,41 @@ test('default headers are read-only', () => {
     api.setHeader('Accept', 'text/plain')
   }).toThrow(ApiError)
 })
+
+describe.each([
+  {
+    url: '//localhost/',
+    cross: false
+  },
+  {
+    url: 'http://localhost/',
+    cross: false
+  },
+  {
+    url: '/relative',
+    cross: false
+  },
+  {
+    url: 'http://otherdomain.com',
+    cross: true
+  },
+  {
+    url: 'https://ssldomain.com',
+    cross: true
+  },
+  {
+    url: '//ffoobbaar.net',
+    cross: true
+  },
+  // this test case could be left out with typescript
+  {
+    url: 42,
+    cross: false
+  }
+])('cross domain tests', (data) => {
+  const shouldCross = (data.cross) ? 'is' : 'is not'
+
+  test(`checks if ${data.url} ${shouldCross} cross domain`, () => {
+    expect(api.isUrlCrossDomain(data.url)).toBe(data.cross)
+  })
+})

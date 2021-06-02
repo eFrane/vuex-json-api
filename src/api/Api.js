@@ -173,6 +173,38 @@ export class Api {
 
   /* #region request methods */
 
+  _compileUrl (url, params) {
+    if (!isAbsoluteUri(url)) {
+      url = this.baseUrl + url
+    }
+
+    return url
+  }
+
+  isUrlCrossDomain (url) {
+    if (typeof url !== 'string') {
+      return false
+    }
+
+    if (url.length === 0) {
+      return false
+    }
+
+    if (url.indexOf('//') === 0) {
+      // this is only valid in here as the url is not actually used this way!
+      url = 'http:' + url
+    }
+
+    try {
+      const urlObj = new URL(url)
+      const baseUrlObj = new URL(this.baseUrl)
+
+      return urlObj.host !== baseUrlObj.host
+    } catch (e) {}
+
+    return url.length > 0 && isAbsoluteUri(url)
+  }
+
   /**
    *
    * @param {string} method
@@ -186,15 +218,10 @@ export class Api {
     const config = Object.assign({}, this.defaultOptions)
     config.headers = this.headers
 
-    if (!isAbsoluteUri(url)) {
-      url = this.baseUrl + url
-    }
-
     // make cross domain requests if necessary
-    let crossDomain = false
-    if (url.length > 0 && isAbsoluteUri(url)) {
-      crossDomain = true
-    }
+    const crossDomain = this.isUrlCrossDomain(url)
+
+    url = this._compileUrl(url, params)
 
     const requestConfig = {
       body: null,

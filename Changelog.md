@@ -9,6 +9,7 @@
   handling in this library is exclusively bound
   to send and accept json:api 1.0 requests
 - fix api request callback handling
+- fix api cross-domain recognition
 
 # v0.0.33
 _2021-05-28_
