@@ -22,7 +22,7 @@ export class Api {
   constructor () {
     this.baseUrl = ''
 
-    this.preprocessingCallbacks = []
+    this.successCallbacks = []
     this.errorCallbacks = []
 
     this.headers = {
@@ -32,11 +32,12 @@ export class Api {
   }
 
   /**
+   * Functions to be called after successful requests.
    *
    * @param {Function[]} callbacks
    */
-  setPreprocessingCallbacks (callbacks) {
-    this._setCallbacks('preprocessingCallbacks', callbacks)
+  setSuccessCallbacks (callbacks) {
+    this._setCallbacks('successCallbacks', callbacks)
   }
 
   /**
@@ -74,12 +75,12 @@ export class Api {
    *
    * @param {Function} callback
    */
-  addPreprocessingCallback (callback) {
+  addSuccessCallback (callback) {
     if (!validateCallbackFn(callback)) {
       throw new ApiError('You must pass a valid callback to this method')
     }
 
-    this.preprocessingCallbacks.push(callback)
+    this.successCallbacks.push(callback)
   }
 
   /**
@@ -95,10 +96,10 @@ export class Api {
   }
 
   /**
-   * Reset the response preprocessing to the default behaviour
+   * Reset the response success handling to the default behaviour
    */
-  resetPreprocessing () {
-    this.preprocessingCallbacks = []
+  resetSuccessCallbacks () {
+    this.successCallbacks = []
   }
 
   /**
@@ -257,7 +258,7 @@ export class Api {
     return fetch(url, requestConfig).then(async response => {
       let callbacks = []
       if (response.ok) {
-        callbacks = this.preprocessingCallbacks
+        callbacks = this.successCallbacks
       } else {
         // run preprocessing callbacks
         callbacks = this.errorCallbacks

@@ -29,15 +29,15 @@ test('setting callbacks', () => {
   const validCb = () => {}
   const invalidCb = 42
 
-  expect(api.preprocessingCallbacks.length).toBe(0)
+  expect(api.successCallbacks.length).toBe(0)
   expect(api.errorCallbacks.length).toBe(0)
 
   expect(() => {
-    api.addPreprocessingCallback(validCb)
+    api.addSuccessCallback(validCb)
   }).not.toThrow(ApiError)
 
   expect(() => {
-    api.addPreprocessingCallback(invalidCb)
+    api.addSuccessCallback(invalidCb)
   }).toThrow(ApiError)
 
   expect(() => {
@@ -48,34 +48,34 @@ test('setting callbacks', () => {
     api.addErrorCallback(invalidCb)
   }).toThrow(ApiError)
 
-  expect(api.preprocessingCallbacks.length).toBe(1)
+  expect(api.successCallbacks.length).toBe(1)
   expect(api.errorCallbacks.length).toBe(1)
 
-  api.resetPreprocessing()
+  api.resetSuccessCallbacks()
   api.resetErrorCallbacks()
 
-  expect(api.preprocessingCallbacks.length).toBe(0)
+  expect(api.successCallbacks.length).toBe(0)
   expect(api.errorCallbacks.length).toBe(0)
 
   expect(() => {
-    api.setPreprocessingCallbacks([validCb, invalidCb])
+    api.setSuccessCallbacks([validCb, invalidCb])
   }).toThrow(ApiError)
 
-  expect(api.preprocessingCallbacks.length).toBe(1)
+  expect(api.successCallbacks.length).toBe(1)
 
   expect(() => {
-    api.setPreprocessingCallbacks([invalidCb, validCb])
+    api.setSuccessCallbacks([invalidCb, validCb])
   }).toThrow(ApiError)
 
-  expect(api.preprocessingCallbacks.length).toBe(2)
+  expect(api.successCallbacks.length).toBe(2)
 
   expect(() => {
-    api.setPreprocessingCallbacks([validCb])
+    api.setSuccessCallbacks([validCb])
   }).not.toThrow(ApiError)
 
-  expect(api.preprocessingCallbacks.length).toBe(3)
+  expect(api.successCallbacks.length).toBe(3)
 
-  api.resetPreprocessing()
+  api.resetSuccessCallbacks()
 
   expect(() => {
     api.setErrorCallbacks([validCb, invalidCb])

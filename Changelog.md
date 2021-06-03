@@ -1,13 +1,17 @@
 # next version
 
+- **BREAKING** Preprocessing callbacks have been renamed to `successCallbacks` in the Api
+  layer to better reflect their actual purpose, this also affects the methods 
+  `Api.setPreprocessingCallbacks`, `Api.addPreprocessingCallback`, and
+  `Api.resetPreprocessing` which are now `Api.setSuccessCallbacks`,
+  `Api.addSuccessCallback`, and `Api.resetSuccessCallbacks`.
 - **BREAKING** Responses are `WindowOrWorkerGlobal.Response` (Fetch) instead of Axios Responses now
 - **BREAKING** None of the `Api.(get|post|delete|...)` methods support passing options to `doRequest` or
   the underlying request handling anymore.
 - **BREAKING** `Api.doRequest` is `protected` and **MUST NOT** be called directly
 - **BREAKING** `Api.addHeader` was _renamed_ to `Api.setHeader`
 - **BREAKING** Default headers cannot be changed anymore, this essentially means that the request
-  handling in this library is exclusively bound
-  to send and accept json:api 1.0 requests
+  handling in this library is exclusively bound to send and accept json:api 1.0 requests
 - fix api request callback handling
 - fix api cross-domain recognition
 
