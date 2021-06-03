@@ -25,12 +25,6 @@ export class Api {
     this.preprocessingCallbacks = []
     this.errorCallbacks = []
 
-    this.defaultOptions = {
-      paramsSerializer (params) {
-        return stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
-      }
-    }
-
     this.headers = {
       Accept: 'application/vnd.api+json',
       'Content-Type': 'application/vnd.api+json'
@@ -174,11 +168,41 @@ export class Api {
   /* #region request methods */
 
   _compileUrl (url, params) {
-    if (!isAbsoluteUri(url)) {
-      url = this.baseUrl + url
+    let urlObj = null
+    const baseUrlObj = new URL(this.baseUrl)
+
+    if (url.indexOf('//') === 0) {
+      url = baseUrlObj.protocol + url
     }
 
-    return url
+    if (!isAbsoluteUri(url)) {
+      // various path adjustments
+      url = url.replace(/^(\/)(.+)/, '$2')
+
+      if (baseUrlObj.pathname !== '' && baseUrlObj.pathname !== '/') {
+        const deSlashedBaseUrlPath = baseUrlObj.pathname.replace(
+          /(\/)(.+)(\/)$/,
+          '$2'
+        )
+
+        url = deSlashedBaseUrlPath + '/' + url
+
+        baseUrlObj.pathname = ''
+      }
+
+      urlObj = new URL(baseUrlObj.href)
+      urlObj.pathname = url
+    } else {
+      try {
+        urlObj = new URL(url)
+      } catch (e) {
+        throw new ApiError('Invalid url: ' + url)
+      }
+    }
+
+    urlObj.search = stringify(params, { encodeValuesOnly: true, arrayFormat: 'brackets' })
+
+    return urlObj.href
   }
 
   isUrlCrossDomain (url) {
@@ -192,6 +216,7 @@ export class Api {
 
     if (url.indexOf('//') === 0) {
       // this is only valid in here as the url is not actually used this way!
+      // please check _compileUrl for the correct way to do this
       url = 'http:' + url
     }
 
@@ -215,19 +240,13 @@ export class Api {
    * @protected
    */
   async _doRequest (method, url, params, data) {
-    const config = Object.assign({}, this.defaultOptions)
-    config.headers = this.headers
-
-    // make cross domain requests if necessary
-    const crossDomain = this.isUrlCrossDomain(url)
-
     url = this._compileUrl(url, params)
 
     const requestConfig = {
       body: null,
       headers: this.headers,
       method: method.toUpperCase(),
-      mode: crossDomain ? 'cors' : 'same-origin',
+      mode: this.isUrlCrossDomain(url) ? 'cors' : 'same-origin',
       referrerPolicy: 'strict-origin-when-cross-origin'
     }
 

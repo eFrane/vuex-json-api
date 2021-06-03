@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Api } from '@/api/Api'
 import { ApiError } from '@/errors/ApiError'
 
@@ -169,5 +173,53 @@ describe.each([
 
   test(`checks if ${data.url} ${shouldCross} cross domain`, () => {
     expect(api.isUrlCrossDomain(data.url)).toBe(data.cross)
+  })
+})
+
+describe.each([
+  {
+    base: 'http://localhost/',
+    url: '//foo.com',
+    params: {},
+    result: 'http://foo.com/'
+  },
+  {
+    base: 'http://localhost/',
+    url: '/relative',
+    params: {
+      foo: true,
+      bar: 21
+    },
+    result: 'http://localhost/relative?foo=true&bar=21'
+  },
+  {
+    base: 'http://localhost/api/',
+    url: 'relative',
+    params: {},
+    result: 'http://localhost/api/relative'
+  },
+  {
+    base: 'http://localhost/api',
+    url: 'relative',
+    params: {},
+    result: 'http://localhost/api/relative'
+  },
+  {
+    base: 'http://localhost/api/',
+    url: '/relative',
+    params: {},
+    result: 'http://localhost/api/relative'
+  }
+])('url building tests', (data) => {
+  const {
+    base,
+    url,
+    params,
+    result
+  } = data
+
+  test(`combines ${base}, ${url} and ${Object.keys(params).length} parameters to correct url ${result}`, () => {
+    api.setBaseUrl(base)
+    expect(api._compileUrl(url, params)).toEqual(result)
   })
 })
