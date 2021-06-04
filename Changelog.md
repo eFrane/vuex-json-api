@@ -1,5 +1,6 @@
 # next version
 
+- Responses from `ResourcefulApi` now also contain `links` (defaulting to an empty object)
 - **BREAKING** Response data is read-only
 - **BREAKING** Preprocessing callbacks have been renamed to `successCallbacks` in the Api
   layer to better reflect their actual purpose, this also affects the methods 
