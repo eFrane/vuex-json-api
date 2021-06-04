@@ -264,6 +264,9 @@ export class Api {
         callbacks = this.errorCallbacks
       }
 
+      // prevent any modification of the response data
+      Object.seal(response)
+
       for (const callback of callbacks) {
         await callback(response)
       }
