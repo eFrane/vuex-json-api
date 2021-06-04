@@ -273,23 +273,23 @@ export class Api {
   }
 
   get (url, params = null) {
-    return this.doRequest('get', url, params, null)
+    return this._doRequest('get', url, params, null)
   }
 
   post (url, params = null, data = null) {
-    return this.doRequest('post', url, params, data)
+    return this._doRequest('post', url, params, data)
   }
 
   put (url, params = null, data = null) {
-    return this.doRequest('put', url, params, data)
+    return this._doRequest('put', url, params, data)
   }
 
   patch (url, params = null, data = null) {
-    return this.doRequest('patch', url, params, data)
+    return this._doRequest('patch', url, params, data)
   }
 
   delete (url, params = null, data = null) {
-    return this.doRequest('delete', url, params, data)
+    return this._doRequest('delete', url, params, data)
   }
 
   /* #endregion */
