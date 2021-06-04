@@ -3,13 +3,15 @@ import fetchMock from 'fetch-mock'
 
 // This spec only tests the request related methods of Api
 
-test('request sends correct headers', async () => {
-  fetchMock.config.sendAsJson = false
-  fetchMock.get('https://test/', { body: '{}' })
+fetchMock.config.sendAsJson = false
+fetchMock.get('https://test/', { body: '{}' })
+fetchMock.post('https://test/error', { body: '{}', status: 400 })
 
-  const api = new Api()
-  api.setBaseUrl('https://test')
-  let response = await api._doRequest('get', '/')
+const api = new Api()
+api.setBaseUrl('https://test')
+
+test('request sends correct headers', async () => {
+  const response = await api._doRequest('get', '/')
   let receivedRequestOptions = fetchMock.lastOptions()
 
   expect(receivedRequestOptions.headers).toStrictEqual({
@@ -26,6 +28,26 @@ test('request sends correct headers', async () => {
 
   expect(receivedRequestOptions.headers).toHaveProperty('X-Custom-Header')
   expect(receivedRequestOptions.headers['X-Custom-Header']).toEqual('custom-value')
+})
+
+test('executes success callbacks', async () => {
+  let calls = 0
+  const cb = () => { calls++ }
+
+  api.addSuccessCallback(cb)
+  await api.get('/')
+
+  expect(calls).toBe(1)
+})
+
+test('executes error callbacks', async () => {
+  let calls = 0
+  const cb = () => { calls++ }
+
+  api.addErrorCallback(cb)
+  await api.post('/error')
+
+  expect(calls).toBe(1)
 })
 
 test('verb methods pass to _doRequest', () => {

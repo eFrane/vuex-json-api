@@ -99,5 +99,5 @@ export function checkConfigProperty (config, property, isRequiredProp = true) {
  * @returns {boolean}
  */
 export function validateCallbackFn (fn) {
-  return fn.constructor === Function
+  return fn instanceof Function
 }
