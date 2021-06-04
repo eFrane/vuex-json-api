@@ -10,20 +10,26 @@ initTestApi()
 const sut = new ResourcefulApi()
 sut.setBaseUrl('http://api/')
 
-test('normalizes item get', async () => {
-  expect(await sut.get('/book/1')).toMatchObject({
-    data: {
-      book: {
-        1: {
-          attributes: {
-            author: expect.any(String),
-            title: expect.any(String)
+describe.each([
+  { title: 'normalizes item get', url: '/book/1' },
+  { title: 'remains graceful with missing meta', url: '/book/1/nometa' },
+  { title: 'remains graceful with missing links', url: '/book/1/nolinks' }
+])('item tests', ({ url, title }) => {
+  test(`${title}`, async () => {
+    expect(await sut.get(url)).toMatchObject({
+      data: {
+        book: {
+          1: {
+            attributes: {
+              author: expect.any(String),
+              title: expect.any(String)
+            }
           }
         }
-      }
-    },
-    links: {},
-    meta: {}
+      },
+      links: {},
+      meta: {}
+    })
   })
 })
 
