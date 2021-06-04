@@ -1,6 +1,7 @@
 import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
+import { ApiError } from '../errors/ApiError'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { ResourceProxy } from './ResourceProxy'
 import { deref, hasOwn } from '../shared/utils'
@@ -29,14 +30,23 @@ export class ResourcefulApi extends Api {
 
     return super._doRequest(method, url, params, data)
       .then(async (response) => {
-        const json = await response.json()
+        try {
+          const json = await response.json()
 
-        return {
-          data: normalize(json.data),
-          meta: json.data.meta,
-          status: response.status
+          return this._parseResponse(response.status, json)
+        } catch (e) {
+          throw new ApiError('Failed to decode response json')
         }
       })
+  }
+
+  _parseResponse (status, json) {
+    return {
+      data: normalize(json),
+      meta: json.meta ? json.meta : {},
+      links: json.links ? json.links : {},
+      status: status
+    }
   }
 
   /**

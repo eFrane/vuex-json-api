@@ -3,28 +3,29 @@
  */
 
 import { ResourcefulApi } from '@/api/ResourcefulApi'
+import { initTestApi } from '../apiMock'
 
-// test.skip('normalizes responses', () => {
-//   return api.get('tag/1').then(
-//     data => {
-//       expect(data).toBeDefined()
-//       expect(data).toStrictEqual({
-//         data: {
-//           tag: {
-//             1: {
-//               id: '1',
-//               type: 'tag',
-//               attributes: {
-//                 title: 'Tag 1'
-//               }
-//             }
-//           }
-//         },
-//         meta: undefined,
-//         status: 200
-//       })
-//     })
-// })
+initTestApi()
+
+const sut = new ResourcefulApi()
+sut.setBaseUrl('http://api/')
+
+test('normalizes item get', async () => {
+  expect(await sut.get('/book/1')).toMatchObject({
+    data: {
+      book: {
+        1: {
+          attributes: {
+            author: expect.any(String),
+            title: expect.any(String)
+          }
+        }
+      }
+    },
+    links: {},
+    meta: {}
+  })
+})
 
 test('reads the initial module list', () => {
   const api = new ResourcefulApi()
