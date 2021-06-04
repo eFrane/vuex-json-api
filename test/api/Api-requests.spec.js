@@ -50,6 +50,24 @@ test('executes error callbacks', async () => {
   expect(calls).toBe(1)
 })
 
+test('response is sealed', async () => {
+  const newProp = (response) => {
+    response.new_prop = 'test'
+  }
+
+  api.addSuccessCallback(newProp)
+  await expect(api.get('/')).rejects.toThrowError(TypeError)
+
+  const changeProp = (response) => {
+    response.ok = false
+  }
+
+  api.resetSuccessCallbacks()
+  api.addSuccessCallback(changeProp)
+
+  await expect(api.get('/')).rejects.toThrowError(TypeError)
+})
+
 test('verb methods pass to _doRequest', () => {
   const nonRequestingApi = new Api()
   nonRequestingApi._doRequest = jest.fn()
