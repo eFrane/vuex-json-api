@@ -7,9 +7,6 @@ import { ResourceProxy } from './ResourceProxy'
 import { deref, hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
-/**
- * @class ResourcefulApi
- */
 export class ResourcefulApi extends Api {
   /**
    * Extends `Api::doRequest()` to handle some data preprocessing.
@@ -74,7 +71,7 @@ export class ResourcefulApi extends Api {
   }
 
   /**
-   * convert RessourceTypes to uppercase
+   * convert ResourceTypes to uppercase
    * to follow the json:api spects even if the incoming data is not correct
    *
    * this is just a safety net
