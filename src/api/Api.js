@@ -260,7 +260,6 @@ export class Api {
       if (response.ok) {
         callbacks = this.successCallbacks
       } else {
-        // run preprocessing callbacks
         callbacks = this.errorCallbacks
       }
 
