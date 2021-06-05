@@ -56,7 +56,7 @@ test('response is sealed', async () => {
   }
 
   api.addSuccessCallback(newProp)
-  await expect(api.get('/')).rejects.toThrowError(TypeError)
+  await expect(api.get('/')).rejects.toThrowErrorMatchingSnapshot(TypeError)
 
   const changeProp = (response) => {
     response.ok = false
@@ -65,7 +65,7 @@ test('response is sealed', async () => {
   api.resetSuccessCallbacks()
   api.addSuccessCallback(changeProp)
 
-  await expect(api.get('/')).rejects.toThrowError(TypeError)
+  await expect(api.get('/')).rejects.toThrowErrorMatchingSnapshot(TypeError)
 })
 
 test('verb methods pass to _doRequest', () => {

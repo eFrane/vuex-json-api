@@ -1,5 +1,7 @@
 # next version
 
+- Responses that do not adhere to the basic json:api response
+  structure throw errors
 - Responses from `ResourcefulApi` now also contain `links` (defaulting to an empty object)
 - **BREAKING** Response data is read-only
 - **BREAKING** Preprocessing callbacks have been renamed to `successCallbacks` in the Api

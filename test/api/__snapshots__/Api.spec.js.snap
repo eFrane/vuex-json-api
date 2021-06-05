@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`adding headers: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 1`] = `"Expected name to be string, got undefined"`;
+
+exports[`adding headers: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 2`] = `"Expected name to be string, got number"`;
+
+exports[`adding headers: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 3`] = `"Header is already set, not overwriting."`;
+
+exports[`default headers are read-only: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 1`] = `"Cannot change default headers"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 1`] = `"You must pass a valid callback to this method"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 2`] = `"You must pass a valid callback to this method"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 3`] = `"Invalid callbacks: () => {}, 42"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 4`] = `"Invalid callbacks: 42, () => {}"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 5`] = `"Invalid callbacks: () => {}, 42"`;
+
+exports[`setting callbacks: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 6`] = `"Invalid callbacks: 42, () => {}"`;
