@@ -1,5 +1,6 @@
 # next version
 
+- **BREAKING**: 404 Not Found responses throw an Error
 - Responses that do not adhere to the basic json:api response
   structure throw errors
 - Responses from `ResourcefulApi` now also contain `links` (defaulting to an empty object)

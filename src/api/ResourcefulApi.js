@@ -1,7 +1,7 @@
 import normalize from 'json-api-normalizer'
 
 import { Api } from './Api'
-import { ApiError } from '../errors/ApiError'
+import { ApiError, NotFoundApiError } from '../errors/ApiError'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { ResourceProxy } from './ResourceProxy'
 import { deref, hasOwn } from '../shared/utils'
@@ -35,6 +35,10 @@ export class ResourcefulApi extends Api {
         try {
           json = await response.json()
         } catch (e) {
+          if (response.status === 404) {
+            throw new NotFoundApiError('Resource not found')
+          }
+
           throw new ApiError('Failed to decode response json')
         }
 
@@ -47,12 +51,26 @@ export class ResourcefulApi extends Api {
       throw new ApiError('Response object must have either a `data` or an `errors` property.')
     }
 
-    return {
-      data: normalize(json),
+    const parsedResponse = {
       meta: json.meta ? json.meta : {},
       links: json.links ? json.links : {},
       status: status
     }
+
+    if (json.data) {
+      parsedResponse.data = normalize(json)
+    }
+
+    if (json.errors) {
+      parsedResponse.errors = json.errors
+
+      switch (status) {
+        case 404:
+          throw new NotFoundApiError('Resource not found but received error info', json.errors)
+      }
+    }
+
+    return parsedResponse
   }
 
   /**

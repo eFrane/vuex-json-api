@@ -7,9 +7,14 @@ export class ApiError extends Error {
 }
 
 export class NotFoundApiError extends ApiError {
-  constructor (message) {
+  constructor (message, errorInfo = null) {
     super(message)
 
     this.name = 'NotFoundApiError'
+    this.errorInfo = errorInfo
+  }
+
+  hasErrorInfo () {
+    return this.errorInfo !== null && this.errorInfo !== undefined
   }
 }

@@ -39,5 +39,17 @@ export function initTestApi () {
   fetchMock.get(url('/book/1/nometa'), response(item, null))
   fetchMock.get(url('/book/1/nolinks'), response(item, {}, null))
 
-  fetchMock.get(url('/nodataorerror'), response(null))
+  fetchMock.get(url('/no-data-or-error'), response(null))
+  fetchMock.get(url('/not-found'), { status: 404 })
+  fetchMock.get(url('/not-found-with-json'), {
+    status: 404,
+    body: JSON.stringify({
+      errors: [
+        {
+          code: 42,
+          title: 'Answer already given'
+        }
+      ]
+    })
+  })
 }

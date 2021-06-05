@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`response is sealed: function TypeError() { [native code] } 1`] = `"Cannot define property new_prop, object is not extensible"`;
+exports[`response is sealed 1`] = `"Cannot define property new_prop, object is not extensible"`;
 
-exports[`response is sealed: function TypeError() { [native code] } 2`] = `"Cannot set property ok of #<Response> which has only a getter"`;
+exports[`response is sealed 2`] = `"Cannot set property ok of #<Response> which has only a getter"`;

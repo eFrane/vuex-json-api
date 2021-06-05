@@ -38,7 +38,7 @@ test('setting callbacks', () => {
 
   expect(() => {
     api.addSuccessCallback(invalidCb)
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(() => {
     api.addErrorCallback(validCb)
@@ -46,7 +46,7 @@ test('setting callbacks', () => {
 
   expect(() => {
     api.addErrorCallback(invalidCb)
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(api.successCallbacks.length).toBe(1)
   expect(api.errorCallbacks.length).toBe(1)
@@ -59,13 +59,13 @@ test('setting callbacks', () => {
 
   expect(() => {
     api.setSuccessCallbacks([validCb, invalidCb])
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(api.successCallbacks.length).toBe(1)
 
   expect(() => {
     api.setSuccessCallbacks([invalidCb, validCb])
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(api.successCallbacks.length).toBe(2)
 
@@ -79,13 +79,13 @@ test('setting callbacks', () => {
 
   expect(() => {
     api.setErrorCallbacks([validCb, invalidCb])
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(api.errorCallbacks.length).toBe(1)
 
   expect(() => {
     api.setErrorCallbacks([invalidCb, validCb])
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(api.errorCallbacks.length).toBe(2)
 
@@ -99,11 +99,11 @@ test('setting callbacks', () => {
 })
 
 test('adding headers', () => {
-  expect(api.setHeader).toThrowErrorMatchingSnapshot(ApiError)
+  expect(api.setHeader).toThrowErrorMatchingSnapshot()
 
   expect(() => {
     api.setHeader(42, 34)
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(Object.keys(api.headers).length).toBe(2)
 
@@ -114,7 +114,7 @@ test('adding headers', () => {
 
   expect(() => {
     api.setHeader('foo', 'baz')
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 
   expect(Object.keys(api.headers).length).toBe(3)
 
@@ -135,7 +135,7 @@ test('adding headers', () => {
 test('default headers are read-only', () => {
   expect(() => {
     api.setHeader('Accept', 'text/plain')
-  }).toThrowErrorMatchingSnapshot(ApiError)
+  }).toThrowErrorMatchingSnapshot()
 })
 
 describe.each([
