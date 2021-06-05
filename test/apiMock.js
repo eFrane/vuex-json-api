@@ -1,22 +1,26 @@
 import fetchMock from 'fetch-mock'
 import faker from 'faker'
 
-function wrapIntoJsonApi (data, meta = {}, links = {}) {
-  const response = {}
+function response (data, meta = {}, links = {}) {
+  const jsonApiResponse = {}
 
   if (data) {
-    response.data = data
+    jsonApiResponse.data = data
   }
 
   if (meta) {
-    response.meta = meta
+    jsonApiResponse.meta = meta
   }
 
   if (links) {
-    response.links = links
+    jsonApiResponse.links = links
   }
 
-  return JSON.stringify(response)
+  return { body: JSON.stringify(jsonApiResponse) }
+}
+
+function url (path) {
+  return new URL(path, 'http://api/')
 }
 
 export function initTestApi () {
@@ -31,7 +35,9 @@ export function initTestApi () {
     }
   }
 
-  fetchMock.get('http://api/book/1', { body: wrapIntoJsonApi(item) })
-  fetchMock.get('http://api/book/1/nometa', { body: wrapIntoJsonApi(item, null) })
-  fetchMock.get('http://api/book/1/nolinks', { body: wrapIntoJsonApi(item, {}, null) })
+  fetchMock.get(url('/book/1'), response(item))
+  fetchMock.get(url('/book/1/nometa'), response(item, null))
+  fetchMock.get(url('/book/1/nolinks'), response(item, {}, null))
+
+  fetchMock.get(url('/nodata'), response(null))
 }
