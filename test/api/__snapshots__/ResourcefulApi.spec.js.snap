@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fails on missing data: class ApiError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ApiError';
+  }
+
+} 1`] = `"Response object must have either a \`data\` or an \`errors\` property."`;

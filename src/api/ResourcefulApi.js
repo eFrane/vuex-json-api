@@ -30,17 +30,23 @@ export class ResourcefulApi extends Api {
 
     return super._doRequest(method, url, params, data)
       .then(async (response) => {
-        try {
-          const json = await response.json()
+        let json = {}
 
-          return this._parseResponse(response.status, json)
+        try {
+          json = await response.json()
         } catch (e) {
           throw new ApiError('Failed to decode response json')
         }
+
+        return this._parseResponse(response.status, json)
       })
   }
 
   _parseResponse (status, json) {
+    if (!(hasOwn(json, 'data') || hasOwn(json, 'errors'))) {
+      throw new ApiError('Response object must have either a `data` or an `errors` property.')
+    }
+
     return {
       data: normalize(json),
       meta: json.meta ? json.meta : {},

@@ -4,6 +4,7 @@
 
 import { ResourcefulApi } from '@/api/ResourcefulApi'
 import { initTestApi } from '../apiMock'
+import { ApiError } from '../../src/errors/ApiError'
 
 initTestApi()
 
@@ -31,6 +32,10 @@ describe.each([
       meta: {}
     })
   })
+})
+
+test('fails on missing data', async () => {
+  await expect(sut.get('/nodataorerror')).rejects.toThrowErrorMatchingSnapshot(ApiError)
 })
 
 test('reads the initial module list', () => {

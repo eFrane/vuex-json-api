@@ -39,5 +39,5 @@ export function initTestApi () {
   fetchMock.get(url('/book/1/nometa'), response(item, null))
   fetchMock.get(url('/book/1/nolinks'), response(item, {}, null))
 
-  fetchMock.get(url('/nodata'), response(null))
+  fetchMock.get(url('/nodataorerror'), response(null))
 }
