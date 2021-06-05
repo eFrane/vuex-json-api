@@ -28,7 +28,8 @@ describe.each([
         }
       },
       links: {},
-      meta: {}
+      meta: {},
+      status: 200
     })
   })
 })
