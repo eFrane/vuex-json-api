@@ -48,7 +48,7 @@ test('shoud add a "get" Method wich returns the value from the given attribute',
   expect(obj.get('fail')).toEqual(new Error('attribute "fail" not found'))
 })
 
-test('shoud return the value from the given attribute', () => {
+test('should return the value from the given attribute', () => {
   expect(obj.attributes.name).toBe(jsonResourceMock.data.attributes.name)
   expect(obj.attributes.fail).toBe(undefined)
 })
