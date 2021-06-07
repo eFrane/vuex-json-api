@@ -43,9 +43,9 @@
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^11.0.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.13",
     "vue-jest": "^3.0.5",
-    "vue-template-compiler": "^2.5.2"
+    "vue-template-compiler": "^2.6.13"
   },
   "engines": {
     "node": ">= 8.0.0",
