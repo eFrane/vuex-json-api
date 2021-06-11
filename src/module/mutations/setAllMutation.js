@@ -1,22 +1,21 @@
 import Vue from 'vue'
 
 /**
- * Proxy for setting Resource Objects on a single item module
+ * Proxy for setting Resource Objects on a collection module
  *
  * The `Vuex.commit`-Syntax is
  *
- * `commit('module/set', receivedItemObject)`
+ * `commit('module/set', receivedCollectionObject)`
  *
  * @param {Vuex.Store} store
  * @param {resource.Builder} resourceBuilder
- * @param {Boolean} isCollection
  */
-export function setMutation (resourceBuilder, isCollection) {
+export function setAllMutation (resourceBuilder) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [state, payload]) {
       const settablePayload = resourceBuilder.build(payload)
 
-      Vue.set(state, 'item', settablePayload)
+      Vue.set(state, 'items', settablePayload)
       Vue.set(state, 'initial', settablePayload)
     }
   })
