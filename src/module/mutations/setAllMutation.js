@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Proxy for setting Resource Objects on a collection module
  *
@@ -15,8 +13,8 @@ export function setAllMutation (resourceBuilder) {
     apply (target, thisArg, [state, payload]) {
       const settablePayload = resourceBuilder.build(payload)
 
-      Vue.set(state, 'items', settablePayload)
-      Vue.set(state, 'initial', settablePayload)
+      state.items = { ...state.items, ...settablePayload }
+      state.initial = { ...state.initial, ...settablePayload }
     }
   })
 }
