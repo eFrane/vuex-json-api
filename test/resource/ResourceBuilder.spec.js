@@ -1,5 +1,6 @@
 import { ResourceBuilder } from '@/module/resource/ResourceBuilder'
 import Vuex from 'vuex'
+import normalize from 'json-api-normalizer'
 
 const jsonResourceMock = {
   data: {
@@ -39,7 +40,9 @@ const jsonResourceMock = {
   }]
 }
 
-const obj = new ResourceBuilder(Vuex).build(jsonResourceMock)
+const normalizedMock = normalize(jsonResourceMock)
+
+const obj = new ResourceBuilder(Vuex).build(normalizedMock.test.aa1)
 
 test('shoud add a "get" Method wich returns the value from the given attribute', () => {
   expect(typeof obj.get).toBe('function')
@@ -101,7 +104,8 @@ test('should not add relationship methods for non-existing relationships', () =>
     }
   }
 
-  const someObj = new ResourceBuilder(Vuex).build(jsonSomeRel)
+  const normalizedRel = normalize(jsonSomeRel)
+  const someObj = new ResourceBuilder(Vuex).build(normalizedRel.test.aa1)
 
   expect(typeof someObj.relationships.someRel.get).toBe('function')
   expect(typeof someObj.relationships.someRel.load).toBe('function')
