@@ -16,7 +16,7 @@ export function updateMutation (isCollection) {
           return
         }
 
-        if (value instanceof Array === false) {
+        if (!(value instanceof Array)) {
           if (action === 'remove') {
             const idx = selectedsList.findIndex(el => el.id === value.id)
             Vue.delete(selectedsList, idx)
