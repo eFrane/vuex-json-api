@@ -5,8 +5,7 @@
  *
  * `commit('module/set', receivedCollectionObject)`
  *
- * @param {Vuex.Store} store
- * @param {resource.Builder} resourceBuilder
+ * @param {ResourceBuilder} resourceBuilder
  */
 export function setAllMutation (resourceBuilder) {
   return new Proxy(() => {}, {
