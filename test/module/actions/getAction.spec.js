@@ -8,6 +8,7 @@ test('simple get action', async () => {
   expect(action).toBeInstanceOf(Function)
 
   const result = await action(getVuexContextForResourceType(api, 'book'), { id: 1 })
+
   expect(result).toBeInstanceOf(Object)
   expect(result.status).toBe(200)
   expect(result.data.book[1]).toMatchObject({
