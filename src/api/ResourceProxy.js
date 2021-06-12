@@ -4,10 +4,8 @@ import { hasOwn } from '../shared/utils'
 /**
  * ResourceProxy
  *
- * A wrapper class for the available methods on
- * a route. The actual proxied axios-clients
- * will only be created once the first request on
- * a method is made.
+ * A wrapper class for the available methods on a route. The actual proxied Fetch-clients
+ * will only be created once the first request on a method is made.
  *
  * @class ResourceProxy
  */
