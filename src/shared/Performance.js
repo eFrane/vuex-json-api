@@ -3,9 +3,11 @@
  *
  * @class Performance
  */
+import { hasOwn } from './utils'
+
 export class Performance {
   static hasPerformanceApi () {
-    const p = window.performance
+    const p = typeof window !== 'undefined' && hasOwn(window, 'performance')
     return p && p.mark && p.measure && p.clearMarks && p.clearMeasures
   }
 
