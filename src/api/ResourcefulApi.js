@@ -130,7 +130,7 @@ export class ResourcefulApi extends Api {
   /**
    * Prepare the routable requests
    *
-   * @param {route.Router} router
+   * @param {Router} router
    */
   setupResourcefulRequests (router) {
     this.router = router
