@@ -29,6 +29,7 @@ function url (path) {
 }
 
 export function initApiMockServer () {
+  fetchMock.reset()
   fetchMock.config.sendAsJson = false
 
   function book (id) {
@@ -46,6 +47,7 @@ export function initApiMockServer () {
   fetchMock.get(url('/book/1/nometa'), response(book(1), null))
   fetchMock.get(url('/book/1/nolinks'), response(book(1), {}, null))
   fetchMock.get(url('/book/'), response([book(1), book(2), book(3)]))
+  fetchMock.post(url('/book'), {})
 
   fetchMock.get(url('/no-data-or-error'), response(null))
   fetchMock.get(url('/not-found'), { status: 404 })
