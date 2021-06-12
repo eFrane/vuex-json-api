@@ -5,7 +5,6 @@ import { hasOwn } from '../../shared/utils'
 /**
  * Process the (normalized) data part of a response
  *
- * @param {Vuex} vuexInstance
  * @param {Object} vuexFns
  * @param {ResourcefulApi} api
  * @param {String} currentModule  name of the current storeModule
@@ -13,7 +12,7 @@ import { hasOwn } from '../../shared/utils'
  * @param {String} currentMethod  default = ''
  * @param {Object} module         storeModule
  */
-export function processResponseData (vuexInstance, vuexFns, api, currentModule, data, currentMethod = '', module = null) {
+export function processResponseData (vuexFns, api, currentModule, data, currentMethod = '', module = null) {
   for (const itemType in data) {
     let registeredModule = itemType
 
@@ -21,11 +20,12 @@ export function processResponseData (vuexInstance, vuexFns, api, currentModule, 
       module.state.options.absoluteMethods.includes(currentMethod)) {
       registeredModule = currentModule
     } else if (!hasOwn(data, itemType)) {
+      // TODO: add error here, invalid resource format
       continue
     }
 
-    if (isMissingModule(vuexInstance, registeredModule)) {
-      registerMissingModule(vuexInstance, api, registeredModule)
+    if (isMissingModule(api.store, registeredModule)) {
+      registerMissingModule(api.store, api, registeredModule)
     }
 
     setResourceObjectsForModule(
