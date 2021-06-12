@@ -1,5 +1,6 @@
 # next version
 
+- `Router.addRoute` can be called fluently now
 - **BREAKING**: 404 Not Found responses throw an Error
 - Responses that do not adhere to the basic json:api response
   structure throw errors
