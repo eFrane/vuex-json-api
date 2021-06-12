@@ -1,12 +1,15 @@
 import { ResourcefulApi } from '@/api/ResourcefulApi'
 import { ResourceProxy } from '@/api/ResourceProxy'
 import { Route } from '@/route/Route'
+import { initApiMockServer } from '../apiMock'
+
+initApiMockServer()
 
 let sut
 
 beforeEach(() => {
   const api = new ResourcefulApi()
-  api.setBaseUrl('http://test/')
+  api.setBaseUrl('http://api/')
   sut = new ResourceProxy(api)
 })
 
@@ -18,7 +21,7 @@ test('has routes', () => {
   expect(sut.routes).toBeDefined()
   expect(sut.routes).toStrictEqual({})
 
-  const route = new Route('foo', 'get', '/', [])
+  const route = new Route('book', 'get', '/', [])
 
   sut.addRoute(route)
 
@@ -36,7 +39,7 @@ test('throws for unavailable methods', () => {
 })
 
 test('creates a resource proxy for a method if none exists', async () => {
-  sut.addRoute(new Route('foo', 'get', '/', []))
+  sut.addRoute(new Route('book', 'get', '/', []))
 
   expect(sut.proxies).toStrictEqual({})
 
@@ -45,10 +48,8 @@ test('creates a resource proxy for a method if none exists', async () => {
   expect(sut.proxies).toMatchSnapshot()
 })
 
-test('returns a function for valid route method', async () => {
-  sut.addRoute(new Route('foo', 'get', '/', []))
+test('returns promise for allowed route method', () => {
+  sut.addRoute(new Route('book', 'get', '/book/1', []))
 
-  const methodProxy = await sut.get()
-
-  expect(methodProxy).toBeInstanceOf(Function)
+  expect(sut.get()).toBeInstanceOf(Promise)
 })
