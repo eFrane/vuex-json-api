@@ -56,7 +56,7 @@ export class ResourceProxy {
       this.createProxyForMethodIfMissing(methodName)
     }
 
-    return this.proxies[methodName](parameters, data)
+    return this.proxies[methodName]
   }
 
   createProxyForMethodIfMissing (methodName) {

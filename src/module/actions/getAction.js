@@ -6,6 +6,7 @@ import { prepareQuery } from '../helpers/prepareQuery'
  *
  * @param {ResourcefulApi} api
  * @param {String} moduleName
+ * @param {Object|undefined} defaultQuery
  */
 export function getAction (api, moduleName, defaultQuery) {
   return new Proxy(() => {}, {

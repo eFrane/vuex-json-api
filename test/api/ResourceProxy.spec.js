@@ -6,6 +6,7 @@ let sut
 
 beforeEach(() => {
   const api = new ResourcefulApi()
+  api.setBaseUrl('http://test/')
   sut = new ResourceProxy(api)
 })
 
@@ -34,26 +35,20 @@ test('throws for unavailable methods', () => {
   expect(testGet).toThrowErrorMatchingSnapshot()
 })
 
-/**
- * @fixme getProxyForMethod returns a promise which must be resolved during the test
- */
-test.skip('creates a resource proxy for a method if none exists', () => {
+test('creates a resource proxy for a method if none exists', async () => {
   sut.addRoute(new Route('foo', 'get', '/', []))
 
   expect(sut.proxies).toStrictEqual({})
 
-  sut.getProxyForMethod('get')
+  await sut.getProxyForMethod('get')
 
   expect(sut.proxies).toMatchSnapshot()
 })
 
-/**
- * @fixme methodProxy is a promise which must be resolved during the test
- */
-test.skip('returns a promise for valid route method', () => {
+test('returns a function for valid route method', async () => {
   sut.addRoute(new Route('foo', 'get', '/', []))
 
-  const methodProxy = sut.get()
+  const methodProxy = await sut.get()
 
-  expect(methodProxy).toBeInstanceOf(Promise)
+  expect(methodProxy).toBeInstanceOf(Function)
 })

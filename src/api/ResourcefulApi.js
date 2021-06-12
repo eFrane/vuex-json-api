@@ -140,13 +140,11 @@ export class ResourcefulApi extends Api {
     const routes = router.getRoutes()
     this.registerableModules = {}
 
-    for (const routeName in routes) {
-      if (hasOwn(routes, routeName)) {
-        const methods = routes[routeName]
+    for (const routeName in Object.keys(routes)) {
+      const methods = routes[routeName]
 
-        this.registerResourceMethods(routeName, methods)
-        this.registerableModules[routeName] = methods
-      }
+      this.registerResourceMethods(routeName, methods)
+      this.registerableModules[routeName] = methods
     }
 
     Performance.mark('api_setup_routing_end')
