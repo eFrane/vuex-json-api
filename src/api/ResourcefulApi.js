@@ -140,7 +140,7 @@ export class ResourcefulApi extends Api {
     const routes = router.getRoutes()
     this.registerableModules = {}
 
-    for (const routeName in Object.keys(routes)) {
+    for (const routeName of Object.keys(routes)) {
       const methods = routes[routeName]
 
       this.registerResourceMethods(routeName, methods)
@@ -216,16 +216,14 @@ export class ResourcefulApi extends Api {
 
     const relationsToBeAdded = []
 
-    for (const methodName in methods) {
-      if (hasOwn(methods, methodName)) {
-        if (this.isRelationMethodName(methodName)) {
-          relationsToBeAdded.push(methodName)
+    for (const methodName of Object.keys(methods)) {
+      if (this.isRelationMethodName(methodName)) {
+        relationsToBeAdded.push(methodName)
 
-          continue
-        }
-
-        this[routeName].addRoute(methods[methodName])
+        continue
       }
+
+      this[routeName].addRoute(methods[methodName])
     }
 
     relationsToBeAdded.forEach(relationToBeAdded => {
