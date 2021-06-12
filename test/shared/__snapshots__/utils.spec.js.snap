@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`throws on invalid arrays 1`] = `"You must pass an array of valid callback functions to this method"`;
