@@ -197,7 +197,7 @@ export class ResourcefulApi extends Api {
       return
     }
 
-    const moduleBuilder = new ModuleBuilder(this.store, this, moduleName, methods)
+    const moduleBuilder = new ModuleBuilder(this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
       this.store.registerModule(moduleName, module)

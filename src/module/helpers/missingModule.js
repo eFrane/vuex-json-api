@@ -14,19 +14,23 @@ export function isMissingModule (store, moduleName) {
 /**
  * Register a standalone module to the store.
  *
- * @param {Vuex} store
  * @param {ResourcefulApi} api
  * @param {String} moduleName
  */
-export function registerMissingModule (store, api, moduleName) {
+export function registerMissingModule (api, moduleName) {
   let resourceProxy = api[moduleName]
   if (!resourceProxy) {
     resourceProxy = new ResourceProxy()
   }
 
-  const builder = new ModuleBuilder(store, api, moduleName, resourceProxy, { standalone: true })
+  const builder = new ModuleBuilder(
+    api,
+    moduleName,
+    resourceProxy,
+    { standalone: true }
+  )
 
-  store.registerModule(
+  api.store.registerModule(
     moduleName,
     builder.build()
   )

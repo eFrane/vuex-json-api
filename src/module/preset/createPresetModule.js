@@ -23,7 +23,7 @@ export function createPresetModule (store, api) {
 
       Performance.mark('module_register_preset_start')
 
-      const builder = new ModuleBuilder(store, api, baseModule, resourceProxy, {
+      const builder = new ModuleBuilder(api, baseModule, resourceProxy, {
         presetOptions: {
           defaultQuery: checkConfigProperty(config, 'defaultQuery', false) ? config.defaultQuery : {}
         }
@@ -58,6 +58,6 @@ function registerBaseModule (store, api, moduleName) {
     resourceProxy = new ResourceProxy()
   }
 
-  const moduleBuilder = new ModuleBuilder(store, api, moduleName, resourceProxy)
+  const moduleBuilder = new ModuleBuilder(api, moduleName, resourceProxy)
   store.registerModule(moduleName, moduleBuilder.build())
 }
