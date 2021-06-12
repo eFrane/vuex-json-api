@@ -43,7 +43,7 @@ test('creates a resource proxy for a method if none exists', async () => {
 
   expect(sut.proxies).toStrictEqual({})
 
-  await sut.getProxyForMethod('get')
+  await sut._getProxyForMethod('get')
 
   expect(sut.proxies).toMatchSnapshot()
 })
