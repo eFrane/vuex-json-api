@@ -11,4 +11,5 @@ test('simple list action', async () => {
 
   expect(result).toBeInstanceOf(Object)
   expect(result.status).toBe(200)
+  expect(Object.keys(result.data.book).length).toBe(3)
 })
