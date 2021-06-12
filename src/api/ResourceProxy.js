@@ -146,7 +146,7 @@ export class ResourceProxy {
   }
 
   allowsItemAccess () {
-    return ('get' in this.routes)
+    return ('get' in this.routes || 'list' in this.routes)
   }
 
   hasRelated () {
