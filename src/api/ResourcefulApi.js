@@ -27,20 +27,30 @@ export class ResourcefulApi extends Api {
 
     return super._doRequest(method, url, params, data)
       .then(async (response) => {
-        let json = {}
+        if (this._shouldDecodeResponseJson(response.status)) {
+          const json = await this._decodeResponseJson(response)
 
-        try {
-          json = await response.json()
-        } catch (e) {
-          if (response.status === 404) {
-            throw new NotFoundApiError('Resource not found')
-          }
-
-          throw new ApiError('Failed to decode response json')
+          return this._parseResponse(response.status, json)
         }
 
-        return this._parseResponse(response.status, json)
+        return this._createDatalessResponse(response)
       })
+  }
+
+  _shouldDecodeResponseJson (status) {
+    return [200, 404].includes(status)
+  }
+
+  async _decodeResponseJson (response) {
+    try {
+      return await response.json()
+    } catch (e) {
+      if (response.status === 404) {
+        throw new NotFoundApiError('Resource not found')
+      }
+
+      throw new ApiError('Failed to decode response json')
+    }
   }
 
   _parseResponse (status, json) {
@@ -68,6 +78,15 @@ export class ResourcefulApi extends Api {
     }
 
     return parsedResponse
+  }
+
+  _createDatalessResponse (response) {
+    return {
+      data: null,
+      meta: null,
+      links: null,
+      status: response.status
+    }
   }
 
   /**
