@@ -2,7 +2,7 @@
 
 ## Structure
 
-This library offers a plugin for Vuex which integrates with a [{json:api}](https://jsonapi.org) Server.
+This library offers a plugin for Vuex which integrates with a [<jsonapi />](https://jsonapi.org) Server.
 The general plugin structure is:
 
 <mermaid>
