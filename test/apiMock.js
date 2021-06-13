@@ -21,11 +21,15 @@ function response (data, meta = {}, links = {}) {
     jsonApiResponse.links = links
   }
 
-  return { body: JSON.stringify(jsonApiResponse) }
+  return { body: JSON.stringify(jsonApiResponse), status: 200 }
 }
 
+/**
+ * @param {string} path
+ * @returns {string}
+ */
 function url (path) {
-  return new URL(path, 'http://api/')
+  return (new URL(path, 'http://api/')).href
 }
 
 export function initApiMockServer () {
@@ -47,7 +51,19 @@ export function initApiMockServer () {
   fetchMock.getOnce(url('/book/1/nometa'), response(book(1), null))
   fetchMock.getOnce(url('/book/1/nolinks'), response(book(1), {}, null))
   fetchMock.get(url('/book/'), response([book(1), book(2), book(3)]))
-  fetchMock.post(url('/book'), {})
+  fetchMock.delete(url('/book/delete-accepted'), { status: 202 })
+  fetchMock.delete(url('/book/delete-successful'), { status: 204 })
+  fetchMock.delete(url('/book/delete-with-meta'), {
+    status: 200,
+    body: JSON.stringify({
+      meta: {
+        foo: 'bar'
+      }
+    })
+  })
+  fetchMock.delete(url('/book/delete-not-found'), {
+    status: 404
+  })
 
   fetchMock.getOnce(url('/no-data-or-error'), response(null))
   fetchMock.getOnce(url('/not-found'), { status: 404 })
@@ -76,6 +92,7 @@ export function initApiMock () {
   const router = new Router()
   router
     .addRoute(new Route('book', 'get', '/book/{id}', ['id']))
+    .addRoute(new Route('book', 'delete', '/book/{id}', ['id']))
     .addRoute(new Route('book', 'list', '/book/', []))
 
   const store = new Vuex.Store()
