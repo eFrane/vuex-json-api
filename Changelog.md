@@ -1,6 +1,13 @@
 # next version
 
 
+# v0.0.34
+
+_2021-06-14_
+
+- Collection resources are now set all at once after list calls which
+  significantly boosts loading perfomance. 
+
 
 # v0.0.33
 _2021-05-28_
