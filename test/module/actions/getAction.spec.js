@@ -7,7 +7,8 @@ test('simple get action', async () => {
   const action = getAction(api, 'book', undefined)
   expect(action).toBeInstanceOf(Function)
 
-  const result = await action(getVuexContextForResourceType(api, 'book'), { id: 1 })
+  const bookModule = getVuexContextForResourceType(api, 'book')
+  const result = await action(bookModule, { id: 1 })
 
   expect(result).toBeInstanceOf(Object)
   expect(result.status).toBe(200)
@@ -16,4 +17,6 @@ test('simple get action', async () => {
     type: 'book',
     attributes: expect.any(Object)
   })
+
+  expect(Object.keys(bookModule.state.items).length).toBe(1)
 })
