@@ -51,9 +51,9 @@ export function initApiMockServer () {
   fetchMock.getOnce(url('/book/1/nometa'), response(book(1), null))
   fetchMock.getOnce(url('/book/1/nolinks'), response(book(1), {}, null))
   fetchMock.get(url('/book/'), response([book(1), book(2), book(3)]))
-  fetchMock.delete(url('/book/delete-accepted'), { status: 202 })
-  fetchMock.delete(url('/book/delete-successful'), { status: 204 })
-  fetchMock.delete(url('/book/delete-with-meta'), {
+  fetchMock.delete(url('/book/1?q=delete-accepted'), { status: 202 })
+  fetchMock.delete(url('/book/1?q=delete-successful'), { status: 204 })
+  fetchMock.delete(url('/book/1?q=delete-with-meta'), {
     status: 200,
     body: JSON.stringify({
       meta: {

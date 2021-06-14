@@ -8,10 +8,13 @@ import { NotFoundApiError } from '../../errors/ApiError'
 
 export function deleteAction (api, moduleName) {
   return new Proxy(() => {}, {
-    apply (target, thisArg, [vuexFns, id]) {
+    apply (target, thisArg, [vuexFns, query]) {
       vuexFns.commit('startLoading')
 
-      return api[moduleName].delete({ id: id }).then(response => {
+      // fixme: add fallback support for scalars as query, they should be assumed to be the id
+      const id = query.id
+
+      return api[moduleName].delete(query).then(response => {
         vuexFns.commit('remove', id)
         vuexFns.commit('endLoading')
 

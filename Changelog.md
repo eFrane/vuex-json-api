@@ -1,5 +1,8 @@
 # next version
 
+- **BREAKING**: The `deleteAction` must be passed
+  a full query now, this brings it in alignment with
+  the other actions.
 - `Router.addRoute` can be called fluently now
 - **BREAKING**: 404 Not Found responses throw an Error
 - Responses that do not adhere to the basic json:api response
