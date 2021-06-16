@@ -61,7 +61,7 @@ export function initApiMockServer () {
       }
     })
   })
-  fetchMock.delete(url('/book/delete-not-found'), {
+  fetchMock.delete(url('/book/1?q=delete-not-found'), {
     status: 404
   })
 
