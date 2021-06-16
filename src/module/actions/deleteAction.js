@@ -24,6 +24,9 @@ export function deleteAction (api, moduleName) {
           return error
         }
 
+        vuexFns.commit('remove', id)
+        vuexFns.commit('endLoading')
+
         if (error.hasErrorInfo()) {
           // TODO: what to do with the error info?
           /**
