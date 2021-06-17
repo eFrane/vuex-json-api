@@ -34,3 +34,14 @@ test('delete with server error: not found', async () => {
 
   expect(Object.keys(bookModule.state.items).length).toBe(0)
 })
+
+test('delete with meta in response', async () => {
+  expect(Object.keys(bookModule.state.items).length).toBe(1)
+
+  const response = await action(bookModule, { id: 1, q: 'delete-with-meta' })
+
+  expect(response.status).toBe(200)
+  expect(response.meta).toEqual({ foo: 'bar' })
+
+  expect(Object.keys(bookModule.state.items).length).toBe(0)
+})

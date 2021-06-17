@@ -56,6 +56,7 @@ export function initApiMockServer () {
   fetchMock.delete(url('/book/1?q=delete-with-meta'), {
     status: 200,
     body: JSON.stringify({
+      data: null,
       meta: {
         foo: 'bar'
       }
