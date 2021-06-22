@@ -56,3 +56,13 @@ test('delete with meta in response', async () => {
 
   expect(Object.keys(bookModule.state.items).length).toBe(0)
 })
+
+test('delete with scalar id instead of query object', async () => {
+  expect(Object.keys(bookModule.state.items).length).toBe(1)
+
+  const response = await action(bookModule, 1)
+
+  expect(response.status).toBe(204)
+
+  expect(Object.keys(bookModule.state.items).length).toBe(0)
+})

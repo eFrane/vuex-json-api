@@ -11,8 +11,11 @@ export function deleteAction (api, moduleName) {
     apply (target, thisArg, [vuexFns, query]) {
       vuexFns.commit('startLoading')
 
-      // fixme: add fallback support for scalars as query, they should be assumed to be the id
-      const id = query.id
+      let id = query.id
+      if (id === undefined) {
+        id = query
+        query = { id }
+      }
 
       return api[moduleName].delete(query).then(response => {
         vuexFns.commit('remove', id)

@@ -1,6 +1,6 @@
 # next version
 
-- **BREAKING**: The `deleteAction` must be passed
+- The `deleteAction` **can** be passed
   a full query now, this brings it in alignment with
   the other actions.
 - `Router.addRoute` can be called fluently now
