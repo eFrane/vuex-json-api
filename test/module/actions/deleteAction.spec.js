@@ -25,6 +25,17 @@ test('simple delete action', async () => {
   expect(Object.keys(bookModule.state.items).length).toBe(0)
 })
 
+test('delete with server response accepted', async () => {
+  expect(Object.keys(bookModule.state.items).length).toBe(1)
+
+  const response = await action(bookModule, { id: 1, q: 'delete-accepted' })
+
+  expect(response.status).toBe(202)
+  expect(response.data).toBeNull()
+
+  expect(Object.keys(bookModule.state.items).length).toBe(0)
+})
+
 test('delete with server error: not found', async () => {
   expect(Object.keys(bookModule.state.items).length).toBe(1)
 
