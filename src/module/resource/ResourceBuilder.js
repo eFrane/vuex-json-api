@@ -25,7 +25,7 @@ export class ResourceBuilder {
   */
   build (jsonResourceObject) {
     if (hasOwn(jsonResourceObject, 'id')) {
-      const item = deref(jsonResourceObject) // why tho?
+      const item = deref(jsonResourceObject.data) // why tho?
 
       return this.functionalizeItem(item)
     }
