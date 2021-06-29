@@ -1,14 +1,11 @@
 import { Route } from '../route/Route'
-import { createApiResourceMethodProxy } from './createApiResourceMethodProxy'
 import { hasOwn } from '../shared/utils'
 
 /**
  * ResourceProxy
  *
- * A wrapper class for the available methods on
- * a route. The actual proxied axios-clients
- * will only be created once the first request on
- * a method is made.
+ * A wrapper class for the available methods on a route. The actual proxied Fetch-clients
+ * will only be created once the first request on a method is made.
  *
  * @class ResourceProxy
  */
@@ -51,18 +48,55 @@ export class ResourceProxy {
     throw new Error(`Method ${methodName} not available`)
   }
 
-  getProxyForMethod (methodName, parameters, data) {
+  _getProxyForMethod (methodName) {
     if (!hasOwn(this.proxies, methodName)) {
-      this.createProxyForMethodIfMissing(methodName)
+      this._createProxyForMethodIfMissing(methodName)
     }
 
-    return this.proxies[methodName](parameters, data)
+    return this.proxies[methodName]
   }
 
-  createProxyForMethodIfMissing (methodName) {
-    const proxy = createApiResourceMethodProxy(this.resourcefulApi, methodName, this.routes[methodName])
+  _createProxyForMethodIfMissing (methodName) {
+    this.proxies[methodName] = this._doCreateProxy(
+      this.resourcefulApi,
+      methodName,
+      this.routes[methodName]
+    )
+  }
 
-    this.proxies[methodName] = proxy
+  _doCreateProxy (api, method, route) {
+    return new Proxy(() => {}, {
+      apply (target, thisArg, argArray) {
+        if (!(route instanceof Route)) {
+          throw new Error('Expected Route object')
+        }
+
+        // add actual route as first param
+        const url = route.prepare(argArray[0])
+        argArray.unshift(url)
+
+        switch (method) {
+          case 'list':
+          case 'get':
+            return api.get.apply(api, argArray)
+
+          case 'create':
+            return api.post.apply(api, argArray)
+
+          case 'replace':
+            return api.put.apply(api, argArray)
+
+          case 'update':
+            return api.patch.apply(api, argArray)
+
+          case 'delete':
+            return api.delete.apply(api, argArray)
+
+          default:
+            throw new Error('unsupported api method: ' + method)
+        }
+      }
+    })
   }
 
   /**
@@ -72,7 +106,9 @@ export class ResourceProxy {
    * @returns Function
    */
   get (parameters, data) {
-    return this.allowsItemAccess() ? this.getProxyForMethod('get', parameters, data) : this.methodNotAvailable('get')
+    return this.allowsItemAccess()
+      ? this._getProxyForMethod('get')(parameters, data)
+      : this.methodNotAvailable('get')
   }
 
   /**
@@ -82,7 +118,9 @@ export class ResourceProxy {
    * @returns Function
    */
   list (parameters, data) {
-    return this.isCollection() ? this.getProxyForMethod('list', parameters, data) : this.methodNotAvailable('list')
+    return this.isCollection()
+      ? this._getProxyForMethod('list')(parameters, data)
+      : this.methodNotAvailable('list')
   }
 
   /**
@@ -92,7 +130,9 @@ export class ResourceProxy {
    * @returns Function
    */
   create (parameters, data) {
-    return this.allowsCreation() ? this.getProxyForMethod('create', parameters, data) : this.methodNotAvailable('create')
+    return this.allowsCreation()
+      ? this._getProxyForMethod('create')(parameters, data)
+      : this.methodNotAvailable('create')
   }
 
   /**
@@ -102,7 +142,9 @@ export class ResourceProxy {
    * @returns Function
    */
   replace (parameters, data) {
-    return this.allowsReplacement ? this.getProxyForMethod('replace', parameters, data) : this.methodNotAvailable('replace')
+    return this.allowsReplacement
+      ? this._getProxyForMethod('replace')(parameters, data)
+      : this.methodNotAvailable('replace')
   }
 
   /**
@@ -112,7 +154,9 @@ export class ResourceProxy {
    * @returns Function
    */
   update (parameters, data) {
-    return this.allowsModification() ? this.getProxyForMethod('update', parameters, data) : this.methodNotAvailable('update')
+    return this.allowsModification()
+      ? this._getProxyForMethod('update')(parameters, data)
+      : this.methodNotAvailable('update')
   }
 
   /**
@@ -122,7 +166,9 @@ export class ResourceProxy {
    * @returns Function
    */
   delete (parameters, data) {
-    return this.allowsDeletion() ? this.getProxyForMethod('delete', parameters, data) : this.methodNotAvailable('delete')
+    return this.allowsDeletion()
+      ? this._getProxyForMethod('delete')(parameters, data)
+      : this.methodNotAvailable('delete')
   }
 
   isCollection () {
@@ -146,7 +192,7 @@ export class ResourceProxy {
   }
 
   allowsItemAccess () {
-    return ('get' in this.routes)
+    return ('get' in this.routes || 'list' in this.routes)
   }
 
   hasRelated () {

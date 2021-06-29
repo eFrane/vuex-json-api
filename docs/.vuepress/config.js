@@ -10,6 +10,10 @@ module.exports = {
         link: '/'
       },
       {
+        text: 'Development',
+        link: '/development/'
+      },
+      {
         text: 'Reference',
         link: '/reference/'
       },
@@ -22,7 +26,8 @@ module.exports = {
     editLinks: true,
     editLinkText: 'Help us improve this page!',
     displayAllHeaders: true,
-    activeHeaderLinks: true
+    activeHeaderLinks: true,
+    sidebar: 'auto'
   },
   evergreen: true,
   serviceWorker: true,

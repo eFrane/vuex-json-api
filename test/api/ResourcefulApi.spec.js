@@ -3,9 +3,9 @@
  */
 
 import { ResourcefulApi } from '@/api/ResourcefulApi'
-import { initTestApi } from '../apiMock'
+import { initApiMockServer } from '../apiMock'
 
-initTestApi()
+initApiMockServer()
 
 const sut = new ResourcefulApi()
 sut.setBaseUrl('http://api/')

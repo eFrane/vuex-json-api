@@ -16,7 +16,7 @@ with a collection or a single item. Additionally, `vuex-json-api` offers
 the capability to handle multiple sets of a collection, in which case all of the
 below is a little more complicated.
 
-<mermaid>
+```mermaid
   graph TD
   R[Routes for Module]-->StateDecider
   StateDecider{Module has `list`-Route}-->|True|SColl
@@ -24,7 +24,7 @@ below is a little more complicated.
   SColl[Initial state for a collection resource endpoint]-->S
   SSingle[Initial state for a single-resource endpoint]-->S
   S[State]
-</mermaid>
+```
 
 **Base state for items**
 

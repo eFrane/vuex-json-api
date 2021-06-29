@@ -1,11 +1,15 @@
 import { ResourcefulApi } from '@/api/ResourcefulApi'
 import { ResourceProxy } from '@/api/ResourceProxy'
 import { Route } from '@/route/Route'
+import { initApiMockServer } from '../apiMock'
+
+initApiMockServer()
 
 let sut
 
 beforeEach(() => {
   const api = new ResourcefulApi()
+  api.setBaseUrl('http://api/')
   sut = new ResourceProxy(api)
 })
 
@@ -17,7 +21,7 @@ test('has routes', () => {
   expect(sut.routes).toBeDefined()
   expect(sut.routes).toStrictEqual({})
 
-  const route = new Route('foo', 'get', '/', [])
+  const route = new Route('book', 'get', '/', [])
 
   sut.addRoute(route)
 
@@ -34,26 +38,18 @@ test('throws for unavailable methods', () => {
   expect(testGet).toThrowErrorMatchingSnapshot()
 })
 
-/**
- * @fixme getProxyForMethod returns a promise which must be resolved during the test
- */
-test.skip('creates a resource proxy for a method if none exists', () => {
-  sut.addRoute(new Route('foo', 'get', '/', []))
+test('creates a resource proxy for a method if none exists', async () => {
+  sut.addRoute(new Route('book', 'get', '/', []))
 
   expect(sut.proxies).toStrictEqual({})
 
-  sut.getProxyForMethod('get')
+  await sut._getProxyForMethod('get')
 
   expect(sut.proxies).toMatchSnapshot()
 })
 
-/**
- * @fixme methodProxy is a promise which must be resolved during the test
- */
-test.skip('returns a promise for valid route method', () => {
-  sut.addRoute(new Route('foo', 'get', '/', []))
+test('returns promise for allowed route method', () => {
+  sut.addRoute(new Route('book', 'get', '/book/1', []))
 
-  const methodProxy = sut.get()
-
-  expect(methodProxy).toBeInstanceOf(Promise)
+  expect(sut.get()).toBeInstanceOf(Promise)
 })

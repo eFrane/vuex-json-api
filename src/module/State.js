@@ -1,6 +1,19 @@
-import { item } from './state/item'
-import { collection } from './state/collection'
-import { deref } from '../shared/utils'
+const collection = {
+  loading: false,
+  items: {},
+  initial: {},
+  currentPage: null,
+  totalPages: null,
+  urlInfo: {},
+  options: {}
+}
+
+const item = {
+  loading: false,
+  item: {},
+  initial: {},
+  options: {}
+}
 
 /**
  * Return a new Object representing the initial state of a module
@@ -14,9 +27,9 @@ import { deref } from '../shared/utils'
 function initialState (isCollection) {
   return (() => {
     if (isCollection) {
-      return deref(collection)
+      return Object.assign({}, collection)
     } else {
-      return deref(item)
+      return Object.assign({}, item)
     }
   })()
 }

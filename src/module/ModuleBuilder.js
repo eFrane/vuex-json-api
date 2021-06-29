@@ -37,15 +37,13 @@ export class ModuleBuilder {
   /**
    * Module Builder for Json:Api bound Vuex Modules
    *
-   * @param {Vuex} store
    * @param {ResourcefulApi} api
    * @param {String} moduleName
    * @param {ResourceProxy} apiMethods
    * @param {Object} options additional objects for the module builder
    * @param {String} presetModuleName
    */
-  constructor (store, api, moduleName, apiMethods, options = {}, presetModuleName = null) {
-    this.store = store
+  constructor (api, moduleName, apiMethods, options = {}, presetModuleName = null) {
     this.api = api
     this.moduleName = moduleName
     this.apiMethods = apiMethods || {}
@@ -120,7 +118,7 @@ export class ModuleBuilder {
    * Build the mutations
    */
   buildMutations () {
-    const resourceBuilder = new ResourceBuilder(this.store)
+    const resourceBuilder = new ResourceBuilder(this.api.store)
 
     const mutations = {
       resetItems: resetItemsMutation(this.isCollection),

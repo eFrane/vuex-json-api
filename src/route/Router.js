@@ -45,5 +45,7 @@ export class Router {
     }
 
     this.routes[route.module][route.action] = route
+
+    return this
   }
 }
