@@ -1,5 +1,6 @@
 # next version
 
+- use correct mutation on save (@hwiem)
 
 # v0.0.34
 
