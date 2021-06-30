@@ -2,6 +2,7 @@
 
 - use correct mutation on save (@hwiem)
 - do not add data object to resource on save (@hwiem)
+- use correct mutation on restoreFromInitial (@hwiem)
 
 # v0.0.34
 
