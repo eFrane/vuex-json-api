@@ -1,13 +1,17 @@
-# next version
+# v0.0.35
+
+_2021-07-02_
 
 - use correct mutation on save (@hwiem)
+- do not add data object to resource on save (@hwiem)
+- use correct mutation on restoreFromInitial (@hwiem)
 
 # v0.0.34
 
 _2021-06-14_
 
 - Collection resources are now set all at once after list calls which
-  significantly boosts loading perfomance. 
+  significantly boosts loading performance. 
 
 
 # v0.0.33

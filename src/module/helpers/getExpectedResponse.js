@@ -3,8 +3,7 @@ function getExpectedResponse (currentResource) {
     throw new Error('Resources must have an id-property and a type-property.')
   }
   return {
-    id: currentResource.id,
-    data: Object.assign(
+    ...Object.assign(
       currentResource, {
         id: currentResource.id,
         type: currentResource.type
