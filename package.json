@@ -12,8 +12,7 @@
     "unit": "jest --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
-    "lint": "eslint --ext .js,.vue src test",
-    "prepare": "husky install"
+    "lint": "eslint --ext .js,.vue src test"
   },
   "dependencies": {
     "axios": "^0.*",

@@ -9,7 +9,7 @@ export function restoreFromInitialAction (moduleName, presetModuleName, isCollec
         item = isCollection ? thisArg.state[moduleName][presetModuleName].initial[id] : item = thisArg.state[moduleName][presetModuleName].initial
       }
 
-      vuexFns.commit('set', { id: id, data: item })
+      vuexFns.commit('setItem', { id: id, ...item })
     }
   })
 }
