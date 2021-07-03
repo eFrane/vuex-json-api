@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 /**
  *
- * @param {resource.Builder} resourceBuilder
+ * @param {ResourceBuilder} resourceBuilder
  * @param {boolean} isCollection
  */
 export function setItemMutation (resourceBuilder, isCollection) {
