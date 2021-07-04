@@ -38,7 +38,7 @@ export class ResourcefulApi extends Api {
   }
 
   _shouldDecodeResponseJson (status) {
-    return [200, 404].includes(status)
+    return [200, 201, 404, 409].includes(status)
   }
 
   async _decodeResponseJson (response) {

@@ -6,7 +6,7 @@ import { Router } from '../src/route/Router'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-function response (data, meta = {}, links = {}) {
+function response (data, meta = {}, links = {}, status = 200) {
   const jsonApiResponse = {}
 
   if (data) {
@@ -21,7 +21,7 @@ function response (data, meta = {}, links = {}) {
     jsonApiResponse.links = links
   }
 
-  return { body: JSON.stringify(jsonApiResponse), status: 200 }
+  return { body: JSON.stringify(jsonApiResponse), status }
 }
 
 /**
@@ -51,6 +51,14 @@ export function initApiMockServer () {
   fetchMock.getOnce(url('/book/1/nometa'), response(book(1), null))
   fetchMock.getOnce(url('/book/1/nolinks'), response(book(1), {}, null))
   fetchMock.get(url('/book/'), response([book(1), book(2), book(3)]))
+  fetchMock.postOnce(url('/book/'), response(book('new'), {}, {}, 201))
+  fetchMock.postOnce({
+    url: url('/clientBook/'),
+    matchPartialBody: true,
+    body: {
+      id: 'client-side-id'
+    }
+  }, response(book('client-side-id'), {}, {}, 201))
   fetchMock.delete(url('/book/1'), { status: 204 })
   fetchMock.delete(url('/book/1?q=delete-accepted'), { status: 202 })
   fetchMock.delete(url('/book/1?q=delete-successful'), { status: 204 })
@@ -96,6 +104,7 @@ export function initApiMock () {
     .addRoute(new Route('book', 'get', '/book/{id}', ['id']))
     .addRoute(new Route('book', 'delete', '/book/{id}', ['id']))
     .addRoute(new Route('book', 'list', '/book/', []))
+    .addRoute(new Route('book', 'create', '/book/', []))
 
   const store = new Vuex.Store()
   const api = new ResourcefulApi()
