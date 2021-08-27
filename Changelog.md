@@ -1,5 +1,7 @@
 # next version
 
+- fix listRelationships for "to one"-relationships 
+
 # v0.0.35
 
 _2021-07-02_
