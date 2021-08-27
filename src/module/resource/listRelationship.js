@@ -12,7 +12,7 @@ export function listRelationship (store, relatedObjects) {
 
       const relatedItems = {}
       relatedObjectIds.forEach(id => {
-        relatedItems[id] = relatedModule.items[id]
+        relatedItems[id] = relatedModule.item ? relatedModule.item[id] : relatedModule.items[id]
       })
 
       return relatedItems
