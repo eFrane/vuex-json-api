@@ -1,3 +1,4 @@
+import { ActionError } from '../../errors/ActionError'
 import { processResponseData } from '../helpers/processResponseData'
 import { hasOwn } from '../../shared/utils'
 
@@ -61,10 +62,26 @@ export function createAction (api, moduleName) {
           if (hasClientGeneratedId && !hasOwn(response.data.book, resourceObject.id)) {
             // TODO: Throwing here should be configurable, it may be desirable
             //       to be less pedantic.
-            throw new Error('Server altered client-provided id, with HTTP status 201 instead of 409')
+            throw new ActionError('Server altered client-provided id, with HTTP status 201 instead of 409')
           }
 
           processResponseData(vuexFns, api, moduleName, response.data, 'create')
+        }
+
+        if (response.status === 202) {
+          if (!hasClientGeneratedId) {
+            console.warn('Cannot commit expected change because no id is available.')
+          } else {
+            processResponseData(vuexFns, api, moduleName, response.data, 'create')
+          }
+        }
+
+        if (response.status === 204) {
+          if (!hasClientGeneratedId) {
+            throw new ActionError('Unexpected empty response from server: missing client-generated id.')
+          }
+
+          vuexFns.commit('set', { id: resourceObject.id, data: resourceObject.data })
         }
 
         vuexFns.commit('endLoading')
