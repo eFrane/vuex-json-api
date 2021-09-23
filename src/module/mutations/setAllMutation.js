@@ -19,8 +19,8 @@ export function setAllMutation (resourceBuilder) {
         Vue.set(state.items, settablePayload.id, settablePayload)
         Vue.set(state.initial, settablePayload.id, settablePayload)
       } else {
-        state.items = {...state.items, ...settablePayload}
-        state.initial = {...state.initial, ...settablePayload}
+        state.items = { ...state.items, ...settablePayload }
+        state.initial = { ...state.initial, ...settablePayload }
       }
     }
   })
