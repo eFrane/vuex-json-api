@@ -1,6 +1,7 @@
 # next version
 
 - fix listRelationships for "to one"-relationships 
+- fix storing data on save in collections
 
 # v0.0.35
 
