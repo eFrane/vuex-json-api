@@ -1,3 +1,7 @@
+---
+sidebar: 'off'
+---
+
 # Json:Api for Vuex
 
 > Automagic Json:Api integration for Vuex
@@ -42,7 +46,11 @@ Then, in `App.vue`:
   // ...
   computed: ...mapState('books', {
     books: state => state.items
-  })
+  }),
+  methods: ...mapActions('books', ['list']),
+  mounted() {
+    this.list()
+  }
   // ...
 }
 ```

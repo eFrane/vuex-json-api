@@ -27,20 +27,30 @@ export class ResourcefulApi extends Api {
 
     return super._doRequest(method, url, params, data)
       .then(async (response) => {
-        let json = {}
+        if (this._shouldDecodeResponseJson(response.status)) {
+          const json = await this._decodeResponseJson(response)
 
-        try {
-          json = await response.json()
-        } catch (e) {
-          if (response.status === 404) {
-            throw new NotFoundApiError('Resource not found')
-          }
-
-          throw new ApiError('Failed to decode response json')
+          return this._parseResponse(response.status, json)
         }
 
-        return this._parseResponse(response.status, json)
+        return this._createDatalessResponse(response)
       })
+  }
+
+  _shouldDecodeResponseJson (status) {
+    return [200, 201, 404, 409].includes(status)
+  }
+
+  async _decodeResponseJson (response) {
+    try {
+      return await response.json()
+    } catch (e) {
+      if (response.status === 404) {
+        throw new NotFoundApiError('Resource not found')
+      }
+
+      throw new ApiError('Failed to decode response json')
+    }
   }
 
   _parseResponse (status, json) {
@@ -68,6 +78,15 @@ export class ResourcefulApi extends Api {
     }
 
     return parsedResponse
+  }
+
+  _createDatalessResponse (response) {
+    return {
+      data: null,
+      meta: null,
+      links: null,
+      status: response.status
+    }
   }
 
   /**
@@ -130,7 +149,7 @@ export class ResourcefulApi extends Api {
   /**
    * Prepare the routable requests
    *
-   * @param {route.Router} router
+   * @param {Router} router
    */
   setupResourcefulRequests (router) {
     this.router = router
@@ -140,13 +159,11 @@ export class ResourcefulApi extends Api {
     const routes = router.getRoutes()
     this.registerableModules = {}
 
-    for (const routeName in routes) {
-      if (hasOwn(routes, routeName)) {
-        const methods = routes[routeName]
+    for (const routeName of Object.keys(routes)) {
+      const methods = routes[routeName]
 
-        this.registerResourceMethods(routeName, methods)
-        this.registerableModules[routeName] = methods
-      }
+      this.registerResourceMethods(routeName, methods)
+      this.registerableModules[routeName] = methods
     }
 
     Performance.mark('api_setup_routing_end')
@@ -199,7 +216,7 @@ export class ResourcefulApi extends Api {
       return
     }
 
-    const moduleBuilder = new ModuleBuilder(this.store, this, moduleName, methods)
+    const moduleBuilder = new ModuleBuilder(this, moduleName, methods)
     const module = moduleBuilder.build()
     if (moduleName) {
       this.store.registerModule(moduleName, module)
@@ -218,16 +235,14 @@ export class ResourcefulApi extends Api {
 
     const relationsToBeAdded = []
 
-    for (const methodName in methods) {
-      if (hasOwn(methods, methodName)) {
-        if (this.isRelationMethodName(methodName)) {
-          relationsToBeAdded.push(methodName)
+    for (const methodName of Object.keys(methods)) {
+      if (this.isRelationMethodName(methodName)) {
+        relationsToBeAdded.push(methodName)
 
-          continue
-        }
-
-        this[routeName].addRoute(methods[methodName])
+        continue
       }
+
+      this[routeName].addRoute(methods[methodName])
     }
 
     relationsToBeAdded.forEach(relationToBeAdded => {
