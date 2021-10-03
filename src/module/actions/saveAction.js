@@ -70,7 +70,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
         const { data, status } = response
 
         if (status === 204) {
-          vuexFns.commit('set', getExpectedResponse(currentItemState))
+          vuexFns.commit('setItem', getExpectedResponse(currentItemState))
         }
 
         if (status === 200) {
@@ -78,7 +78,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
           const isEmptyObject = typeof data === 'object' && data !== null && Object.keys(data).length === 0
           const isNull = data === null
           if (isEmptyArray || isEmptyObject || isNull) {
-            vuexFns.commit('set', getExpectedResponse(currentItemState))
+            vuexFns.commit('setItem', getExpectedResponse(currentItemState))
           }
         }
 

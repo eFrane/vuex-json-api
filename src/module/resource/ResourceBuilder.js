@@ -24,19 +24,32 @@ export class ResourceBuilder {
   * @param {Object} jsonResourceObject
   */
   build (jsonResourceObject) {
-    const obj = deref(jsonResourceObject.data) // why tho?
+    if (hasOwn(jsonResourceObject, 'id')) {
+      const item = deref(jsonResourceObject) // why tho?
 
-    obj.hasRelationship = hasRelationship(obj)
-    obj.hasLoadableRelationship = hasLoadableRelationship(obj)
-    obj.hasLoadedRelationship = hasLoadedRelationship(obj)
-
-    obj.get = (attributeName) => hasOwn(obj.attributes, attributeName) ? obj.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
-
-    if (hasOwn(obj, 'relationships')) {
-      this.buildRelationshipMethods(obj)
+      return this.functionalizeItem(item)
     }
 
-    return obj
+    const items = {}
+    for (const itemId in jsonResourceObject) {
+      items[itemId] = this.functionalizeItem(deref(jsonResourceObject[itemId]))
+    }
+
+    return items
+  }
+
+  functionalizeItem (item) {
+    item.hasRelationship = hasRelationship(item)
+    item.hasLoadableRelationship = hasLoadableRelationship(item)
+    item.hasLoadedRelationship = hasLoadedRelationship(item)
+
+    item.get = (attributeName) => hasOwn(item.attributes, attributeName) ? item.attributes[attributeName] : new Error(`attribute "${attributeName}" not found`)
+
+    if (hasOwn(item, 'relationships')) {
+      this.buildRelationshipMethods(item)
+    }
+
+    return item
   }
 
   /**

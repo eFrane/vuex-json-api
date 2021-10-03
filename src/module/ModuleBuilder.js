@@ -21,6 +21,7 @@ import { hasChanges } from './getters/hasChanges'
 import { ResourceBuilder } from './resource/ResourceBuilder'
 import { checkConfigProperty, hasOwn, isAbsoluteUri } from '../shared/utils'
 import { Performance } from '../shared/Performance'
+import { setAllMutation } from './mutations/setAllMutation'
 
 /**
  * JsonApi-based module builder for Vuex
@@ -122,7 +123,7 @@ export class ModuleBuilder {
 
     const mutations = {
       resetItems: resetItemsMutation(this.isCollection),
-      set: setMutation(resourceBuilder, this.isCollection),
+      set: (this.isCollection) ? setAllMutation(resourceBuilder) : setMutation(resourceBuilder),
       setItem: setItemMutation(resourceBuilder, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,

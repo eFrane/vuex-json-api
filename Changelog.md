@@ -10,7 +10,7 @@
 - Responses from `ResourcefulApi` now also contain `links` (defaulting to an empty object)
 - **BREAKING** Response data is read-only
 - **BREAKING** Preprocessing callbacks have been renamed to `successCallbacks` in the Api
-  layer to better reflect their actual purpose, this also affects the methods 
+  layer to better reflect their actual purpose, this also affects the methods
   `Api.setPreprocessingCallbacks`, `Api.addPreprocessingCallback`, and
   `Api.resetPreprocessing` which are now `Api.setSuccessCallbacks`,
   `Api.addSuccessCallback`, and `Api.resetSuccessCallbacks`.
@@ -23,6 +23,15 @@
   handling in this library is exclusively bound to send and accept json:api 1.0 requests
 - fix api request callback handling
 - fix api cross-domain recognition
+- use correct mutation on save (@hwiem)
+
+# v0.0.34
+
+_2021-06-14_
+
+- Collection resources are now set all at once after list calls which
+  significantly boosts loading perfomance. 
+
 
 # v0.0.33
 _2021-05-28_
