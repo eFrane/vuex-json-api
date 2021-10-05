@@ -39,3 +39,20 @@ test('reads the initial module list', () => {
 
   expect(registerModuleMock.mock.calls.length).toBe(3)
 })
+
+test('keeps null relationships after preprocessing', () => {
+  const testResource = {
+    data: {
+      id: 1,
+      type: 'User',
+      relationships: {
+        hobbies: {
+          data: null
+        }
+      }
+    }
+  }
+
+  const preprocessedData = api.preprocessData(testResource)
+  expect(preprocessedData.data.relationships.hobbies.data).toBe(null)
+})

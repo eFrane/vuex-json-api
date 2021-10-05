@@ -87,6 +87,10 @@ export class ResourcefulApi extends Api {
               type: startChar.charAt(0).toUpperCase() + relationship.data.type.slice(1)
             }
           }
+        } else if (relationship.data === null) {
+          relationships[name] = {
+            data: null
+          }
         }
       }
       data.data.relationships = relationships
