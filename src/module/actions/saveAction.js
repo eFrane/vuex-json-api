@@ -27,18 +27,18 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
 
       if (hasOwn(defaultQuery, 'group')) {
         if (isCollection) {
-          currentItemState = thisArg.state[moduleName][defaultQuery.group].items[id]
+          currentItemState = deref(thisArg.state[moduleName][defaultQuery.group].items[id])
           initialItemState = deref(thisArg.state[moduleName][defaultQuery.group].initial[id])
         } else {
-          currentItemState = thisArg.state[moduleName][defaultQuery.group].item
+          currentItemState = deref(thisArg.state[moduleName][defaultQuery.group].item)
           initialItemState = deref(thisArg.state[moduleName][defaultQuery.group].initial)
         }
       } else {
         if (isCollection) {
-          currentItemState = thisArg.state[moduleName].items[id]
+          currentItemState = deref(thisArg.state[moduleName].items[id])
           initialItemState = deref(thisArg.state[moduleName].initial[id])
         } else {
-          currentItemState = thisArg.state[moduleName].item
+          currentItemState = deref(thisArg.state[moduleName].item)
           initialItemState = deref(thisArg.state[moduleName].initial)
         }
       }
