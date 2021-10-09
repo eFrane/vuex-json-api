@@ -1,5 +1,29 @@
 # next version
 
+- The `deleteAction` **can** be passed
+  a full query now, this brings it in alignment with
+  the other actions.
+- `Router.addRoute` can be called fluently now
+- **BREAKING**: 404 Not Found responses throw an Error
+- Responses that do not adhere to the basic json:api response
+  structure throw errors
+- Responses from `ResourcefulApi` now also contain `links` (defaulting to an empty object)
+- **BREAKING** Response data is read-only
+- **BREAKING** Preprocessing callbacks have been renamed to `successCallbacks` in the Api
+  layer to better reflect their actual purpose, this also affects the methods
+  `Api.setPreprocessingCallbacks`, `Api.addPreprocessingCallback`, and
+  `Api.resetPreprocessing` which are now `Api.setSuccessCallbacks`,
+  `Api.addSuccessCallback`, and `Api.resetSuccessCallbacks`.
+- **BREAKING** Responses are `WindowOrWorkerGlobal.Response` (Fetch) instead of Axios Responses now
+- **BREAKING** None of the `Api.(get|post|delete|...)` methods support passing options to `doRequest` or
+  the underlying request handling anymore.
+- **BREAKING** `Api.doRequest` is `protected` and **MUST NOT** be called directly
+- **BREAKING** `Api.addHeader` was _renamed_ to `Api.setHeader`
+- **BREAKING** Default headers cannot be changed anymore, this essentially means that the request
+  handling in this library is exclusively bound to send and accept json:api 1.0 requests
+- fix api request callback handling
+- fix api cross-domain recognition
+
 # v0.0.37
 
 _2021-10-09_

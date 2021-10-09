@@ -3,34 +3,50 @@
  */
 
 import { ResourcefulApi } from '@/api/ResourcefulApi'
+import { initApiMockServer } from '../apiMock'
 
-let api = null
-api = new ResourcefulApi()
-api.setBaseUrl('http://localhost/')
+initApiMockServer()
 
-test.skip('normalizes responses', () => {
-  return api.get('tag/1').then(
-    data => {
-      expect(data).toBeDefined()
-      expect(data).toStrictEqual({
-        data: {
-          tag: {
-            1: {
-              id: '1',
-              type: 'tag',
-              attributes: {
-                title: 'Tag 1'
-              }
+const sut = new ResourcefulApi()
+sut.setBaseUrl('http://api/')
+
+describe.each([
+  { title: 'normalizes item get', url: '/book/1' },
+  { title: 'remains graceful with missing meta', url: '/book/1/nometa' },
+  { title: 'remains graceful with missing links', url: '/book/1/nolinks' }
+])('item tests', ({ url, title }) => {
+  test(`${title}`, async () => {
+    expect(await sut.get(url)).toMatchObject({
+      data: {
+        book: {
+          1: {
+            attributes: {
+              author: expect.any(String),
+              title: expect.any(String)
             }
           }
-        },
-        meta: undefined,
-        status: 200
-      })
+        }
+      },
+      links: {},
+      meta: {},
+      status: 200
     })
+  })
+})
+
+test('fails on missing data', async () => {
+  await expect(sut.get('/no-data-or-error')).rejects.toThrowErrorMatchingSnapshot()
+})
+
+test('fails on not found', async () => {
+  await expect(sut.get('/not-found')).rejects.toThrowErrorMatchingSnapshot()
+  await expect(sut.get('/not-found-with-json')).rejects.toThrowErrorMatchingSnapshot()
 })
 
 test('reads the initial module list', () => {
+  const api = new ResourcefulApi()
+  api.setBaseUrl('http://localhost/')
+
   const registerModuleMock = jest.fn()
 
   api.registerModule = registerModuleMock
@@ -52,6 +68,8 @@ test('keeps null relationships after preprocessing', () => {
       }
     }
   }
+
+  const api = new ResourcefulApi()
 
   const preprocessedData = api.preprocessData(testResource)
   expect(preprocessedData.data.relationships.hobbies.data).toBe(null)

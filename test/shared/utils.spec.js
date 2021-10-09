@@ -1,4 +1,4 @@
-import { deref, hasOwn, isAbsoluteUri, validateCallbackFn, validateCallbackFns } from '@/shared/utils'
+import { deref, hasOwn, isAbsoluteUri, validateCallbackFn } from '@/shared/utils'
 
 test('dereferences objects', () => {
   const testObj = { foo: 'bar' }
@@ -54,32 +54,4 @@ test('is falsy on invalid callback', () => {
   expect(validateCallbackFn(true)).toBeFalsy()
   expect(validateCallbackFn(42)).toBeFalsy()
   expect(validateCallbackFn('str')).toBeFalsy()
-})
-
-test('returns valid arrays', () => {
-  const cbArr1 = [
-    () => {}
-  ]
-
-  const cbArr2 = [
-    (foo) => { return foo },
-    (bar) => { return bar }
-  ]
-
-  expect(validateCallbackFns(cbArr1)).toStrictEqual(cbArr1)
-  expect(validateCallbackFns(cbArr2)).toStrictEqual(cbArr2)
-})
-
-test('throws on invalid arrays', () => {
-  const cbArr3 = [
-    (foo) => { return foo },
-    42,
-    (bar) => { return bar }
-  ]
-
-  function testInvalid () {
-    validateCallbackFns(cbArr3)
-  }
-
-  expect(testInvalid).toThrowErrorMatchingSnapshot()
 })

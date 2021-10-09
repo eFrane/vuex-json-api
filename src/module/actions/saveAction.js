@@ -82,7 +82,7 @@ export function saveAction (api, isCollection, moduleName, defaultQuery = {}) {
           }
         }
 
-        processResponseData(thisArg, vuexFns, api, moduleName, data, 'update')
+        processResponseData(vuexFns, api, moduleName, data, 'update')
 
         vuexFns.commit('endLoading', null)
 
