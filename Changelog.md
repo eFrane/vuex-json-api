@@ -1,5 +1,16 @@
 # next version
 
+# v0.0.37
+
+_2021-10-09_
+
+- same as 0.0.36, only with published changelog and
+  added publication dates
+
+# v0.0.36
+
+_2021-10-09_
+
 - fix listRelationships for "to one"-relationships 
 - fix storing data on save in collections
 
