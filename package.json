@@ -39,7 +39,7 @@
     "eslint-plugin-vue": "^7.19.1",
     "faker": "^5.5.3",
     "fetch-mock": "^9.11.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.4",
     "jest": "^26.0.1",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^11.2.3",
