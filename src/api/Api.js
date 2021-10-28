@@ -170,7 +170,15 @@ export class Api {
 
   _compileUrl (url, params) {
     let urlObj = null
-    const baseUrlObj = new URL(this.baseUrl)
+    let baseUrlObj = null
+
+    try {
+      baseUrlObj = new URL(this.baseUrl)
+    } catch (e) {
+      // if the base url cannot be constructed it is most likely due
+      // to it being a relative path assumed to work based off of window.location.host
+      baseUrlObj = new URL(this.baseUrl, window.location.href)
+    }
 
     if (url.indexOf('//') === 0) {
       url = baseUrlObj.protocol + url

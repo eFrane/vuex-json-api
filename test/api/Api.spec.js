@@ -223,3 +223,11 @@ describe.each([
     expect(api._compileUrl(url, params)).toEqual(result)
   })
 })
+
+test('handles relative base urls', () => {
+  window.location.href = 'http://localhost/'
+
+  api.setBaseUrl('/api/')
+
+  expect(api._compileUrl('')).toEqual('http://localhost/api/')
+})
