@@ -72,7 +72,7 @@ export function processResponseData (
     }
 
     if (isMissingModule(api.store, registeredModule)) {
-      registerMissingModule(api.store, api, registeredModule)
+      registerMissingModule(api.store, registeredModule)
     }
 
     setResourceObjectsForModule(
