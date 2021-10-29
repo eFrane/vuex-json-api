@@ -176,7 +176,7 @@ export class Api {
       baseUrlObj = new URL(this.baseUrl)
     } catch (e) {
       // if the base url cannot be constructed it is most likely due
-      // to it being a relative path assumed to work based off of window.location.host
+      // to it being a relative path assumed to work based off of window.location.href
       baseUrlObj = new URL(this.baseUrl, window.location.href)
     }
 
