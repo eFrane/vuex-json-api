@@ -51,21 +51,10 @@ test('executes error callbacks', async () => {
 })
 
 test('response is sealed', async () => {
-  const newProp = (response) => {
+  await expect(api.get('/').then(response => {
     response.new_prop = 'test'
-  }
-
-  api.addSuccessCallback(newProp)
-  await expect(api.get('/')).rejects.toThrowErrorMatchingSnapshot()
-
-  const changeProp = (response) => {
     response.ok = false
-  }
-
-  api.resetSuccessCallbacks()
-  api.addSuccessCallback(changeProp)
-
-  await expect(api.get('/')).rejects.toThrowErrorMatchingSnapshot()
+  })).rejects.toThrowErrorMatchingSnapshot()
 })
 
 test('verb methods pass to _doRequest', () => {
