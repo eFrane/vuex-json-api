@@ -275,7 +275,13 @@ export class Api {
       Object.seal(response)
 
       for (const callback of callbacks) {
-        await callback(response)
+        // note: this does not quite work as the response body
+        //       cannot be modified or even read twice.
+        //       the current solution of cloning the response
+        //       to every callback, may incur performance
+        //       pressure as typical callbacks likely want to examine the
+        //       request body and would repeatedly parse the json bodies
+        await callback(response.clone())
       }
 
       return response
