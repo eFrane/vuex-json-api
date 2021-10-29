@@ -21,8 +21,8 @@ export function initJsonApiPlugin (config) {
     api.setBaseUrl(config.baseUrl)
   }
 
-  if (checkConfigProperty(config, 'preprocessingCallbacks', false)) {
-    api.setPreprocessingCallbacks(config.preprocessingCallbacks)
+  if (checkConfigProperty(config, 'successCallbacks', false)) {
+    api.setSuccessCallbacks(config.successCallbacks)
   }
 
   if (checkConfigProperty(config, 'errorCallbacks', false)) {
