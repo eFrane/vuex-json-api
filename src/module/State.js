@@ -1,3 +1,4 @@
+// #region base_state
 const collection = {
   loading: false,
   items: {},
@@ -14,6 +15,7 @@ const item = {
   initial: {},
   options: {}
 }
+// #endregion base_state
 
 /**
  * Return a new Object representing the initial state of a module

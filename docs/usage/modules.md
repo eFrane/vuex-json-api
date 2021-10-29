@@ -26,13 +26,9 @@ below is a little more complicated.
   S[State]
 ```
 
-**Base state for items**
+**Base state**
 
-<<< @/../src/module/state/item.js
-
-**Base state for collections**
-
-<<< @/../src/module/state/collection.js
+<<< @/../src/module/State.js#base_state
 
 ### The fields
 
