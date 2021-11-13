@@ -74,3 +74,30 @@ test('keeps null relationships after preprocessing', () => {
   const preprocessedData = api.preprocessData(testResource)
   expect(preprocessedData.data.relationships.hobbies.data).toBe(null)
 })
+
+test('runs response callbacks', async () => {
+  const api = new ResourcefulApi()
+  api.setBaseUrl('http://api/')
+  api.addResponseCallback((response, status) => {
+    response.status_on_response = status
+
+    return response
+  })
+
+  expect(await api.get('/book/1')).toMatchObject({
+    data: {
+      book: {
+        1: {
+          attributes: {
+            author: expect.any(String),
+            title: expect.any(String)
+          }
+        }
+      }
+    },
+    links: {},
+    meta: {},
+    status: 200,
+    status_on_response: 200
+  })
+})

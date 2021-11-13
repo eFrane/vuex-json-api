@@ -1,5 +1,8 @@
 # next version
 
+- **BREAKING**: Success and error callbacks can no longer modify the response data,
+  to act on the parsed response data for all requests you **MUST** use
+  `ResourcefulApi`'s new `responseCallback`s.
 - The `deleteAction` **can** be passed
   a full query now, this brings it in alignment with
   the other actions.

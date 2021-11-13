@@ -8,6 +8,30 @@ import { deref, hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
 export class ResourcefulApi extends Api {
+  constructor () {
+    super()
+
+    /** @var {Function[]} */
+    this.responseCallbacks = []
+  }
+
+  /**
+   * Functions to be called with the parsed request data.
+   *
+   * @param {Function[]} callbacks
+   */
+  setResponseCallbacks (callbacks) {
+    this.responseCallbacks = callbacks
+  }
+
+  addResponseCallback (cb) {
+    this.responseCallbacks.push(cb)
+  }
+
+  resetResponseCallbacks () {
+    this.responseCallbacks = []
+  }
+
   /**
    * Extends `Api::doRequest()` to handle some data preprocessing.
    *
@@ -27,13 +51,19 @@ export class ResourcefulApi extends Api {
 
     return super._doRequest(method, url, params, data)
       .then(async (response) => {
+        let parsedResponse = this._createDatalessResponse(response)
+
         if (this._shouldDecodeResponseJson(response.status)) {
           const json = await this._decodeResponseJson(response)
 
-          return this._parseResponse(response.status, json)
+          parsedResponse = this._parseResponse(response.status, json)
         }
 
-        return this._createDatalessResponse(response)
+        for (const cb of this.responseCallbacks) {
+          parsedResponse = cb(parsedResponse, response.status)
+        }
+
+        return Object.freeze(parsedResponse)
       })
   }
 
