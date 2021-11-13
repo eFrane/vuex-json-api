@@ -29,6 +29,10 @@ export function initJsonApiPlugin (config) {
     api.setErrorCallbacks(config.errorCallbacks)
   }
 
+  if (checkConfigProperty(config, 'responseCallbacks', false)) {
+    api.setResponseCallbacks(config.responseCallbacks)
+  }
+
   let apiModulesToRegister = []
   if (checkConfigProperty(config, 'apiModules', false)) {
     apiModulesToRegister = config.apiModules
