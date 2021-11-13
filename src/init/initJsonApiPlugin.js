@@ -29,6 +29,10 @@ export function initJsonApiPlugin (config) {
     api.setErrorCallbacks(config.errorCallbacks)
   }
 
+  if (checkConfigProperty(config, 'requestCallbacks', false)) {
+    api.setRequestCallbacks(config.requestCallbacks)
+  }
+
   if (checkConfigProperty(config, 'responseCallbacks', false)) {
     api.setResponseCallbacks(config.responseCallbacks)
   }

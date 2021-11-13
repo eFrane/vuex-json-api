@@ -56,25 +56,6 @@ test('reads the initial module list', () => {
   expect(registerModuleMock.mock.calls.length).toBe(3)
 })
 
-test('keeps null relationships after preprocessing', () => {
-  const testResource = {
-    data: {
-      id: 1,
-      type: 'User',
-      relationships: {
-        hobbies: {
-          data: null
-        }
-      }
-    }
-  }
-
-  const api = new ResourcefulApi()
-
-  const preprocessedData = api.preprocessData(testResource)
-  expect(preprocessedData.data.relationships.hobbies.data).toBe(null)
-})
-
 test('runs response callbacks', async () => {
   const api = new ResourcefulApi()
   api.setBaseUrl('http://api/')
@@ -100,4 +81,19 @@ test('runs response callbacks', async () => {
     status: 200,
     status_on_response: 200
   })
+})
+
+test('runs request callbacks', async () => {
+  const api = new ResourcefulApi()
+  api.setBaseUrl('http://api/')
+
+  const cb = jest.fn(data => {
+    return data
+  })
+
+  api.addRequestCallback(cb)
+
+  await api.get('/book/1')
+
+  expect(cb.mock.calls.length).toBe(1)
 })

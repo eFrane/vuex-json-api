@@ -1,5 +1,10 @@
 # next version
 
+- **BREAKING**: Requests no longer get automatic type name fixing.
+  This feature did not conform to the spec as there is no requirement
+  for types to always be upper camel cased. If you need to perform
+  this case fixing in your use case, you may re-add it via `ResourcefulApi`'s
+  new `requestCallback`s.
 - **BREAKING**: Success and error callbacks can no longer modify the response data,
   to act on the parsed response data for all requests you **MUST** use
   `ResourcefulApi`'s new `responseCallback`s.

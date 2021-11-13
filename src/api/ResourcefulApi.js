@@ -4,7 +4,7 @@ import { Api } from './Api'
 import { ApiError, NotFoundApiError } from '../errors/ApiError'
 import { ModuleBuilder } from '../module/ModuleBuilder'
 import { ResourceProxy } from './ResourceProxy'
-import { deref, hasOwn } from '../shared/utils'
+import { hasOwn } from '../shared/utils'
 import { Performance } from '../shared/Performance'
 
 export class ResourcefulApi extends Api {
@@ -12,11 +12,31 @@ export class ResourcefulApi extends Api {
     super()
 
     /** @var {Function[]} */
+    this.requestCallbacks = []
+
+    /** @var {Function[]} */
     this.responseCallbacks = []
   }
 
   /**
    * Functions to be called with the parsed request data.
+   *
+   * @param {Function[]} callbacks
+   */
+  setRequestCallbacks (callbacks) {
+    this.requestCallbacks = callbacks
+  }
+
+  addRequestCallback (cb) {
+    this.requestCallbacks.push(cb)
+  }
+
+  resetRequestCallbacks () {
+    this.requestCallbacks = []
+  }
+
+  /**
+   * Functions to be called with the parsed response data.
    *
    * @param {Function[]} callbacks
    */
@@ -45,8 +65,8 @@ export class ResourcefulApi extends Api {
    * @param {Object} data
    */
   async _doRequest (method, url, params, data) {
-    if (data) {
-      data = this.preprocessData(data)
+    for (const cb of this.requestCallbacks) {
+      data = cb(data, params, url, method)
     }
 
     return super._doRequest(method, url, params, data)
@@ -117,67 +137,6 @@ export class ResourcefulApi extends Api {
       links: null,
       status: response.status
     }
-  }
-
-  /**
-   * convert ResourceTypes to uppercase
-   * to follow the json:api spects even if the incoming data is not correct
-   *
-   * this is just a safety net
-   *
-   * @param data
-   *
-   * @return {*}
-   */
-  preprocessData (data) {
-    data = deref(data)
-    data.data.type = data.data.type.charAt(0).toUpperCase() + data.data.type.slice(1)
-
-    if (data.data.relationships) {
-      const relationships = {}
-      const casingWarning = (type) => {
-        console.warn(`The Resource with type '${type}' is sent in lower camel case. Please send as upper camel case.`)
-      }
-
-      for (const [name, relationship] of Object.entries(data.data.relationships)) {
-        if (Array.isArray(relationship.data)) {
-          relationships[name] = {
-            data: relationship.data.map(itemData => {
-              const startChar = itemData.type.charAt(0)
-
-              if (startChar === startChar.toLocaleLowerCase()) {
-                casingWarning(itemData.type)
-              }
-
-              return {
-                id: itemData.id,
-                type: startChar.toUpperCase() + itemData.type.slice(1)
-              }
-            })
-          }
-        } else if (relationship.data !== null) {
-          const startChar = relationship.data.type.charAt(0)
-
-          if (startChar === startChar.toLocaleLowerCase()) {
-            casingWarning(relationship.data.type)
-          }
-
-          relationships[name] = {
-            data: {
-              id: relationship.data.id,
-              type: startChar.charAt(0).toUpperCase() + relationship.data.type.slice(1)
-            }
-          }
-        } else if (relationship.data === null) {
-          relationships[name] = {
-            data: null
-          }
-        }
-      }
-      data.data.relationships = relationships
-    }
-
-    return data
   }
 
   /**
