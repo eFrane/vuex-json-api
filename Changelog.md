@@ -1,5 +1,7 @@
 # next version
 
+- fix updating collections
+
 # v0.0.37
 
 _2021-10-09_
@@ -11,7 +13,7 @@ _2021-10-09_
 
 _2021-10-09_
 
-- fix listRelationships for "to one"-relationships 
+- fix listRelationships for "to one"-relationships
 - fix storing data on save in collections
 
 # v0.0.35
@@ -27,7 +29,7 @@ _2021-07-02_
 _2021-06-14_
 
 - Collection resources are now set all at once after list calls which
-  significantly boosts loading performance. 
+  significantly boosts loading performance.
 
 
 # v0.0.33
