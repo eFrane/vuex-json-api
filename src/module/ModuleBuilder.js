@@ -127,7 +127,7 @@ export class ModuleBuilder {
       setItem: setItemMutation(resourceBuilder, this.isCollection),
       startLoading: startLoadingMutation,
       endLoading: endLoadingMutation,
-      update: updateMutation
+      update: updateMutation(this.isCollection)
     }
 
     if (this.apiMethods.allowsDeletion()) {
