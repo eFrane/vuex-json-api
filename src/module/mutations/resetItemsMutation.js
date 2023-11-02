@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { initialState } from '../State'
 
 /**
@@ -12,13 +11,13 @@ export function resetItemsMutation (isCollection) {
       const initial = initialState(isCollection)
 
       if (isCollection) {
-        Vue.set(state, 'items', initial.items)
-        Vue.set(state, 'initial', initial.initial)
+        state.items = initial.items
+        state.initial = initial.initial
       }
 
       if (!isCollection) {
-        Vue.set(state, 'item', initial.item)
-        Vue.set(state, 'item', initial.initial)
+        state['item'] = initial.item
+        state['item'] = initial.initial
       }
     }
   })

@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Proxy for setting Resource Objects on a single item module
  *
@@ -16,8 +14,8 @@ export function setMutation (resourceBuilder, isCollection) {
     apply (target, thisArg, [state, payload]) {
       const settablePayload = resourceBuilder.build(payload)
 
-      Vue.set(state, 'item', settablePayload)
-      Vue.set(state, 'initial', settablePayload)
+      state.item = settablePayload
+      state.initial = settablePayload
     }
   })
 }

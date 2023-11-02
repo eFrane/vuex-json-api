@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Remove a ResourceObject from a module's item(s)
  *
@@ -18,9 +16,11 @@ export function removeMutation (isCollection) {
   return new Proxy((state, payload) => {}, {
     apply (target, thisArg, [state, id]) {
       if (isCollection) {
-        Vue.delete(state.items, id)
+        const idx = state.items.findIndex(el => el.id === id)
+        state.items.splice(idx, 1)
+
       } else {
-        Vue.set(state, 'item', {})
+        state.item = {}
       }
     }
   })

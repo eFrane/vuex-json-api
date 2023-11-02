@@ -3,7 +3,6 @@ import faker from 'faker'
 import { ResourcefulApi } from '../src/api/ResourcefulApi'
 import { Route } from '../src/route/Route'
 import { Router } from '../src/route/Router'
-import Vue from 'vue'
 import Vuex from 'vuex'
 
 function response (data, meta = {}, links = {}, status = 200) {
@@ -97,7 +96,7 @@ export function initApiMockServer () {
 export function initApiMock () {
   initApiMockServer()
 
-  Vue.use(Vuex)
+  // Vue.use(Vuex)
 
   const router = new Router()
   router

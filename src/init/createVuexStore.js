@@ -1,10 +1,9 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { initJsonApiPlugin } from './initJsonApiPlugin'
 import { checkConfigProperty, hasOwn } from '../shared/utils'
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
 /**
  * Converts a module listing object (e.g. `{ myModule: myModule }`)

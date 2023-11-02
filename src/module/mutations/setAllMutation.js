@@ -1,5 +1,4 @@
 import { hasOwn } from '../../shared/utils'
-import Vue from 'vue'
 
 /**
  * Proxy for setting Resource Objects on a collection module
@@ -16,8 +15,8 @@ export function setAllMutation (resourceBuilder) {
       const settablePayload = resourceBuilder.build(payload)
 
       if (hasOwn(settablePayload, 'id')) {
-        Vue.set(state.items, settablePayload.id, settablePayload)
-        Vue.set(state.initial, settablePayload.id, settablePayload)
+        state.items[settablePayload.id] = settablePayload
+        state.initial[settablePayload.id] = settablePayload
       } else {
         state.items = { ...state.items, ...settablePayload }
         state.initial = { ...state.initial, ...settablePayload }
