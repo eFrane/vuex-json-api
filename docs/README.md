@@ -15,16 +15,13 @@ a magical experience.
 In your entrypoint do something like:
 
 ```js
-import Vue from 'vue/dist/vue.esm'
+import { createApp } from 'vue'
+import { createStore } from 'vuex'
 
 import {
-  createVueInstance,
-  createVuexStore,
   Api,
   StaticRouter
 } from '@efrane/vuex-json-api'
-
-import App from './App'
 
 import PlaygroundRoutes from '@efrane/vuex-json-api/misc/JsonApiPlaygroundRoutes'
 
@@ -32,23 +29,33 @@ Api.setBaseUrl('https://jsonapiplayground.reyesoft.com')
 
 const router = new StaticRouter(PlaygroundRoutes)
 
-createVuexStore({}, router)
-  .then((store) => {
-    return createVueInstance(store, { App })
+const storeOptions = {} // your store options
+
+const store = createStore(storeOptions, router)
+  .then(store => {
+    const app = createApp(store, { App })
+
+    app.use(store)
+    app.mount('#app')
   })
-  .then(instance => instance.$mount('#app'))
 ```
 
 Then, in `App.vue`:
 
-```js
+```vue
 {
   // ...
-  computed: ...mapState('books', {
-    books: state => state.items
-  }),
-  methods: ...mapActions('books', ['list']),
-  mounted() {
+  computed: {
+    ...mapState('books', {
+      books: state => state.items
+    })
+  },
+
+  methods: {
+    ...mapActions('books', ['list'])
+  },
+
+  mounted () {
     this.list()
   }
   // ...

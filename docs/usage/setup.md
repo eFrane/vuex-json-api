@@ -1,31 +1,26 @@
 # Example Setup
-## prepare the store
+## Prepare the store
 
 ``` js
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createApp } from 'vue'
+import { createStore } from 'vuex'
 ...
 import { initJsonApiPlugin, prepareModuleHashMap, StaticRouter } from '@efrane/vuex-json-api'
 import VuexApiRoutes from '<path-to>/VuexApiRoutes'
 
-Vue.use(Vuex)
-
-// create The Router
 const router = new StaticRouter(VuexApiRoutes)
-
-// set the baseUrl
 let baseUrl = '/my-base/api/1.0'
+const app = createApp(rootComponent)
 
-// create a store instance
 const store = router
   .updateRoutes()
   .then(router => {
-    const store = new Vuex.Store({
+    const store = createStore({
       plugins: [
         initJsonApiPlugin({
           router: router,
           baseUrl: baseUrl,
-          headers: { }, // you might want set some custum headers
+          headers: { }, // you might want to set some custom headers
           preprocessingCallbacks: [], // you can pass an array of promise resolving methods to manipulate the response before passing it to the store
           errorCallbacks: [], // you can pass an array of promise resolving methods to manipulate the response if an error gets returned (e.g. statuscode >= 400)
         }),
@@ -37,6 +32,8 @@ const store = router
 
     return store
   })
+  
+app.use(store)
 
 export { store }
 
@@ -47,6 +44,7 @@ export { store }
 
 
 ``` js
+import { createApp } from 'vue'
 import { store } from '<the-place-of-the-above-file>/Store'
 
 // The Module names has
@@ -65,7 +63,7 @@ const presetModules = [
 ]
 
 store.then(store => {
-  let instance = new Vue({
+  let instance = createApp({
     components: [], // do the regular stuff you do, when using vue
     store,
   }).then(() => {
@@ -86,5 +84,5 @@ store.then(store => {
   })
 })
 ```
-Thats it.
-now you should see the registered modules in the vue devTools.
+That's it.
+Now you should see the registered modules in the vue devTools.
