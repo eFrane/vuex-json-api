@@ -17,11 +17,11 @@
   "dependencies": {
     "deep-object-diff": "^1.1.0",
     "json-api-normalizer": "^1.0",
-    "qs": "~6.10.3",
-    "vuex": "^3.1.1"
+    "qs": "~6.10.3"
   },
   "peerDependencies": {
-    "vue": "2.*"
+    "@vue/compat": "3.2.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16",
@@ -44,9 +44,7 @@
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^12.3.2",
     "node-fetch": "^2.6.1",
-    "vue": "^2.6.14",
-    "vue-jest": "^3.0.5",
-    "vue-template-compiler": "^2.6.14"
+    "vue-jest": "^3.0.5"
   },
   "engines": {
     "node": ">= 8.0.0",
