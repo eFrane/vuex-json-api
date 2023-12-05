@@ -28,6 +28,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "@babel/preset-env": "^7.16.4",
+    "@vue/compat": "^3.2.0",
     "babel-jest": "^27.3.1",
     "eslint": "7.32.0",
     "eslint-config-standard": "16.0.3",
@@ -44,7 +45,9 @@
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^12.3.2",
     "node-fetch": "^2.6.1",
-    "vue-jest": "^3.0.5"
+    "vue": "^3.2.0",
+    "vue-jest": "^3.0.5",
+    "vuex": "^4.0.2"
   },
   "engines": {
     "node": ">= 8.0.0",
