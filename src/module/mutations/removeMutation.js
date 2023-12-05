@@ -16,9 +16,7 @@ export function removeMutation (isCollection) {
   return new Proxy((state, payload) => {}, {
     apply (target, thisArg, [state, id]) {
       if (isCollection) {
-        const idx = state.items.findIndex(el => el.id === id)
-        state.items.splice(idx, 1)
-
+        delete state.items[id]
       } else {
         state.item = {}
       }
