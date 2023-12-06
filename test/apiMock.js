@@ -96,8 +96,6 @@ export function initApiMockServer () {
 export function initApiMock () {
   initApiMockServer()
 
-  // Vue.use(Vuex)
-
   const router = new Router()
   router
     .addRoute(new Route('book', 'get', '/book/{id}', ['id']))
