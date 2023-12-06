@@ -16,8 +16,8 @@ export function resetItemsMutation (isCollection) {
       }
 
       if (!isCollection) {
-        state['item'] = initial.item
-        state['item'] = initial.initial
+        state.item = initial.item
+        state.item = initial.initial
       }
     }
   })
