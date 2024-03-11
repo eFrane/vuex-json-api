@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`adds routes to the expected keys 1`] = `
-Object {
+{
   "get": Route {
     "action": "get",
     "module": "module",
-    "parameters": Array [],
+    "parameters": [],
     "url": "/",
   },
 }

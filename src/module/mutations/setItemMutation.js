@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  *
  * @param {ResourceBuilder} resourceBuilder
@@ -9,11 +7,11 @@ export function setItemMutation (resourceBuilder, isCollection) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [state, payload]) {
       if (isCollection) {
-        Vue.set(state.items, payload.id, resourceBuilder.build(payload))
+        state.items[payload.id] = resourceBuilder.build(payload)
         return
       }
 
-      Vue.set(state, 'item', payload)
+      state.item = payload
     }
   })
 }

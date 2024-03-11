@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 export function updateMutation (isCollection) {
   return new Proxy(() => {}, {
     apply (target, thisArg, [state, { id, path, value, relationship, action }]) {
@@ -12,24 +10,24 @@ export function updateMutation (isCollection) {
         const selectedsList = path.reduce((obj, key) => obj[key], state)
         const prop = path.pop()
         if (value instanceof Array) {
-          Vue.set(selectedsList, prop, value)
+          selectedsList[prop] = value
           return
         }
 
         if (!(value instanceof Array)) {
           if (action === 'remove') {
             const idx = selectedsList.findIndex(el => el.id === value.id)
-            Vue.delete(selectedsList, idx)
+            selectedsList.splice(idx, 1)
           }
           if (action === 'add') {
             const length = selectedsList.length
-            Vue.set(selectedsList, length, value)
+            selectedsList[length] = value
           }
 
           // if its a 1-1 relation and we cant remove or add but only replace
           // we may find a more elegant way to handle that
           if (typeof action === 'undefined') {
-            Vue.set(path.reduce((obj, key) => obj[key], state), prop, value)
+            path.reduce((obj, key) => obj[key], state)[prop] = value
           }
           return
         }
@@ -40,7 +38,7 @@ export function updateMutation (isCollection) {
         path = path.split('.')
         const prop = path.pop()
         const selectedsList = path.reduce((obj, key) => obj[key], state)
-        Vue.set(selectedsList, prop, value)
+        selectedsList[prop] = value
         return
       }
 
