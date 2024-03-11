@@ -1,5 +1,8 @@
 # next version
 
+- **BREAKING**: Vue has been removed as a direct dependency.
+  In most cases, this should not have any detrimental effects,
+  instead, this makes the library compatible with Vue 3.
 - **BREAKING**: Requests no longer get automatic type name fixing.
   This feature did not conform to the spec as there is no requirement
   for types to always be upper camel cased. If you need to perform
