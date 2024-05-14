@@ -1,5 +1,7 @@
 # next version
 
+# v0.1
+
 - **BREAKING**: Vue has been removed as a direct dependency.
   In most cases, this should not have any detrimental effects,
   instead, this makes the library compatible with Vue 3.
