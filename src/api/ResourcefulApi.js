@@ -115,7 +115,7 @@ export class ResourcefulApi extends Api {
     }
 
     if (json.data) {
-      parsedResponse.data = normalize(json, { camelizeTypeValues: false })
+      parsedResponse.data = normalize(json, { camelizeTypeValues: false, camelizeKeys: false })
     }
 
     if (json.errors) {
