@@ -120,7 +120,6 @@ export class ModuleBuilder {
    */
   buildMutations () {
     const resourceBuilder = new ResourceBuilder(this.api.store)
-
     const mutations = {
       resetItems: resetItemsMutation(this.isCollection),
       set: (this.isCollection) ? setAllMutation(resourceBuilder) : setMutation(resourceBuilder),
@@ -183,7 +182,7 @@ export class ModuleBuilder {
 
       if (relatedObjectMethods.isCollection()) {
         const listActionName = `listRelated${relatedObjectTypeActionName}`
-        relatedActions[listActionName] = listRelatedAction(this.api, this.moduleName, relatedObjectType)
+        relatedActions[listActionName] = listRelatedAction(this.api, this.moduleName, relatedObjectTypeActionName)
       }
     }
 

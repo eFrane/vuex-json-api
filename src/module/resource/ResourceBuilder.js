@@ -69,11 +69,11 @@ export class ResourceBuilder {
           isToMany: relatedObject.data.constructor === Array
         }
 
-        relatedObject.get = getRelationship(this.store, relatedObject, relationshipConfig)
-        relatedObject.load = loadRelationship(this.store, obj.id, obj.type, relatedObject, relationshipConfig)
+        relatedObject.get = getRelationship(this.store, currentRelationshipName, relatedObject, relationshipConfig)
+        relatedObject.load = loadRelationship(this.store, obj.id, currentRelationshipName, relatedObject, relationshipConfig)
 
         if (relationshipConfig.isToMany) {
-          relatedObject.list = listRelationship(this.store, relatedObject)
+          relatedObject.list = listRelationship(this.store, currentRelationshipName, relatedObject)
         }
 
         relationships[currentRelationshipName] = relatedObject
@@ -81,13 +81,13 @@ export class ResourceBuilder {
 
       // shorthand variant
       obj.loadRel = (relationshipName) => {
-        return loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+        return loadRelationship(this.store, obj.id, relationshipName, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
       }
       obj.rel = (relationshipName) => {
         if (getRelationshipConfig(relationships[relationshipName]).isToMany) {
-          return listRelationship(this.store, relationships[relationshipName])()
+          return listRelationship(this.store, relationshipName, relationships[relationshipName])()
         } else {
-          return getRelationship(this.store, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+          return getRelationship(this.store, relationshipName, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
         }
       }
     }

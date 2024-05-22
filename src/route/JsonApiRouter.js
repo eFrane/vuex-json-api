@@ -74,7 +74,7 @@ export class JsonApiRouter extends Router {
   }
 
   parseApiResult (data) {
-    for (const routeResource of Object.values(data.vuexJsonApiRoute)) {
+    for (const routeResource of Object.values(data.VuexJsonApiRoute)) {
       this.addRoute(new JsonApiRoute(routeResource))
     }
   }
