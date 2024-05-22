@@ -51,7 +51,7 @@ test('reads the initial module list', () => {
 
   api.registerModule = registerModuleMock
 
-  api.setupApiModules(['foo', 'bar', 'baz'])
+  api.setupApiModules(['foo', 'bar', 'Baz'])
 
   expect(registerModuleMock.mock.calls.length).toBe(3)
 })

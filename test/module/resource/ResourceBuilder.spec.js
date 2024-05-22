@@ -40,15 +40,66 @@ const jsonResourceMock = {
   }]
 }
 
+const jsonResourceMock2 = {
+  data: {
+    attributes: {
+      name: 'Some Other Name'
+    },
+    id: 'a1234',
+    type: 'Test',
+    relationships: {
+      relatedObject: {
+        data: {
+          id: 'bb22',
+          type: 'RelatedObject'
+        }
+      },
+      relObjs: {
+        data: [
+          {
+            id: 'ro1234',
+            type: 'RelObjs'
+          },
+          {
+            id: 'ro234',
+            type: 'RelObjs'
+          }
+        ]
+      }
+    }
+  },
+  includeds: [{
+    id: 'ro1234',
+    type: 'RelObjs',
+    attributes: {
+      name: 'relative lame name',
+      anotherProp: 'test'
+    }
+  },{
+    id: 'ro234',
+    type: 'RelObjs',
+    attributes: {
+      name: 'some other lame name',
+      anotherProp: 'test me too'
+    }
+  }]
+}
+
 const normalizedMock = normalize(jsonResourceMock)
+const normalizedAltMock = normalize(jsonResourceMock2)
 
 const obj = new ResourceBuilder(Vuex).build(normalizedMock.test.aa1)
+const alternativeObj = new ResourceBuilder(Vuex).build(normalizedAltMock.test.a1234)
 
 test('shoud add a "get" Method wich returns the value from the given attribute', () => {
   expect(typeof obj.get).toBe('function')
+  expect(typeof alternativeObj.get).toBe('function')
 
   expect(obj.get('name')).toBe(jsonResourceMock.data.attributes.name)
   expect(obj.get('fail')).toEqual(new Error('attribute "fail" not found'))
+
+  expect(alternativeObj.get('name')).toBe(jsonResourceMock2.data.attributes.name)
+  expect(alternativeObj.get('fail')).toEqual(new Error('attribute "fail" not found'))
 })
 
 test('should return the value from the given attribute', () => {
@@ -59,6 +110,9 @@ test('should return the value from the given attribute', () => {
 test('should add relationship methods if there are relationships', () => {
   expect(typeof obj.loadRel).toBe('function')
   expect(typeof obj.rel).toBe('function')
+
+  expect(typeof alternativeObj.loadRel).toBe('function')
+  expect(typeof alternativeObj.rel).toBe('function')
 })
 
 test('should not add relationship methods if there are no relationships', () => {
@@ -91,7 +145,7 @@ test('should not add relationship methods for non-existing relationships', () =>
         },
         moreRel: {
           data: [
-            { id: 'first', type: 'more-rel' }, { id: 'second', type: 'more-rel' }
+            { id: 'first', type: 'More-rel' }, { id: 'second', type: 'More-rel' }
           ]
         },
         noSingleRel: {
