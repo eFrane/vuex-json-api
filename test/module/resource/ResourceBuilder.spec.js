@@ -75,7 +75,7 @@ const jsonResourceMock2 = {
       name: 'relative lame name',
       anotherProp: 'test'
     }
-  },{
+  }, {
     id: 'ro234',
     type: 'RelObjs',
     attributes: {
