@@ -17,11 +17,11 @@ export function getRelationship (store, relationshipModuleName, relatedObject, c
         try {
           return relatedModule.items[requestedId]
         } catch (e) {
-          throw new Error(`Related object ${relatedObject.id} not found in ${moduleType}`)
+          throw new Error(`Related object ${relatedObject.data.id} not found in ${moduleType}`)
         }
       }
 
-      return relatedModule.items[relatedObject.id]
+      return relatedModule.items[relatedObject.data.id]
     }
   })
 }
