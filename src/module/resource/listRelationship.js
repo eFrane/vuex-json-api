@@ -6,7 +6,8 @@
 export function listRelationship (store, relationshipModuleName, relatedObjects) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
-      const relatedModule = store.state[relationshipModuleName]
+      const moduleName = relatedObjects.data[0].type
+      const relatedModule = store.state[moduleName] // This should work with 'relationshipModuleName' instead of 'moduleType'
 
       const relatedObjectIds = relatedObjects.data.map(obj => obj.id)
 
