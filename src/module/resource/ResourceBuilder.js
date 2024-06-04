@@ -70,7 +70,7 @@ export class ResourceBuilder {
         }
 
         relatedObject.get = getRelationship(this.store, relatedObject, relationshipConfig)
-        relatedObject.load = loadRelationship(this.store, obj.id, relatedObject, relationshipConfig)
+        relatedObject.load = loadRelationship(this.store, obj.id, obj.type, relatedObject, relationshipConfig)
 
         if (relationshipConfig.isToMany) {
           relatedObject.list = listRelationship(this.store, relatedObject)
