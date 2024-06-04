@@ -11,8 +11,6 @@ test('simple list action with different casings of the moduleName', async () => 
     const module = getVuexContextForResourceType(api, moduleName)
     const result = await action(module)
 
-    // console.log('result', result)
-    // console.log('module', module.state)
     expect(result).toBeInstanceOf(Object)
     expect(result.status).toBe(200)
     expect(Object.keys(result.data[moduleName]).length).toBe(3)

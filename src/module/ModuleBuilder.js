@@ -178,7 +178,6 @@ export class ModuleBuilder {
 
     for (const relatedObjectType in this.apiMethods.related) {
       const relatedObjectMethods = this.apiMethods.related[relatedObjectType]
-      // const relatedObjectTypeActionName = relatedObjectType.charAt(0).toUpperCase() + relatedObjectType.slice(1)
 
       if (relatedObjectMethods.isCollection()) {
         const listActionName = `listRelated${relatedObjectType}`
