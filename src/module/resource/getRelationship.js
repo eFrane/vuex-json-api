@@ -1,15 +1,14 @@
 /**
 *
 * @param {Vuex.Store} store
-* @param {String} relationshipModuleName
 * @param {Object} relatedObject
 * @param {Object} config{isToMany: boolean}
 */
-export function getRelationship (store, relationshipModuleName, relatedObject, config) {
+export function getRelationship (store, relatedObject, config) {
   return new Proxy(() => {}, {
     apply (target, thisArg, argArray) {
       const moduleType = relatedObject.data.type
-      const relatedModule = store.state[moduleType] // This should work with 'relationshipModuleName' instead of 'moduleType'
+      const relatedModule = store.state[moduleType]
 
       if (config.isToMany) {
         const [requestedId] = argArray
