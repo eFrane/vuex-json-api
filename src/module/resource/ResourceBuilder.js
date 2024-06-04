@@ -81,7 +81,7 @@ export class ResourceBuilder {
 
       // shorthand variant
       obj.loadRel = (relationshipName) => {
-        return loadRelationship(this.store, obj.id, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
+        return loadRelationship(this.store, obj.id, obj.type, relationships[relationshipName], getRelationshipConfig(relationships[relationshipName]))()
       }
       obj.rel = (relationshipName) => {
         if (getRelationshipConfig(relationships[relationshipName]).isToMany) {
