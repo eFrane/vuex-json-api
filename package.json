@@ -47,7 +47,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^15.2.2",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.3.2",
     "node-notifier": "^10.0.1",
     "vue": "^3.4.21",
     "vuex": "^4.0.2"
