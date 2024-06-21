@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { ResourcefulApi } from '../src/api/ResourcefulApi'
 import { Route } from '../src/route/Route'
 import { Router } from '../src/route/Router'
@@ -40,7 +40,7 @@ export function initApiMockServer () {
       type: 'Book',
       id,
       attributes: {
-        author: faker.name.findName(),
+        author: faker.person.fullName(),
         title: faker.lorem.words(3)
       }
     }
