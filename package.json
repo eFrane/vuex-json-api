@@ -26,7 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.24",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
     "@babel/preset-env": "^7.24.0",
     "@vue/compat": "^3.4.21",
     "@faker-js/faker": "^8.4.1",
