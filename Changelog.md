@@ -1,5 +1,11 @@
 # next version
 
+- **BREAKING**: The response data now allows PascalCase Types and Keys.
+  With that, If the Type has been pascal case before, but Your module was
+  in camel case, it worked, because the Type was transformed to camel case
+  automatically. Now, the Type is not transformed anymore, so you have to
+  adjust your module to the correct case.
+
 # v0.1
 
 - **BREAKING**: Vue has been removed as a direct dependency.

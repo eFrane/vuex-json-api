@@ -56,7 +56,7 @@ export class ResourceBuilder {
    * Adds Methods (get, load, list) to the relationships for getting / loading them
    * Adds Shorthand Methods (rel / loadRel)
    *
-   * @param {Object} jsonResourceObject
+   * @param {Object} obj jsonResourceObject
    */
   buildRelationshipMethods (obj) {
     const relationships = obj.relationships

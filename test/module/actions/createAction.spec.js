@@ -6,5 +6,5 @@ const action = createAction(api, 'book')
 const bookModule = getVuexContextForResourceType(api, 'book')
 
 test.skip('creates without id', async () => {
-  action(bookModule, { type: 'Book', attributes: {} })
+  action(bookModule, { type: 'book', attributes: {} })
 })
