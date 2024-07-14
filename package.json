@@ -27,7 +27,7 @@
     "@babel/core": "^7.24",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-modules-commonjs": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-env": "^7.24.8",
     "@vue/compat": "^3.4.31",
     "@faker-js/faker": "^8.4.1",
     "@vue/vue3-jest": "29",
