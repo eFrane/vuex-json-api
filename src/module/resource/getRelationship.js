@@ -3,6 +3,7 @@
 * @param {Vuex.Store} store
 * @param {Object} relatedObject
 * @param {Object} config{isToMany: boolean}
+* @param {Object} config{isToMany: boolean}
 */
 export function getRelationship (store, relatedObject, config) {
   return new Proxy(() => {}, {

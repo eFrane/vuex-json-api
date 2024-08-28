@@ -51,7 +51,7 @@ export function initApiMockServer () {
       type: 'book',
       id,
       attributes: {
-        author: faker.name.findName(),
+        author: faker.person.fullName(),
         title: faker.lorem.words(3)
       }
     }
@@ -62,7 +62,7 @@ export function initApiMockServer () {
       type: 'Category',
       id,
       attributes: {
-        author: faker.name.findName(),
+        author: faker.person.fullName(),
         title: faker.lorem.words(3)
       }
     }
