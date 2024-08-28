@@ -1,5 +1,7 @@
 # next version
 
+# v0.1.1
+
 - **BREAKING**: The response data now allows PascalCase Types and Keys.
   With that, If the Type has been pascal case before, but Your module was
   in camel case, it worked, because the Type was transformed to camel case
