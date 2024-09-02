@@ -1,5 +1,9 @@
 # next version
 
+# v0.1.2
+
+Re-release of 0.1.1 because something failed during the npm publishing.
+
 # v0.1.1
 
 - **BREAKING**: The response data now allows PascalCase Types and Keys.
