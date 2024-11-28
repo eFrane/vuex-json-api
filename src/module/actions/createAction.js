@@ -88,8 +88,9 @@ export function createAction (api, moduleName) {
 
         return response
       }).catch(e => {
-        // FIXME: This is not the way to handle errors.
-        console.log(e)
+        console.error('Error in createAction:', e)
+        vuexFns.commit('endLoading')
+        throw e
       })
     }
   })
