@@ -245,10 +245,11 @@ export class Api {
    * @param {string} url
    * @param {Object} params
    * @param {Object} data
+   * @param {Object} options
    * @returns {Promise<Response>}
    * @protected
    */
-  async _doRequest (method, url, params, data) {
+  async _doRequest (method, url, params, data, options = {}) {
     url = this._compileUrl(url, params)
 
     const requestConfig = {
@@ -264,6 +265,7 @@ export class Api {
     }
 
     return fetch(url, requestConfig).then(async response => {
+      console.log('vuex fetch', response)
       let callbacks = []
       if (response.ok) {
         callbacks = this.successCallbacks
@@ -281,31 +283,31 @@ export class Api {
         //       to every callback, may incur performance
         //       pressure as typical callbacks likely want to examine the
         //       request body and would repeatedly parse the json bodies
-        await callback(response.clone())
+        await callback(response.clone(), options)
       }
 
       return response
     })
   }
 
-  get (url, params = null) {
-    return this._doRequest('get', url, params, null)
+  get (url, params = null, options = {}) {
+    return this._doRequest('get', url, params, null, options)
   }
 
-  post (url, params = null, data = null) {
-    return this._doRequest('post', url, params, data)
+  post (url, params = null, data = null, options = {}) {
+    return this._doRequest('post', url, params, data, options)
   }
 
-  put (url, params = null, data = null) {
-    return this._doRequest('put', url, params, data)
+  put (url, params = null, data = null, options = {}) {
+    return this._doRequest('put', url, params, data, options)
   }
 
-  patch (url, params = null, data = null) {
-    return this._doRequest('patch', url, params, data)
+  patch (url, params = null, data = null, options = {}) {
+    return this._doRequest('patch', url, params, data, options)
   }
 
-  delete (url, params = null, data = null) {
-    return this._doRequest('delete', url, params, data)
+  delete (url, params = null, data = null, options = {}) {
+    return this._doRequest('delete', url, params, data, options)
   }
 
   /* #endregion */

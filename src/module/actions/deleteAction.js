@@ -8,7 +8,7 @@ import { NotFoundApiError } from '../../errors/ApiError'
 
 export function deleteAction (api, moduleName) {
   return new Proxy(() => {}, {
-    apply (target, thisArg, [vuexFns, query]) {
+    apply (target, thisArg, [vuexFns, query, options]) {
       vuexFns.commit('startLoading')
 
       let id = query.id

@@ -64,12 +64,12 @@ export class ResourcefulApi extends Api {
    * @param {Object} params
    * @param {Object} data
    */
-  async _doRequest (method, url, params, data) {
+  async _doRequest (method, url, params, data, options = {}) {
     for (const cb of this.requestCallbacks) {
       data = cb(data, params, url, method)
     }
 
-    return super._doRequest(method, url, params, data)
+    return super._doRequest(method, url, params, data, options)
       .then(async (response) => {
         let parsedResponse = this._createDatalessResponse(response)
 
