@@ -1,5 +1,10 @@
 # next version
 
+# v0.1.3
+
+- Route objects are exported on the library entrpoint. In some cases, it was
+  not possible to create new valid Route objects after the initial setup.
+
 # v0.1.2
 
 Re-release of 0.1.1 because something failed during the npm publishing.
