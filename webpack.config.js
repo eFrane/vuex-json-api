@@ -1,17 +1,21 @@
 const path = require('path');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
-  entry: './index.js',
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
+  entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    libraryTarget: 'umd',
   },
+  externalsType: 'commonjs',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-    extensions: ['.js', '.vue'],
+    extensions: ['.js'],
   },
   module: {
     rules: [
@@ -19,24 +23,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]',
-        },
-      },
-    ],
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
+      }
+    ]
   },
   devtool: 'source-map',
 };

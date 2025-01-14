@@ -7,8 +7,10 @@
     "Stefan Graupner <efrane@meanderingsoul.com>"
   ],
   "homepage": "https://vuex-json-api.efrane.com",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "unit": "jest --config jest.config.js",
     "test": "yarn unit",
     "tdd": "yarn unit --watch",
