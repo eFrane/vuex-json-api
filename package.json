@@ -19,10 +19,6 @@
     "json-api-normalizer": "^1.0",
     "qs": "~6.12.3"
   },
-  "peerDependencies": {
-    "@vue/compat": "3.2.0",
-    "vuex": "^4.0.2"
-  },
   "devDependencies": {
     "@babel/core": "^7.24",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
