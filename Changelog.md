@@ -1,5 +1,7 @@
 # next version
 
+- Remove vuex and @vue/compat from the Peerdependecy list. They are not necessary anymore for the library to work.
+
 # v0.1.3
 
 - Route objects are exported on the library entrpoint. In some cases, it was
