@@ -1,5 +1,7 @@
 # next version
 
+# v0.1.4
+
 - Remove vuex and @vue/compat from the Peerdependecy list. They are not necessary anymore for the library to work.
 
 # v0.1.3
