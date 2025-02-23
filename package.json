@@ -1,6 +1,6 @@
 {
   "name": "@efrane/vuex-json-api",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A Vuex library for interfacing with Json:Api endpoints",
   "license": "MIT",
   "authors": [
